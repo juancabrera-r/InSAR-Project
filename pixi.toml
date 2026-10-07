@@ -1,0 +1,24 @@
+[workspace]
+authors = ["juanmanuel.cabrera"]
+channels = ["conda-forge"]
+name = "insar-platform"
+platforms = ["win-64", "linux-64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.12"
+rich = "*"
+pyyaml = ">=6.0.3,<7"
+
+[feature.dev.dependencies]
+pytest = "*"
+ruff = "*"
+
+[tasks]
+test = "pytest tests/"
+format = "ruff format ."
+format-check = "ruff format --check ."
+lint = "ruff check ."
+
+[environments]
+dev = { features = ["dev"], solve-group = "default" }

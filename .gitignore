@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Testing
+.pytest_cache/
+
+# Ruff
+.ruff_cache/
+
+# Pixi
+.pixi/
+
+# Local data
+data/raw/
+data/intermediate/
+data/processed/
+
+# IDE
+.vscode/
+.idea/
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml
