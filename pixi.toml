@@ -10,6 +10,7 @@ python = "3.12"
 rich = "*"
 pyyaml = ">=6.0.3,<7"
 python-dotenv = ">=1.2.4,<2"
+requests = ">=2.34.2,<3"
 
 [feature.dev.dependencies]
 pytest = "*"

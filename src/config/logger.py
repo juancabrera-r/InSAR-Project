@@ -29,9 +29,7 @@ class LoggingManager:
         logger.handlers.clear()
 
         if not log_format:
-            log_format = (
-                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            )
+            log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
         formatter = logging.Formatter(log_format)
 

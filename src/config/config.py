@@ -1,25 +1,22 @@
-
+from pathlib import Path
 
 import yaml
-
-from pathlib import Path
-from dotenv import dotenv_values,load_dotenv
+from dotenv import dotenv_values, load_dotenv
 
 
 class ConfigLoader:
     """Load application configuration from a YAML file."""
 
     def __init__(
-            self,
-            config_path: Path,
-            env_path: Path,
-        ):
-        
+        self,
+        config_path: Path,
+        env_path: Path,
+    ):
+
         self.config_path = config_path
         self.env_path = env_path
 
         load_dotenv(dotenv_path=env_path, override=False)
-
 
     def load_yaml(self) -> dict:
         """Load and return the YAML configuration."""
@@ -41,4 +38,3 @@ class ConfigLoader:
             raise RuntimeError(
                 f"Failed to load environment configuration from {self.env_path}"
             ) from exc
-
