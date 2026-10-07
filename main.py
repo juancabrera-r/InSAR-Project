@@ -29,11 +29,9 @@ def main() -> None:
 
     # Initialize app
     aoi_geojson_path = Path(config["AOI_GEOJSON"])
-    
-    sentinel1_app(
-        config=config,
-        aoi_path=aoi_geojson_path
-    )
+
+    sentinel1_app(config=config, aoi_path=aoi_geojson_path)
+
 
 if __name__ == "__main__":
     main()
