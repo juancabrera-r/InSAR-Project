@@ -9,6 +9,7 @@ version = "0.1.0"
 python = "3.12"
 rich = "*"
 pyyaml = ">=6.0.3,<7"
+python-dotenv = ">=1.2.4,<2"
 
 [feature.dev.dependencies]
 pytest = "*"

@@ -8,6 +8,7 @@ from src.config.config import ConfigLoader
 
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = BASE_DIR / "src" / "config" / "config.yaml"
+ENV_PATH = BASE_DIR / ".env"
 LOG_DIR = BASE_DIR / "logs"
 
 def main() -> None:
@@ -16,7 +17,11 @@ def main() -> None:
     # Initialize config
     config_obj = ConfigLoader(
         config_path=CONFIG_PATH,
+        env_path=ENV_PATH,
     )
+
+    config = config_obj.load_yaml()
+    env = config_obj.load_env()
     
     # Initialize logging
     LoggingManager.setup(
