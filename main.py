@@ -2,9 +2,9 @@
 
 from pathlib import Path
 
-from insar_platform.application import sentinel1_app
-from src.config.config import ConfigLoader
-from src.config.logger import LoggingManager
+from app.application import sentinel1_app
+from config.config import ConfigLoader
+from config.logger import LoggingManager
 
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_PATH = BASE_DIR / "src" / "config" / "config.yaml"

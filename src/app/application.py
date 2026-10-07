@@ -20,6 +20,7 @@ def sentinel1_app(
 
     sentinel1_ingestion = Sentinel1Ingestion(config=config, aoi_wkt=aoi_wkt)
 
-    acquisitions = sentinel1_ingestion.search_acquisitions()
+    bursts = sentinel1_ingestion.search_acquisitions()
 
-    logger.info("Found %d Sentinel-1 acquisitions", len(acquisitions))
+    logger.info("Found %d Sentinel-1 bursts", len(bursts))
+    logger.debug("Sentinel-1 burst: %s", bursts[0])

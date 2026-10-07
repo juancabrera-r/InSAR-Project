@@ -11,12 +11,14 @@ rich = "*"
 pyyaml = ">=6.0.3,<7"
 python-dotenv = ">=1.2.4,<2"
 requests = ">=2.34.2,<3"
+pip = ">=26.2.1,<27"
 
 [feature.dev.dependencies]
 pytest = "*"
 ruff = "*"
 
 [tasks]
+insar = "python main.py"
 test = "pytest tests/"
 format = "ruff format ."
 format-check = "ruff format --check ."

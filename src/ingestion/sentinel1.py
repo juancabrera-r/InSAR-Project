@@ -9,8 +9,8 @@ class Sentinel1Ingestion:
     def __init__(self, config: dict, aoi_wkt: str):
         self.config = config
 
-        self.start_date = config["start_date"]
-        self.end_date = config["end_date"]
+        self.start_date = config["START_DATE"]
+        self.end_date = config["END_DATE"]
         self.url = config["URL"]
 
         self.aoi_wkt = aoi_wkt
