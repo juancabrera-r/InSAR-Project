@@ -16,6 +16,7 @@ pip = ">=26.2.1,<27"
 [feature.dev.dependencies]
 pytest = "*"
 ruff = "*"
+pre-commit = "*"
 
 [tasks]
 insar = "python main.py"

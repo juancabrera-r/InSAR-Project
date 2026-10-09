@@ -4,10 +4,10 @@ import pytest
 
 from utils.geojson_manage import GeojsonManager
 
-
 # ---------------------------------------
 # Fixtures
 # ---------------------------------------
+
 
 @pytest.fixture
 def polygon_data():
@@ -46,6 +46,7 @@ def manager(geojson_file):
 # read_geojson()
 # ---------------------------------------
 
+
 def test_read_geojson_success(manager, polygon_data):
     result = manager.read_geojson()
 
@@ -70,10 +71,12 @@ def test_read_geojson_invalid_type(
     file_path = tmp_path / "invalid.geojson"
 
     file_path.write_text(
-        json.dumps({
-            "type": invalid_type,
-            "coordinates": [],
-        }),
+        json.dumps(
+            {
+                "type": invalid_type,
+                "coordinates": [],
+            }
+        ),
         encoding="utf-8",
     )
 
@@ -90,9 +93,11 @@ def test_read_geojson_missing_type(tmp_path):
     file_path = tmp_path / "missing_type.geojson"
 
     file_path.write_text(
-        json.dumps({
-            "coordinates": [],
-        }),
+        json.dumps(
+            {
+                "coordinates": [],
+            }
+        ),
         encoding="utf-8",
     )
 
@@ -143,18 +148,11 @@ def test_read_geojson_empty_file(tmp_path):
 # polygon_to_wkt()
 # ---------------------------------------
 
+
 def test_polygon_to_wkt_success(manager):
     result = manager.polygon_to_wkt()
 
-    expected = (
-        "POLYGON ("
-        "(-16.0 28.0, "
-        "-15.0 28.0, "
-        "-15.0 29.0, "
-        "-16.0 29.0, "
-        "-16.0 28.0)"
-        ")"
-    )
+    expected = "POLYGON ((-16.0 28.0, -15.0 28.0, -15.0 29.0, -16.0 29.0, -16.0 28.0))"
 
     assert result == expected
 
@@ -191,12 +189,7 @@ def test_polygon_to_wkt_with_hole(tmp_path):
 
     result = manager.polygon_to_wkt()
 
-    expected = (
-        "POLYGON ("
-        "(0 0, 10 0, 10 10, 0 10, 0 0), "
-        "(2 2, 4 2, 4 4, 2 4, 2 2)"
-        ")"
-    )
+    expected = "POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0), (2 2, 4 2, 4 4, 2 4, 2 2))"
 
     assert result == expected
 

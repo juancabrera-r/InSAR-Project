@@ -1,0 +1,23 @@
+repos:
+  - repo: local
+    hooks:
+      - id: unit-tests
+        name: Unit tests
+        entry: pixi run -e dev pytest
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      # - id: ruff-lint
+      #   name: Ruff lint
+      #   entry: pixi run -e dev lint
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true
+
+      # - id: ruff-format
+      #   name: Ruff format check
+      #   entry: pixi run -e dev format-check
+      #   language: system
+      #   pass_filenames: false
+      #   always_run: true
