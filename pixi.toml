@@ -20,7 +20,7 @@ pre-commit = "*"
 
 [tasks]
 insar = "python main.py"
-test = "pytest tests/ -v"
+test = "python -m pytest tests/ -v"
 format = "ruff format ."
 format-check = "ruff format --check ."
 lint = "ruff check ."
