@@ -326,7 +326,7 @@ def test_get_id_duplicates(ingestion, sample_bursts):
 
     result = ingestion.get_id(bursts)
 
-    assert result != expected
+    assert result == expected
 
 
 # ------------------------------
