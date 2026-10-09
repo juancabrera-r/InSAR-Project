@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: unit-tests
         name: Unit tests
-        entry: pixi run -e dev pytest
+        entry: pixi run -e dev test
         language: system
         pass_filenames: false
         always_run: true
