@@ -19,7 +19,7 @@ ruff = "*"
 
 [tasks]
 insar = "python main.py"
-test = "pytest tests/"
+test = "pytest tests/ -v"
 format = "ruff format ."
 format-check = "ruff format --check ."
 lint = "ruff check ."

@@ -6,3 +6,366 @@
 2026-10-07 17:48:18,165 - app.application - INFO - Found 20 Sentinel-1 acquisitions
 2026-10-07 17:50:07,765 - app.application - INFO - Starting Sentinel-1 burst search
 2026-10-07 17:50:13,000 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 15:55:50,652 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 15:55:55,085 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 15:57:26,546 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 15:57:31,806 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 16:04:16,682 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:04:17,902 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 16:04:45,229 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:04:49,837 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 16:04:49,859 - app.application - INFO - Platforms: Counter({'A': 15, 'C': 5})
+2026-10-08 16:04:49,862 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 20})
+2026-10-08 16:07:57,909 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:07:58,263 - app.application - INFO - Found 0 Sentinel-1 bursts
+2026-10-08 16:08:13,031 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:08:13,964 - app.application - INFO - Found 0 Sentinel-1 bursts
+2026-10-08 16:08:59,248 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:08:59,634 - app.application - INFO - Found 0 Sentinel-1 bursts
+2026-10-08 16:12:25,624 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:12:26,113 - app.application - INFO - Found 0 Sentinel-1 bursts
+2026-10-08 16:13:37,434 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:13:38,435 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 16:13:38,444 - app.application - INFO - Platforms: Counter({'A': 15, 'C': 5})
+2026-10-08 16:13:38,446 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 20})
+2026-10-08 16:15:18,010 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:15:22,382 - app.application - INFO - Found 20 Sentinel-1 bursts
+2026-10-08 16:15:22,391 - app.application - INFO - Platforms: Counter({'A': 15, 'C': 5})
+2026-10-08 16:15:22,393 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 20})
+2026-10-08 16:19:38,243 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:27:59,635 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:29:10,559 - app.application - INFO - Found 457 Sentinel-1 bursts
+2026-10-08 16:29:10,570 - app.application - INFO - Platforms: Counter({'A': 273, 'C': 184})
+2026-10-08 16:29:10,573 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 156, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 147})
+2026-10-08 16:38:51,297 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:39:43,768 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-08 16:39:43,770 - app.application - INFO - Platforms: Counter({'A': 278, 'C': 185})
+2026-10-08 16:39:43,772 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 158, ('ASCENDING', 103, 'IW1'): 155, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-08 16:39:43,774 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-08 16:39:43,776 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-08 16:39:43,778 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-08 16:39:43,779 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-08 16:39:43,781 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 37
+2026-10-08 16:39:43,783 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-08 16:39:43,784 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-08 16:46:37,721 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:47:48,762 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-08 16:47:48,765 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-08 16:47:48,767 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-08 16:47:48,770 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-08 16:47:48,772 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-08 16:47:48,774 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-08 16:47:48,776 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-08 16:47:48,777 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-08 16:47:48,779 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-08 16:47:48,780 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-08 16:48:21,535 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-08 16:49:26,834 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-08 16:49:26,837 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-08 16:49:26,839 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-08 16:49:26,842 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-08 16:49:26,844 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-08 16:49:26,846 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-08 16:49:26,848 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-08 16:49:26,850 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-08 16:49:26,851 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-08 16:49:26,853 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-08 16:49:26,855 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-08 16:49:26,857 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-08 16:49:26,858 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-08 16:49:26,860 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-08 16:49:26,862 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-08 16:49:26,864 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-08 16:49:26,865 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-08 16:49:26,867 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-08 16:49:26,869 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-08 16:49:26,870 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-08 16:49:26,872 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-08 16:49:26,874 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-08 16:49:26,877 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-08 16:49:26,878 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-08 16:49:26,880 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-08 16:49:26,882 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-08 16:49:26,884 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-08 16:49:26,886 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-08 16:49:26,888 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-08 16:49:26,892 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-08 16:49:26,894 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-08 16:49:26,896 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-08 16:49:26,898 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-08 16:49:26,899 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-08 16:49:26,902 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-08 16:49:26,903 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-08 16:49:26,905 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-08 16:49:26,908 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-08 16:49:26,910 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-08 16:49:26,913 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-08 16:49:26,915 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 08:41:11,537 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:42:26,294 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 08:42:26,296 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 08:42:26,298 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 08:42:26,301 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 08:42:26,302 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 08:42:26,304 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 08:42:26,306 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 08:42:26,308 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 08:42:26,309 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 08:42:26,311 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 08:42:26,313 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 08:42:26,315 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 08:42:26,316 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 08:42:26,318 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 08:42:26,320 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 08:42:26,322 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 08:42:26,324 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 08:42:26,326 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 08:42:26,327 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 08:42:26,329 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 08:42:26,331 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 08:42:26,332 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 08:42:26,333 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 08:42:26,336 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 08:42:26,337 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 08:42:26,339 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 08:42:26,340 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 08:42:26,341 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 08:42:26,343 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 08:42:26,345 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 08:42:26,347 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 08:42:26,349 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 08:42:26,351 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 08:42:26,352 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 08:42:26,354 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 08:42:26,357 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 08:42:26,358 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 08:42:26,360 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 08:42:26,362 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 08:42:26,364 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 08:42:26,365 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 454 | Duplicates: 9
+2026-10-09 08:42:26,368 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 08:46:30,991 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:46:51,797 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:48:11,059 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 08:48:11,064 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 08:48:11,066 - app.application - INFO - Tracks: Counter({('DESCENDING', 8, 'IW2'): 170, ('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 134})
+2026-10-09 08:48:11,069 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 08:48:11,071 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 08:48:11,073 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 08:48:11,074 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 08:48:11,076 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 08:48:11,077 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 08:48:11,079 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 08:48:11,081 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 08:48:11,083 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 08:48:11,084 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 08:48:11,085 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 08:48:11,088 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 08:48:11,090 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 08:48:11,091 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 08:48:11,093 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 08:48:11,094 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 08:48:11,097 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 08:48:11,098 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 08:48:11,100 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 08:48:11,102 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 08:48:11,104 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 08:48:11,105 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 08:48:11,107 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 08:48:11,109 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 08:48:11,111 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 08:48:11,113 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 08:48:11,116 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 08:48:11,117 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 08:48:11,119 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 08:48:11,121 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 08:48:11,123 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 08:48:11,125 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 08:48:11,127 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 08:48:11,129 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 08:48:11,132 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 08:48:11,134 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 08:48:11,135 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 08:48:11,137 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 443 | Duplicates: 20
+2026-10-09 08:48:11,139 - ingestion.sentinel1 - INFO - Duplicate burst IDs: {'33ff88ce-b290-476f-8fc6-0dfdf7261929': 2, '2680bd60-90e0-42b2-a0d3-c917b6eae0a1': 2, 'aa02700a-4f78-4606-a799-ccc6c0f52f0b': 2, '660cb5f7-970f-4575-83e4-0a96839f03ab': 2, '7764d0d4-749b-4d25-b253-86c2b345e23b': 2, '5f7b5de5-ee70-45a1-99cd-9d69fd7d171b': 2, '77fe6b83-c30b-47af-acfc-d23dd660ecd7': 2, '9da74996-e4f0-4e98-9868-41f1e000c904': 2, 'b7096f88-2b76-47b8-b77a-b7f483f59c06': 2, 'd63ea5d3-e91e-4b3d-a4a1-0c20aac11f68': 2, '88050a60-d440-44be-9b9c-7e26a23769ad': 2, '10a906be-7810-477f-a03e-b943afa535c0': 2, '84d8fd16-7f20-4802-88e5-01fc9b6135d0': 2, '210a1701-c767-4cb4-92a4-d07bb6263821': 2, 'eb06ed35-003f-4e73-8882-dbadc4ac6a20': 2, 'aa689e44-0f41-44ca-b36d-92621779ebbb': 2, '35c88c55-cff8-468d-bc85-ce92c1bc81ba': 2, 'ff541dac-f551-4f45-8527-847c4e9f7d38': 2, '32fab2a2-5093-4e6a-af8b-4e46dd694f14': 2, 'd1c084b7-53f6-4dbe-83aa-cfb14be642f2': 2}
+2026-10-09 08:48:11,143 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 08:50:19,345 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:51:24,594 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 08:51:24,597 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 08:51:24,599 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 08:51:24,601 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 08:51:24,603 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 08:51:24,604 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 08:51:24,607 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 08:51:24,608 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 08:51:24,610 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 08:51:24,613 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 08:51:24,615 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 08:51:24,617 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 08:51:24,619 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 08:51:24,620 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 08:51:24,622 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 08:51:24,624 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 08:51:24,626 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 08:51:24,628 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 08:51:24,630 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 08:51:24,631 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 08:51:24,633 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 08:51:24,634 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 08:51:24,636 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 08:51:24,638 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 08:51:24,640 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 08:51:24,642 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 08:51:24,644 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 08:51:24,646 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 08:51:24,647 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 08:51:24,649 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 08:51:24,651 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 08:51:24,653 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 08:51:24,656 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 08:51:24,658 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 08:51:24,660 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 08:51:24,662 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 08:51:24,664 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 08:51:24,666 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 08:51:24,668 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 08:51:24,670 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 08:51:24,672 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 463 | Duplicates: 0
+2026-10-09 08:51:24,676 - ingestion.sentinel1 - INFO - Duplicate burst IDs: {}
+2026-10-09 08:51:24,678 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 08:56:40,166 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:57:42,050 - ingestion.sentinel1 - INFO - Bursts fingerprint: 98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65
+2026-10-09 08:57:42,052 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 08:57:42,054 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 08:57:42,056 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 08:57:42,058 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 08:57:42,060 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 08:57:42,062 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 08:57:42,063 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 08:57:42,066 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 08:57:42,068 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 08:57:42,071 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 08:57:42,073 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 08:57:42,075 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 08:57:42,077 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 08:57:42,078 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 08:57:42,080 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 08:57:42,081 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 08:57:42,083 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 08:57:42,085 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 08:57:42,086 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 08:57:42,088 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 08:57:42,090 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 08:57:42,091 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 08:57:42,093 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 08:57:42,094 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 08:57:42,096 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 08:57:42,097 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 08:57:42,098 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 08:57:42,100 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 08:57:42,101 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 08:57:42,104 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 08:57:42,106 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 08:57:42,108 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 08:57:42,109 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 08:57:42,111 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 08:57:42,115 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 08:57:42,118 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 08:57:42,120 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 08:57:42,122 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 08:57:42,124 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 08:57:42,126 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 08:57:42,128 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 463 | Duplicates: 0
+2026-10-09 08:57:42,130 - ingestion.sentinel1 - INFO - No duplicate burst IDs found
+2026-10-09 08:57:42,131 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 08:58:33,753 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 08:59:39,306 - ingestion.sentinel1 - INFO - Bursts fingerprint: 98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65
+2026-10-09 08:59:39,308 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 08:59:39,310 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 08:59:39,312 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 08:59:39,315 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 08:59:39,316 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 08:59:39,319 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 08:59:39,321 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 08:59:39,323 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 08:59:39,325 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 08:59:39,328 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 08:59:39,330 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 08:59:39,332 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 08:59:39,334 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 08:59:39,335 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 08:59:39,337 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 08:59:39,339 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 08:59:39,341 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 08:59:39,344 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 08:59:39,346 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 08:59:39,347 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 08:59:39,349 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 08:59:39,353 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 08:59:39,357 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 08:59:39,361 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 08:59:39,363 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 08:59:39,365 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 08:59:39,371 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 08:59:39,379 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 08:59:39,382 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 08:59:39,398 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 08:59:39,403 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 08:59:39,431 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 08:59:39,433 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 08:59:39,439 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 08:59:39,442 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 08:59:39,443 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 08:59:39,452 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 08:59:39,459 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 08:59:39,462 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 08:59:39,464 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 08:59:39,466 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 463 | Duplicates: 0
+2026-10-09 08:59:39,467 - ingestion.sentinel1 - INFO - No duplicate burst IDs found
+2026-10-09 08:59:39,470 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 09:04:18,689 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 09:05:21,950 - ingestion.sentinel1 - INFO - New fingerprint: 98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65
+2026-10-09 09:05:21,953 - ingestion.sentinel1 - INFO - Fingerprint matches the original
+2026-10-09 09:05:21,954 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 09:05:21,956 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 09:05:21,958 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 09:05:21,961 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 09:05:21,963 - ingestion.sentinel1 - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 09:05:21,965 - ingestion.sentinel1 - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 09:05:21,968 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 09:05:21,970 - ingestion.sentinel1 - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 09:05:21,971 - ingestion.sentinel1 - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 09:05:21,973 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-04
+2026-10-09 09:05:21,976 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-16
+2026-10-09 09:05:21,977 - ingestion.sentinel1 - INFO - Acquisition date: 2025-01-28
+2026-10-09 09:05:21,979 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-09
+2026-10-09 09:05:21,981 - ingestion.sentinel1 - INFO - Acquisition date: 2025-02-21
+2026-10-09 09:05:21,984 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-05
+2026-10-09 09:05:21,986 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-17
+2026-10-09 09:05:21,987 - ingestion.sentinel1 - INFO - Acquisition date: 2025-03-29
+2026-10-09 09:05:21,988 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-10
+2026-10-09 09:05:21,993 - ingestion.sentinel1 - INFO - Acquisition date: 2025-04-22
+2026-10-09 09:05:21,995 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-04
+2026-10-09 09:05:21,997 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-16
+2026-10-09 09:05:21,998 - ingestion.sentinel1 - INFO - Acquisition date: 2025-05-28
+2026-10-09 09:05:22,001 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-09
+2026-10-09 09:05:22,003 - ingestion.sentinel1 - INFO - Acquisition date: 2025-06-21
+2026-10-09 09:05:22,006 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-03
+2026-10-09 09:05:22,008 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-15
+2026-10-09 09:05:22,009 - ingestion.sentinel1 - INFO - Acquisition date: 2025-07-27
+2026-10-09 09:05:22,011 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-08
+2026-10-09 09:05:22,012 - ingestion.sentinel1 - INFO - Acquisition date: 2025-08-20
+2026-10-09 09:05:22,016 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-01
+2026-10-09 09:05:22,017 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-13
+2026-10-09 09:05:22,018 - ingestion.sentinel1 - INFO - Acquisition date: 2025-09-25
+2026-10-09 09:05:22,021 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-07
+2026-10-09 09:05:22,024 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-19
+2026-10-09 09:05:22,027 - ingestion.sentinel1 - INFO - Acquisition date: 2025-10-31
+2026-10-09 09:05:22,028 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-12
+2026-10-09 09:05:22,030 - ingestion.sentinel1 - INFO - Acquisition date: 2025-11-24
+2026-10-09 09:05:22,032 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-06
+2026-10-09 09:05:22,033 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-18
+2026-10-09 09:05:22,034 - ingestion.sentinel1 - INFO - Acquisition date: 2025-12-30
+2026-10-09 09:05:22,036 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 463 | Duplicates: 0
+2026-10-09 09:05:22,038 - ingestion.sentinel1 - INFO - No duplicate burst IDs found
+2026-10-09 09:05:22,039 - app.application - INFO - Sentinel-1 burst search completed

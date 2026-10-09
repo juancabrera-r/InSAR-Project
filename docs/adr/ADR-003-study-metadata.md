@@ -24,3 +24,14 @@ Can we measure and characterize land subsidence in the Alto Guadalentín aquifer
 | Swaths | IW1, IW2, IW3 | TOPS sub-swaths |
 | Size | ~7.7 GB | Important engineering constraint |
 | Slice | 3/22 | Product is one slice of the datatake |
+
+Found 463 Sentinel-1 bursts                                                                                                                 
+INFO     Platforms: Counter({'A': 276, 'C': 187})
+INFO     Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+
+INFO     Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+INFO     Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+INFO     Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+INFO     Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+INFO     Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+INFO     Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19

@@ -12,8 +12,7 @@ class GeojsonManager:
 
         if data.get("type") != "Polygon":
             raise ValueError(
-                f"Invalid AOI GeoJSON: expected Polygon, "
-                f"found {data.get('type')!r}"
+                f"Invalid AOI GeoJSON: expected Polygon, found {data.get('type')!r}"
             )
 
         return data
@@ -26,10 +25,7 @@ class GeojsonManager:
             if ring[0] != ring[-1]:
                 raise ValueError("Polygon ring must be closed")
 
-            coordinates = ", ".join(
-                f"{lon} {lat}"
-                for lon, lat in ring
-            )
+            coordinates = ", ".join(f"{lon} {lat}" for lon, lat in ring)
 
             rings.append(f"({coordinates})")
 

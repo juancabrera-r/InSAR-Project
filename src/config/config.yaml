@@ -5,8 +5,21 @@ URL: "https://catalogue.dataspace.copernicus.eu/odata/v1/Bursts"
 
 # Date range for the acquisitions in UTC
 START_DATE: "2025-01-01 00:00:00"
-END_DATE: "2025-12-31 00:00:00"
+END_DATE: "2026-01-01 00:00:00"
 
-COPERNICUS_CATALOGUE: ""
+SAR_PARAMETERS:
+  PLATFORM: "A"
+  ORBIT_DIRECTION: "ASCENDING"
+  RELATIVE_ORBIT: 1
+  SWATH: "IW3"
+
+COPERNICUS_PRODUCT:
+  AREA: "geography"
+  PARENTPRODUCTTYPE: "IW_SLC__1S"
+  POLARIZATION: "VV"
 
 AOI_GEOJSON: "data/aoi/alto_guadalentin.geojson"
+
+
+# Fingerprint for the bursts
+BURSTS_FINGERPRINT: "98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65"
