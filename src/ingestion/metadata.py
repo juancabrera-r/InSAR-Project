@@ -1,8 +1,20 @@
 from collections import Counter
-from logging import Logger
 
 
-def metadata_summary(bursts: list, logger: Logger) -> None:
+def metadata_summary(
+    bursts: list,
+) -> dict[str, Counter]:
+    """
+    Catalogue exploration
+    Summarize metadata for a list of bursts.
+
+    Args:
+        bursts (list): List of burst dictionaries.
+        logger (Logger): Logger instance for logging.
+
+    Returns:
+        dict[str, Counter]: Dictionary containing platform and track counts.
+    """
 
     platform_counts = Counter(burst["PlatformSerialIdentifier"] for burst in bursts)
 
@@ -15,5 +27,7 @@ def metadata_summary(bursts: list, logger: Logger) -> None:
         for burst in bursts
     )
 
-    logger.info("Platforms: %s", platform_counts)
-    logger.info("Tracks: %s", track_counts)
+    return {
+        "platform_counts": platform_counts,
+        "track_counts": track_counts,
+    }

@@ -19,38 +19,6 @@ class ValidateSpatial:
         self.bursts_by_product = bursts_by_product
         self.aoi_wkt = aoi_wkt
 
-    def calculate_coverage_acquisition(
-        self,
-    ) -> dict[str, dict]:
-        """
-        Calculate coverage for each acquisition based on burst geometries and the AOI.
-
-        Returns:
-            dict: Dictionary mapping product IDs to coverage information, including acquisition footprint and whether it covers the AOI.
-        """
-        aoi_geometry = wkt.loads(self.aoi_wkt)
-
-        coverage_acquisition = {}
-
-        for product_id, product_bursts in self.bursts_by_product.items():
-            geometries = [shape(burst["GeoFootprint"]) for burst in product_bursts]
-
-            if not all(geometry.is_valid for geometry in geometries):
-                self.logger.warning(
-                    "Product %s contains invalid burst geometries",
-                    product_id,
-                )
-                continue
-
-            acquisition_footprint = unary_union(geometries)
-
-            coverage_acquisition[product_id] = {
-                "acquisition_footprint": acquisition_footprint,
-                "covers_aoi": acquisition_footprint.covers(aoi_geometry),
-            }
-
-        return coverage_acquisition
-
     def quantify_coverage(self) -> dict:
         """
         Calculate per-acquisition and common AOI coverage.
@@ -58,6 +26,8 @@ class ValidateSpatial:
         Returns:
             dict: Dictionary containing coverage information for each acquisition and the common coverage across all acquisitions.
         """
+
+        self._require_nonempty_bursts_by_product()
 
         # 1. Load and validate AOI
         aoi_geometry = wkt.loads(self.aoi_wkt)
@@ -147,72 +117,6 @@ class ValidateSpatial:
             "acquisitions": coverage_acquisition,
             "common_footprint": common_footprint,
             "common_coverage_percentage": common_coverage,
-        }
-
-    def inspect_burst_identity(self) -> dict:
-        """
-        Inspect the burst identity for each product.
-
-        Returns:
-            dict: Dictionary mapping product IDs to lists of burst identity information.
-        """
-        burst_identity_by_product = {}
-
-        self._require_nonempty_bursts_by_product()
-
-        for product_id, product_bursts in self.bursts_by_product.items():
-            burst_identity_by_product[product_id] = [
-                {
-                    "burst_id": burst["BurstId"],
-                    "absolute_burst_id": burst["AbsoluteBurstId"],
-                    "swath": burst["SwathIdentifier"],
-                }
-                for burst in product_bursts
-            ]
-
-        return burst_identity_by_product
-
-    def validate_burst_identity(self) -> dict:
-        """
-        Compare burst-number sets across parent SLC products.
-
-        Returns:
-            dict: Dictionary containing consistency information for each product and overall consistency.
-        """
-
-        self._require_nonempty_bursts_by_product()
-
-        reference_product_id = next(iter(self.bursts_by_product))
-
-        reference_bursts = self.bursts_by_product[reference_product_id]
-
-        reference_ids = {burst["BurstId"] for burst in reference_bursts}
-
-        results = {}
-
-        for product_id, product_bursts in self.bursts_by_product.items():
-            burst_ids = [burst["BurstId"] for burst in product_bursts]
-            current_ids = set(burst_ids)
-
-            missing = reference_ids - current_ids
-            unexpected = current_ids - reference_ids
-            duplicates = len(burst_ids) != len(current_ids)
-
-            results[product_id] = {
-                "burst_ids": sorted(current_ids),
-                "missing": sorted(missing),
-                "unexpected": sorted(unexpected),
-                "has_duplicates": duplicates,
-                "is_consistent": (not missing and not unexpected and not duplicates),
-            }
-
-        return {
-            "reference_product_id": reference_product_id,
-            "reference_burst_ids": sorted(reference_ids),
-            "products": results,
-            "all_consistent": all(
-                result["is_consistent"] for result in results.values()
-            ),
         }
 
     def _require_nonempty_bursts_by_product(self) -> None:

@@ -4,6 +4,7 @@ from pathlib import Path
 from ingestion.metadata import metadata_summary
 from ingestion.sentinel1 import Sentinel1Ingestion
 from utils.geojson_manage import GeojsonManager
+from utils.metadata_validation import MetadataValidator
 from utils.spatial_validation import ValidateSpatial
 
 
@@ -27,7 +28,8 @@ def sentinel1_app(
     logger.info("Found %d Sentinel-1 bursts", len(bursts))
     # logger.debug("Sentinel-1 burst: %s", bursts[0])
 
-    metadata_summary(bursts=bursts, logger=logger)
+    metadata = metadata_summary(bursts=bursts)
+    logger.info("Metadata summary: %s", metadata)
 
     products_by_group = sentinel1_ingestion.get_products_by_group(bursts)
     for group, products in sorted(products_by_group.items()):
@@ -51,7 +53,7 @@ def sentinel1_app(
 
     bursts_by_product = sentinel1_ingestion.get_bursts_by_product(bursts)
     for product_id, product_bursts in bursts_by_product.items():
-        logger.info(
+        logger.debug(
             "Product: %s | Burst count: %d",
             product_id,
             len(product_bursts),
@@ -78,7 +80,7 @@ def sentinel1_app(
     for product_id, acquisition_info in acquisitions.items():
         coverage_percentage = acquisition_info["coverage_percentage"]
 
-        logger.info(
+        logger.debug(
             "Product: %s | AOI coverage: %.2f%%",
             product_id,
             coverage_percentage,
@@ -90,16 +92,13 @@ def sentinel1_app(
         common_coverage_percentage,
     )
 
-    burst_identity_by_product = validate_spatial_instance.inspect_burst_identity()
+    validation_metadata = MetadataValidator(
+        bursts_by_product=bursts_by_product,
+        config=config,
+        logger=logger,
+    )
 
-    for product_id, burst_identities in burst_identity_by_product.items():
-        logger.info(
-            "Product: %s | Burst identities: %s",
-            product_id,
-            burst_identities,
-        )
-
-    identity_results = validate_spatial_instance.validate_burst_identity()
+    identity_results = validation_metadata.validate_burst_identity()
 
     logger.info(
         "Reference burst IDs: %s",
@@ -121,5 +120,15 @@ def sentinel1_app(
                 result["unexpected"],
                 result["has_duplicates"],
             )
+
+    metadata_mismatches = validation_metadata.validate_acquisition_metadata()
+
+    if metadata_mismatches:
+        for mismatch in metadata_mismatches:
+            logger.error("Acquisition metadata mismatch: %s", mismatch)
+
+        raise ValueError("Acquisition metadata validation failed")
+
+    logger.info("Acquisition metadata validation passed")
 
     logger.info("Sentinel-1 burst search completed")
