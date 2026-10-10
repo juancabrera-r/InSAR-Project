@@ -29,6 +29,7 @@ def base_config():
             "POLARIZATION": "VV",
         },
         "AOI_WKT": "some_wkt",
+        "BURSTS_FINGERPRINT": "some_fingerprint",
     }
 
 
@@ -49,6 +50,40 @@ def ingestion(base_config):
     )
 
 
+@pytest.fixture
+def sample_bursts_by_product():
+    return [
+        _make_burst(
+            date="2025-01-01",
+            platform="A",
+            orbit_direction="DESCENDING",
+            relative_orbit=1,
+            swath="IW3",
+            parent_product_id="P1",
+        ),
+        _make_burst(
+            date="2025-01-02",
+            parent_product_id="P2",
+        ),
+        _make_burst(
+            date="2025-01-03",
+            parent_product_id="P2",
+        ),
+        _make_burst(
+            date="2025-01-04",
+            parent_product_id="P3",
+        ),
+        _make_burst(
+            date="2025-01-05",
+            platform="B",
+            orbit_direction="DESCENDING",
+            relative_orbit=2,
+            swath="IW2",
+            parent_product_id="P4",
+        ),
+    ]
+
+
 # ------------------------------
 # Parametrize test
 # ------------------------------
@@ -63,6 +98,27 @@ def test_require_nonempty_bursts(caplog, ingestion, method_name):
 
     with pytest.raises(ValueError, match="No bursts provided"):
         method([])
+
+
+# ------------------------------
+# Auxiliary function for creating bursts
+# ------------------------------
+def _make_burst(
+    date: str,
+    platform: str = "A",
+    orbit_direction: str = "ASCENDING",
+    relative_orbit: int = 1,
+    swath: str = "IW3",
+    parent_product_id: str = "",
+) -> dict:
+    return {
+        "PlatformSerialIdentifier": platform,
+        "OrbitDirection": orbit_direction,
+        "RelativeOrbitNumber": relative_orbit,
+        "SwathIdentifier": swath,
+        "ContentDate": {"Start": date},
+        "ParentProductId": parent_product_id,
+    }
 
 
 # ------------------------------
@@ -222,30 +278,35 @@ def test_search_bursts_success(ingestion):
 
 
 # ------------------------------
+# Test for get products by group
+# ------------------------------
+def test_get_products_by_group_groups_and_deduplicates_products(
+    ingestion,
+    sample_bursts_by_product,
+):
+
+    expected = {
+        ("A", "DESCENDING", 1, "IW3"): {"P1"},
+        ("A", "ASCENDING", 1, "IW3"): {"P2", "P3"},
+        ("B", "DESCENDING", 2, "IW2"): {"P4"},
+    }
+
+    result = ingestion.get_products_by_group(sample_bursts_by_product)
+
+    assert result == expected
+
+
+# ------------------------------
 # Test for get bursts dates
 # ------------------------------
-def make_burst(
-    date: str,
-    platform: str = "A",
-    orbit_direction: str = "ASCENDING",
-    relative_orbit: int = 1,
-    swath: str = "IW3",
-) -> dict:
-    return {
-        "PlatformSerialIdentifier": platform,
-        "OrbitDirection": orbit_direction,
-        "RelativeOrbitNumber": relative_orbit,
-        "SwathIdentifier": swath,
-        "ContentDate": {"Start": date},
-    }
 
 
 def test_get_bursts_dates_returns_sorted_dates(ingestion):
 
     bursts = [
-        make_burst("2025-03-01"),
-        make_burst("2025-01-01"),
-        make_burst("2025-02-01"),
+        _make_burst("2025-03-01"),
+        _make_burst("2025-01-01"),
+        _make_burst("2025-02-01"),
     ]
 
     dates_result = ingestion.get_bursts_dates(bursts)
@@ -258,11 +319,11 @@ def test_get_bursts_dates_returns_sorted_dates(ingestion):
 def test_get_bursts_dates_filters_metadata(ingestion):
 
     bursts = [
-        make_burst("2025-01-01"),
-        make_burst("2025-01-02", platform="B"),
-        make_burst("2025-01-03", orbit_direction="DESCENDING"),
-        make_burst("2025-01-04", relative_orbit=2),
-        make_burst("2025-01-05", swath="IW2"),
+        _make_burst("2025-01-01"),
+        _make_burst("2025-01-02", platform="B"),
+        _make_burst("2025-01-03", orbit_direction="DESCENDING"),
+        _make_burst("2025-01-04", relative_orbit=2),
+        _make_burst("2025-01-05", swath="IW2"),
     ]
     dates_result = ingestion.get_bursts_dates(bursts)
 
@@ -274,9 +335,9 @@ def test_get_bursts_dates_filters_metadata(ingestion):
 def test_get_bursts_dates_deduplication_dates(ingestion):
 
     bursts = [
-        make_burst("2025-01-01T06:00:00Z"),
-        make_burst("2025-01-01T18:00:00Z"),
-        make_burst("2025-01-13T06:00:00Z"),
+        _make_burst("2025-01-01T06:00:00Z"),
+        _make_burst("2025-01-01T18:00:00Z"),
+        _make_burst("2025-01-13T06:00:00Z"),
     ]
 
     dates_result = ingestion.get_bursts_dates(bursts)
@@ -289,7 +350,7 @@ def test_get_bursts_dates_deduplication_dates(ingestion):
 def test_get_bursts_dates_no_matching(ingestion):
 
     bursts = [
-        make_burst("2025-01-01", platform="B"),
+        _make_burst("2025-01-01", platform="B"),
     ]
 
     dates_result = ingestion.get_bursts_dates(bursts)
@@ -330,31 +391,42 @@ def test_get_id_duplicates(ingestion, sample_bursts):
 
 
 # ------------------------------
+# Test for get bursts by product
+# ------------------------------
+def test_get_bursts_by_product(ingestion, sample_bursts_by_product):
+    result = ingestion.get_bursts_by_product(sample_bursts_by_product)
+    assert result is not None
+
+
+# ------------------------------
 # Test for bursts fingerprint
 # ------------------------------
 def test_bursts_fingerprint_matches(
     caplog,
-    base_config,
     sample_bursts,
     ingestion,
 ):
-
     burst_ids = sorted(burst["Id"] for burst in sample_bursts)
 
     expected_fingerprint = hashlib.sha256(
         "\n".join(burst_ids).encode("utf-8")
     ).hexdigest()
 
-    base_config["BURSTS_FINGERPRINT"] = expected_fingerprint
+    ingestion.original_fingerprint = expected_fingerprint
 
-    caplog.set_level(logging.INFO)
+    caplog.set_level(logging.DEBUG)
 
     ingestion._bursts_fingerprint(sample_bursts)
 
     assert "Fingerprint matches the original" in caplog.text
 
 
-def test_bursts_fingerprint_mismatch(caplog, base_config, sample_bursts, ingestion):
+def test_bursts_fingerprint_mismatch(
+    caplog,
+    base_config,
+    sample_bursts,
+    ingestion,
+):
     bursts_mismatch = [
         {"Id": "burst1"},
         {"Id": "burst2"},

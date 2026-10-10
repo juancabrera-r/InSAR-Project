@@ -9,13 +9,23 @@ from utils.date_time_format import to_iso_utc
 
 class Sentinel1Ingestion:
     def __init__(self, config: dict, aoi_wkt: str):
-        self.config = config
 
-        self.start_date = config["START_DATE"]
-        self.end_date = config["END_DATE"]
         self.initial_url = config["URL"]
 
+        self.start_date_iso = to_iso_utc(config["START_DATE"])
+        self.end_date_iso = to_iso_utc(config["END_DATE"])
+        self.area = config["COPERNICUS_PRODUCT"]["AREA"]
+        self.parent_product_type = config["COPERNICUS_PRODUCT"]["PARENTPRODUCTTYPE"]
+        self.polarization = config["COPERNICUS_PRODUCT"]["POLARIZATION"]
+
+        self.platform = config["SAR_PARAMETERS"]["PLATFORM"]
+        self.orbit_direction = config["SAR_PARAMETERS"]["ORBIT_DIRECTION"]
+        self.relative_orbit = config["SAR_PARAMETERS"]["RELATIVE_ORBIT"]
+        self.swath = config["SAR_PARAMETERS"]["SWATH"]
+
         self.aoi_wkt = aoi_wkt
+
+        self.original_fingerprint = config["BURSTS_FINGERPRINT"]
 
         self.logger = logging.getLogger(__name__)
 
@@ -47,27 +57,21 @@ class Sentinel1Ingestion:
 
     def search_bursts(self) -> list[dict]:
 
-        start_date_iso = to_iso_utc(self.start_date)
-        end_date_iso = to_iso_utc(self.end_date)
-        area = self.config["COPERNICUS_PRODUCT"]["AREA"]
-        parent_product_type = self.config["COPERNICUS_PRODUCT"]["PARENTPRODUCTTYPE"]
-        polarization = self.config["COPERNICUS_PRODUCT"]["POLARIZATION"]
-
         self.logger.debug(
-            f"Searching acquisitions from {start_date_iso} to {end_date_iso} \n"
+            f"Searching acquisitions from {self.start_date_iso} to {self.end_date_iso} \n"
             f"for polygons: {self.aoi_wkt} \n"
-            f"area: {area} \n"
-            f"parent product type: {parent_product_type} \n"
-            f"polarization: {polarization}"
+            f"area: {self.area} \n"
+            f"parent product type: {self.parent_product_type} \n"
+            f"polarization: {self.polarization}"
         )
 
         filter_expression = (
-            f"ContentDate/Start ge {start_date_iso} "
-            f"and ContentDate/Start lt {end_date_iso} "
+            f"ContentDate/Start ge {self.start_date_iso} "
+            f"and ContentDate/Start lt {self.end_date_iso} "
             f"and OData.CSC.Intersects("
-            f"area={area}'SRID=4326;{self.aoi_wkt}') "
-            f"and ParentProductType eq '{parent_product_type}' "
-            f"and PolarisationChannels eq '{polarization}'"
+            f"area={self.area}'SRID=4326;{self.aoi_wkt}') "
+            f"and ParentProductType eq '{self.parent_product_type}' "
+            f"and PolarisationChannels eq '{self.polarization}'"
         )
 
         all_bursts = []
@@ -116,7 +120,7 @@ class Sentinel1Ingestion:
         if not bursts:
             raise ValueError("No bursts provided")
 
-    def get_products_by_group(self, bursts: list) -> None:
+    def get_products_by_group(self, bursts: list) -> dict[tuple, set]:
 
         self._require_nonempty_bursts(bursts)
 
@@ -131,25 +135,19 @@ class Sentinel1Ingestion:
             )
             products_by_group[key].add(burst["ParentProductId"])
 
-        for group, products in sorted(products_by_group.items()):
-            self.logger.info("Group: %s, Unique SLC products: %d", group, len(products))
+        return products_by_group
 
     def get_bursts_dates(self, bursts: list) -> list[str]:
 
         self._require_nonempty_bursts(bursts)
 
-        platform = self.config["SAR_PARAMETERS"]["PLATFORM"]
-        orbit_direction = self.config["SAR_PARAMETERS"]["ORBIT_DIRECTION"]
-        relative_orbit = self.config["SAR_PARAMETERS"]["RELATIVE_ORBIT"]
-        swath = self.config["SAR_PARAMETERS"]["SWATH"]
-
         selected_bursts = [
             burst
             for burst in bursts
-            if burst["PlatformSerialIdentifier"] == platform
-            and burst["OrbitDirection"] == orbit_direction
-            and burst["RelativeOrbitNumber"] == relative_orbit
-            and burst["SwathIdentifier"] == swath
+            if burst["PlatformSerialIdentifier"] == self.platform
+            and burst["OrbitDirection"] == self.orbit_direction
+            and burst["RelativeOrbitNumber"] == self.relative_orbit
+            and burst["SwathIdentifier"] == self.swath
         ]
 
         dates = sorted(
@@ -171,7 +169,7 @@ class Sentinel1Ingestion:
             "duplicates": len(ids) - unique_count,
         }
 
-    def get_deduplicated_id(self, bursts: list) -> None:
+    def get_deduplicated_id(self, bursts: list) -> dict[str, int]:
 
         self._require_nonempty_bursts(bursts)
 
@@ -182,26 +180,37 @@ class Sentinel1Ingestion:
         }
 
         if not duplicate_ids:
-            self.logger.info("No duplicate burst IDs found")
-            return
+            self.logger.debug("No duplicate burst IDs found")
+            return {}
 
-        self.logger.info(
-            "Duplicate burst IDs: %s",
-            duplicate_ids,
-        )
+        return duplicate_ids
+
+    def get_bursts_by_product(self, bursts: list) -> dict:
+
+        bursts_by_product = defaultdict(list)
+
+        for burst in bursts:
+            if (
+                burst["PlatformSerialIdentifier"] == self.platform
+                and burst["OrbitDirection"] == self.orbit_direction
+                and burst["RelativeOrbitNumber"] == self.relative_orbit
+                and burst["SwathIdentifier"] == self.swath
+            ):
+                bursts_by_product[burst["ParentProductId"]].append(burst)
+
+        return dict(bursts_by_product)
 
     def _bursts_fingerprint(self, bursts: list) -> None:
 
         self._require_nonempty_bursts(bursts)
 
-        original_fingerprint = self.config["BURSTS_FINGERPRINT"]
         burst_ids = sorted(burst["Id"] for burst in bursts)
 
         fingerprint = hashlib.sha256("\n".join(burst_ids).encode("utf-8")).hexdigest()
 
-        self.logger.info("New fingerprint: %s", fingerprint)
+        self.logger.debug("New fingerprint: %s", fingerprint)
 
-        if fingerprint == original_fingerprint:
-            self.logger.info("Fingerprint matches the original")
+        if fingerprint == self.original_fingerprint:
+            self.logger.debug("Fingerprint matches the original")
         else:
             self.logger.warning("Fingerprint does not match the original")

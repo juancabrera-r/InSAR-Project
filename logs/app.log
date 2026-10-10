@@ -369,3 +369,1404 @@
 2026-10-09 09:05:22,036 - ingestion.sentinel1 - INFO - Total: 463 | Unique IDs: 463 | Duplicates: 0
 2026-10-09 09:05:22,038 - ingestion.sentinel1 - INFO - No duplicate burst IDs found
 2026-10-09 09:05:22,039 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 13:48:18,895 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 13:49:27,984 - ingestion.sentinel1 - INFO - New fingerprint: 98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65
+2026-10-09 13:49:27,986 - ingestion.sentinel1 - INFO - Fingerprint matches the original
+2026-10-09 13:49:27,987 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 13:49:27,989 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 13:49:27,991 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 13:49:27,994 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 13:49:27,995 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 13:49:27,997 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 13:49:27,998 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 13:49:28,000 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 13:49:28,001 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 13:49:28,053 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 13:49:28,097 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 13:49:28,112 - ingestion.sentinel1 - INFO - No duplicate burst IDs found
+2026-10-09 13:49:28,119 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 13:51:24,549 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 13:52:35,742 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 13:52:35,745 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 13:52:35,746 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 13:52:35,749 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 13:52:35,751 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 13:52:35,753 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 13:52:35,756 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 13:52:35,758 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 13:52:35,760 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 13:52:35,762 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 13:52:35,765 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 13:52:35,769 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 13:52:35,772 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 14:00:50,386 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 14:02:13,367 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 14:02:13,370 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 14:02:13,372 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 14:02:13,375 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 14:02:13,378 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 14:02:13,379 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 14:02:13,382 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 14:02:13,384 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 14:02:13,387 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 14:02:13,391 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 14:02:13,396 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 14:02:13,401 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 14:02:13,412 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 14:49:37,899 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 14:50:10,705 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 14:51:20,879 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 14:51:34,292 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-09 14:51:34,293 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-09 14:51:34,295 - app.application - INFO - Platforms: Counter({'A': 45})
+2026-10-09 14:51:34,297 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})
+2026-10-09 14:51:34,299 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-09 14:51:34,300 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-09 14:51:34,302 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-09 14:51:34,304 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-09 14:51:34,306 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-09 14:51:34,310 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-09 14:51:34,314 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 14:51:34,317 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 14:51:34,320 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 14:51:34,322 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 14:51:34,325 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 14:51:34,327 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 14:51:34,329 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 14:51:34,331 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 14:51:34,334 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 14:51:34,336 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 14:51:34,340 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 14:51:34,343 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 14:51:34,346 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 14:51:34,349 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 14:51:34,351 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 14:51:34,354 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 14:51:34,357 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 14:51:34,360 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 14:51:34,362 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 14:51:34,364 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 14:51:34,366 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 14:51:34,371 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 14:51:34,374 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 14:51:34,376 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 14:51:34,380 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 14:51:34,381 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 14:51:34,384 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 14:51:34,387 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 14:51:34,391 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 14:51:34,393 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 14:51:34,395 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 14:51:34,398 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 14:51:34,400 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 14:51:34,403 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 14:51:34,405 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 14:51:34,408 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 14:51:34,410 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 14:51:34,412 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 14:51:34,414 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 14:51:34,416 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 14:51:34,421 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 14:51:34,424 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 14:51:34,426 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 14:51:34,429 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 14:51:34,432 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 14:51:34,435 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 14:59:59,956 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:00:12,485 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-09 15:00:12,487 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-09 15:00:12,488 - app.application - INFO - Platforms: Counter({'A': 45})
+2026-10-09 15:00:12,490 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})
+2026-10-09 15:00:12,492 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-09 15:00:12,494 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-09 15:00:12,496 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-09 15:00:12,497 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-09 15:00:12,499 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-09 15:00:12,505 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-09 15:00:12,508 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:00:12,509 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:00:12,511 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:00:12,514 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:00:12,515 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:00:12,520 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 15:00:12,523 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 15:00:12,526 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 15:00:12,528 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 15:00:12,531 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 15:00:12,535 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 15:00:12,537 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 15:00:12,541 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 15:00:12,543 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 15:00:12,548 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 15:00:12,550 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 15:00:12,554 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 15:00:12,556 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 15:00:12,559 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 15:00:12,564 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 15:00:12,567 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 15:00:12,571 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 15:00:12,573 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 15:00:12,576 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 15:00:12,654 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 15:00:12,657 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 15:00:12,660 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 15:00:12,692 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 15:00:12,696 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 15:00:12,703 - app.application - INFO - Burst geometry: POLYGON ((-2.416168 37.461, -1.915943 37.533931, -1.451376 37.599477, -1.498376 37.803146, -1.963204 37.733096, -2.463737 37.655649, -2.416168 37.461))
+2026-10-09 15:00:12,706 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 15:00:12,712 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 15:00:12,716 - app.application - INFO - Burst geometry: POLYGON ((-1.280923 37.651325, -1.801921 37.727386, -2.294356 37.797148, -2.336068 37.604716, -1.844013 37.539117, -1.323416 37.467227, -1.280923 37.651325))
+2026-10-09 15:00:12,722 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 15:00:12,724 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 15:00:12,726 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 15:00:12,728 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 15:00:12,731 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 15:00:12,735 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 15:00:12,738 - app.application - INFO - Burst geometry: POLYGON ((-1.315912 37.484972, -1.835906 37.561097, -2.327357 37.630927, -2.369003 37.438515, -1.877924 37.372849, -1.358322 37.300894, -1.315912 37.484972))
+2026-10-09 15:00:12,740 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 15:00:12,742 - app.application - INFO - Burst geometry: POLYGON ((-2.533361 37.627963, -2.076063 37.686712, -1.635576 37.741452, -1.677532 37.94628, -2.118299 37.886962, -2.575868 37.823631, -2.533361 37.627963))
+2026-10-09 15:00:12,744 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 15:00:12,746 - app.application - INFO - Burst geometry: POLYGON ((-2.37574 37.295138, -1.876679 37.36806, -1.413187 37.433612, -1.460092 37.637287, -1.923836 37.567232, -2.423196 37.489795, -2.37574 37.295138))
+2026-10-09 15:00:12,748 - app.application - INFO - Burst geometry: POLYGON ((-1.242558 37.817178, -1.76477 37.89322, -2.258352 37.96295, -2.300133 37.770522, -1.80694 37.704956, -1.285137 37.633086, -1.242558 37.817178))
+2026-10-09 15:00:12,750 - app.application - INFO - Burst geometry: POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))
+2026-10-09 15:00:12,753 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 15:00:12,756 - app.application - INFO - Burst geometry: POLYGON ((-2.461503 37.296316, -2.006295 37.355149, -1.56782 37.409991, -1.609671 37.614824, -2.048409 37.555405, -2.503871 37.491991, -2.461503 37.296316))
+2026-10-09 15:00:12,758 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 15:00:12,760 - app.application - INFO - Burst geometry: POLYGON ((-2.456691 37.626853, -1.955292 37.699792, -1.489641 37.765333, -1.536738 37.968996, -2.002658 37.89895, -2.504374 37.821494, -2.456691 37.626853))
+2026-10-09 15:00:12,762 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:13:11,296 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:13:27,022 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-09 15:13:27,024 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-09 15:13:27,026 - app.application - INFO - Platforms: Counter({'A': 45})
+2026-10-09 15:13:27,027 - app.application - INFO - Tracks: Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})
+2026-10-09 15:13:27,030 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-09 15:13:27,032 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-09 15:13:27,033 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-09 15:13:27,035 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-09 15:13:27,038 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-09 15:13:27,041 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-09 15:13:27,044 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:13:27,046 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:13:27,048 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:13:27,049 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:13:27,051 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:13:27,055 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Bursts: 3 | Covers AOI: False
+2026-10-09 15:13:27,057 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:13:27,059 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:13:27,061 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:13:27,063 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Bursts: 3 | Covers AOI: False
+2026-10-09 15:13:27,065 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:15:06,072 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:16:27,770 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 15:16:27,773 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 15:16:27,775 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 15:16:27,777 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 15:16:27,780 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 15:16:27,781 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 15:16:27,783 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 15:16:27,785 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 15:16:27,787 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 15:16:27,789 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 15:16:27,792 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 15:16:27,796 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 15:16:27,799 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 15:16:27,802 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 15:16:27,804 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:16:27,806 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 15:16:27,807 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 15:16:27,809 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:16:27,811 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 15:16:27,813 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 15:16:27,815 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 15:16:27,817 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 15:16:27,819 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 15:16:27,821 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 15:16:27,824 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:16:27,826 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 15:16:27,828 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 15:16:27,829 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 15:16:27,830 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 15:16:27,832 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 15:16:27,835 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 15:16:27,840 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 15:16:27,841 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 15:16:27,845 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 15:16:27,847 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 15:16:27,848 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 15:16:27,850 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:16:27,852 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 15:16:27,853 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 15:16:27,854 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:16:27,855 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 15:16:27,857 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 15:16:27,858 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 15:16:27,869 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,872 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,874 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,876 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,878 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,880 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,882 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,883 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,885 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,888 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,890 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,892 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,894 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,895 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,897 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,899 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,902 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,904 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,906 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,907 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,910 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,912 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,914 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,916 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,917 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,919 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,920 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,922 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,924 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,925 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,926 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:16:27,928 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:29:51,966 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:30:58,715 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 15:30:58,717 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 15:30:58,719 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 15:30:58,723 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 15:30:58,725 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 15:30:58,726 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 15:30:58,728 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 15:30:58,732 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 15:30:58,734 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 15:30:58,736 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 15:30:58,739 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 15:30:58,746 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 15:30:58,750 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 15:30:58,751 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 15:30:58,754 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:30:58,756 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 15:30:58,758 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 15:30:58,759 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:30:58,762 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 15:30:58,764 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 15:30:58,767 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 15:30:58,769 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 15:30:58,771 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 15:30:58,773 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 15:30:58,774 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:30:58,777 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 15:30:58,778 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 15:30:58,781 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 15:30:58,784 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 15:30:58,786 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 15:30:58,787 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 15:30:58,789 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 15:30:58,791 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 15:30:58,793 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 15:30:58,795 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 15:30:58,797 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 15:30:58,799 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:30:58,801 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 15:30:58,802 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 15:30:58,803 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:30:58,804 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 15:30:58,806 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 15:30:58,809 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 15:30:58,819 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,821 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,823 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,827 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,829 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,831 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,833 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,834 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,835 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,837 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,839 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,841 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,843 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,846 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,848 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,850 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,851 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,854 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,856 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,859 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,860 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,862 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,864 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,866 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,868 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,871 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,872 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,875 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,879 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,881 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,883 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Bursts: 3 | Covers AOI: False
+2026-10-09 15:30:58,885 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:37:26,855 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:38:41,217 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 15:38:41,220 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 15:38:41,221 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 15:38:41,224 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 15:38:41,226 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 15:38:41,227 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 15:38:41,229 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 15:38:41,230 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 15:38:41,233 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 15:38:41,235 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 15:38:41,238 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 15:38:41,242 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 15:38:41,245 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 15:38:41,246 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 15:38:41,248 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:38:41,250 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 15:38:41,251 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 15:38:41,253 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:38:41,255 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 15:38:41,257 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 15:38:41,258 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 15:38:41,259 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 15:38:41,261 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 15:38:41,263 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 15:38:41,265 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:38:41,266 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 15:38:41,268 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 15:38:41,269 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 15:38:41,271 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 15:38:41,273 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 15:38:41,275 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 15:38:41,277 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 15:38:41,279 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 15:38:41,335 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 15:38:41,365 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 15:38:41,367 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 15:38:41,369 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:38:41,373 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 15:38:41,375 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 15:38:41,412 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:38:41,414 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 15:38:41,417 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 15:38:41,420 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 15:38:41,487 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 73.26%
+2026-10-09 15:38:41,488 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 73.26%
+2026-10-09 15:38:41,490 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 73.26%
+2026-10-09 15:38:41,492 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 73.26%
+2026-10-09 15:38:41,494 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 73.26%
+2026-10-09 15:38:41,496 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 73.26%
+2026-10-09 15:38:41,498 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 73.26%
+2026-10-09 15:38:41,504 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 73.26%
+2026-10-09 15:38:41,506 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 73.26%
+2026-10-09 15:38:41,508 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 73.26%
+2026-10-09 15:38:41,511 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 73.26%
+2026-10-09 15:38:41,512 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 73.26%
+2026-10-09 15:38:41,513 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 73.26%
+2026-10-09 15:38:41,515 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 73.26%
+2026-10-09 15:38:41,517 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 73.26%
+2026-10-09 15:38:41,520 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 73.26%
+2026-10-09 15:38:41,521 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 73.26%
+2026-10-09 15:38:41,523 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 73.26%
+2026-10-09 15:38:41,524 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 73.26%
+2026-10-09 15:38:41,527 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 73.26%
+2026-10-09 15:38:41,529 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 73.26%
+2026-10-09 15:38:41,530 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 73.26%
+2026-10-09 15:38:41,532 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 73.26%
+2026-10-09 15:38:41,537 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 73.26%
+2026-10-09 15:38:41,540 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 73.26%
+2026-10-09 15:38:41,541 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 73.26%
+2026-10-09 15:38:41,545 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 73.26%
+2026-10-09 15:38:41,546 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 73.26%
+2026-10-09 15:38:41,548 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 73.26%
+2026-10-09 15:38:41,549 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 73.26%
+2026-10-09 15:38:41,551 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 73.26%
+2026-10-09 15:38:41,552 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:45:05,659 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:46:29,101 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 15:46:29,107 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 15:46:29,109 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 15:46:29,112 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 15:46:29,114 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 15:46:29,116 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 15:46:29,118 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 15:46:29,120 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 15:46:29,122 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 15:46:29,124 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 15:46:29,127 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 15:46:29,131 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 15:46:29,134 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 15:46:29,135 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 15:46:29,137 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:46:29,139 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 15:46:29,140 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 15:46:29,141 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:46:29,143 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 15:46:29,150 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 15:46:29,155 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 15:46:29,158 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 15:46:29,162 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 15:46:29,165 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 15:46:29,167 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:46:29,172 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 15:46:29,174 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 15:46:29,176 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 15:46:29,178 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 15:46:29,217 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 15:46:29,274 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 15:46:29,278 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 15:46:29,280 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 15:46:29,282 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 15:46:29,302 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 15:46:29,304 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 15:46:29,305 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:46:29,308 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 15:46:29,400 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 15:46:29,404 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:46:29,406 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 15:46:29,439 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 15:46:29,443 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 15:53:42,589 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 15:54:50,614 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 15:54:50,616 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 15:54:50,617 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 15:54:50,620 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 15:54:50,622 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 15:54:50,624 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 15:54:50,625 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 15:54:50,627 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 15:54:50,630 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 15:54:50,656 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 15:54:50,676 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 15:54:50,717 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 15:54:50,748 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 15:54:50,757 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 15:54:50,761 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 15:54:50,763 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 15:54:50,765 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 15:54:50,766 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 15:54:50,768 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 15:54:50,770 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 15:54:50,772 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 15:54:50,791 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 15:54:50,796 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 15:54:50,800 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 15:54:50,802 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 15:54:50,803 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 15:54:50,805 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 15:54:50,807 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 15:54:50,809 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 15:54:50,810 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 15:54:50,813 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 15:54:50,815 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 15:54:50,816 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 15:54:50,817 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 15:54:50,818 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 15:54:50,820 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 15:54:50,822 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 15:54:50,824 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 15:54:50,825 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 15:54:50,828 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 15:54:50,832 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 15:54:50,835 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 15:54:50,836 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 15:54:50,871 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 73.25%
+2026-10-09 15:54:50,873 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 73.25%
+2026-10-09 15:54:50,876 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 73.25%
+2026-10-09 15:54:50,878 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 73.25%
+2026-10-09 15:54:50,881 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 73.25%
+2026-10-09 15:54:50,883 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 73.25%
+2026-10-09 15:54:50,885 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 73.25%
+2026-10-09 15:54:50,888 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 73.25%
+2026-10-09 15:54:50,891 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 73.25%
+2026-10-09 15:54:50,894 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 73.25%
+2026-10-09 15:54:50,897 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 73.25%
+2026-10-09 15:54:50,900 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 73.25%
+2026-10-09 15:54:50,902 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 73.25%
+2026-10-09 15:54:50,904 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 73.25%
+2026-10-09 15:54:50,907 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 73.25%
+2026-10-09 15:54:50,909 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 73.25%
+2026-10-09 15:54:50,911 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 73.25%
+2026-10-09 15:54:50,913 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 73.25%
+2026-10-09 15:54:50,917 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 73.25%
+2026-10-09 15:54:50,920 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 73.25%
+2026-10-09 15:54:50,922 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 73.25%
+2026-10-09 15:54:50,926 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 73.25%
+2026-10-09 15:54:50,928 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 73.25%
+2026-10-09 15:54:50,930 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 73.25%
+2026-10-09 15:54:50,932 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 73.25%
+2026-10-09 15:54:50,934 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 73.25%
+2026-10-09 15:54:50,937 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 73.25%
+2026-10-09 15:54:50,939 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 73.25%
+2026-10-09 15:54:50,942 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 73.25%
+2026-10-09 15:54:50,944 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 73.25%
+2026-10-09 15:54:50,946 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 73.25%
+2026-10-09 15:54:50,949 - app.application - INFO - Common AOI coverage across 31 acquisitions: 73.25%
+2026-10-09 15:54:50,951 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 73.25%
+2026-10-09 15:54:50,954 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 73.25%
+2026-10-09 15:54:50,956 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 73.25%
+2026-10-09 15:54:50,958 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 73.25%
+2026-10-09 15:54:50,959 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 73.25%
+2026-10-09 15:54:50,961 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 73.25%
+2026-10-09 15:54:50,962 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 73.25%
+2026-10-09 15:54:50,964 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 73.25%
+2026-10-09 15:54:50,965 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 73.25%
+2026-10-09 15:54:50,966 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 73.25%
+2026-10-09 15:54:50,969 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 73.25%
+2026-10-09 15:54:50,969 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 73.25%
+2026-10-09 15:54:50,972 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 73.25%
+2026-10-09 15:54:50,972 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 73.25%
+2026-10-09 15:54:50,973 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 73.25%
+2026-10-09 15:54:50,976 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 73.25%
+2026-10-09 15:54:50,977 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 73.25%
+2026-10-09 15:54:50,980 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 73.25%
+2026-10-09 15:54:50,981 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 73.25%
+2026-10-09 15:54:50,985 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 73.25%
+2026-10-09 15:54:50,987 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 73.25%
+2026-10-09 15:54:50,989 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 73.25%
+2026-10-09 15:54:50,991 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 73.25%
+2026-10-09 15:54:50,993 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 73.25%
+2026-10-09 15:54:50,994 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 73.25%
+2026-10-09 15:54:50,996 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 73.25%
+2026-10-09 15:54:50,997 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 73.25%
+2026-10-09 15:54:50,999 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 73.25%
+2026-10-09 15:54:51,001 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 73.25%
+2026-10-09 15:54:51,002 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 73.25%
+2026-10-09 15:54:51,004 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 73.25%
+2026-10-09 15:54:51,005 - app.application - INFO - Common AOI coverage across 31 acquisitions: 73.25%
+2026-10-09 15:54:51,008 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 15:58:02,868 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 16:00:03,428 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-09 16:00:03,429 - app.application - INFO - Found 823 Sentinel-1 bursts
+2026-10-09 16:00:03,432 - app.application - INFO - Platforms: Counter({'A': 490, 'C': 333})
+2026-10-09 16:00:03,434 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW2'): 160, ('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150, ('DESCENDING', 8, 'IW3'): 100, ('DESCENDING', 8, 'IW1'): 100})
+2026-10-09 16:00:03,437 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 16:00:03,439 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 16:00:03,441 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW2'), Unique SLC products: 30
+2026-10-09 16:00:03,442 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW1'), Unique SLC products: 31
+2026-10-09 16:00:03,444 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 16:00:03,447 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW3'), Unique SLC products: 31
+2026-10-09 16:00:03,448 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 16:00:03,451 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 16:00:03,453 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW2'), Unique SLC products: 47
+2026-10-09 16:00:03,455 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW1'), Unique SLC products: 19
+2026-10-09 16:00:03,457 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 16:00:03,459 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW3'), Unique SLC products: 19
+2026-10-09 16:00:03,461 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 16:00:03,465 - app.application - INFO - Sentinel-1 product ID info: {'total': 823, 'unique': 823, 'duplicates': 0}
+2026-10-09 16:00:03,469 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.458541, 37.496528], [-0.937668, 37.568413], [-0.445357, 37.634003], [-0.487073, 37.826424], [-0.979767, 37.75667], [-1.501042, 37.680613], [-1.458541, 37.496528]]]}
+2026-10-09 16:00:03,471 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 16:00:03,473 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 16:00:03,475 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 16:00:03,476 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 16:00:03,478 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 16:00:03,479 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 16:00:03,481 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 16:00:03,483 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 16:00:03,485 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 16:00:03,486 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 16:00:03,488 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 16:00:03,491 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 16:00:03,492 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 16:00:03,495 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 16:00:03,496 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 16:00:03,498 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 16:00:03,499 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 16:00:03,501 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 16:00:03,502 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 16:00:03,505 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 16:00:03,508 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 16:00:03,510 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 16:00:03,512 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 16:00:03,513 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 16:00:03,516 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 16:00:03,518 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 16:00:03,519 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 16:00:03,523 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 16:00:03,525 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 16:00:03,529 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 16:00:03,531 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 16:00:03,565 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 70.28%
+2026-10-09 16:00:03,568 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 70.28%
+2026-10-09 16:00:03,570 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 70.28%
+2026-10-09 16:00:03,572 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 70.28%
+2026-10-09 16:00:03,575 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 70.28%
+2026-10-09 16:00:03,578 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 70.28%
+2026-10-09 16:00:03,580 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 70.28%
+2026-10-09 16:00:03,583 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 70.28%
+2026-10-09 16:00:03,585 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 70.28%
+2026-10-09 16:00:03,587 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 70.28%
+2026-10-09 16:00:03,589 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 70.28%
+2026-10-09 16:00:03,591 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 70.28%
+2026-10-09 16:00:03,594 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 70.28%
+2026-10-09 16:00:03,596 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 70.28%
+2026-10-09 16:00:03,599 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 70.28%
+2026-10-09 16:00:03,601 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 70.28%
+2026-10-09 16:00:03,603 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 70.28%
+2026-10-09 16:00:03,605 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 70.28%
+2026-10-09 16:00:03,608 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 70.28%
+2026-10-09 16:00:03,610 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 70.28%
+2026-10-09 16:00:03,613 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 70.28%
+2026-10-09 16:00:03,616 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 70.28%
+2026-10-09 16:00:03,619 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,621 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 70.28%
+2026-10-09 16:00:03,623 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,625 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 70.28%
+2026-10-09 16:00:03,627 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 70.28%
+2026-10-09 16:00:03,629 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 70.28%
+2026-10-09 16:00:03,631 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,633 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 70.28%
+2026-10-09 16:00:03,636 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 70.28%
+2026-10-09 16:00:03,640 - app.application - INFO - Common AOI coverage across 31 acquisitions: 70.28%
+2026-10-09 16:00:03,642 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 70.28%
+2026-10-09 16:00:03,645 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 70.28%
+2026-10-09 16:00:03,647 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 70.28%
+2026-10-09 16:00:03,649 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 70.28%
+2026-10-09 16:00:03,651 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 70.28%
+2026-10-09 16:00:03,653 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 70.28%
+2026-10-09 16:00:03,654 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 70.28%
+2026-10-09 16:00:03,656 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 70.28%
+2026-10-09 16:00:03,658 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 70.28%
+2026-10-09 16:00:03,659 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 70.28%
+2026-10-09 16:00:03,660 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 70.28%
+2026-10-09 16:00:03,662 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 70.28%
+2026-10-09 16:00:03,663 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 70.28%
+2026-10-09 16:00:03,665 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 70.28%
+2026-10-09 16:00:03,666 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 70.28%
+2026-10-09 16:00:03,671 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 70.28%
+2026-10-09 16:00:03,673 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 70.28%
+2026-10-09 16:00:03,675 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 70.28%
+2026-10-09 16:00:03,677 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 70.28%
+2026-10-09 16:00:03,679 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 70.28%
+2026-10-09 16:00:03,681 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 70.28%
+2026-10-09 16:00:03,682 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 70.28%
+2026-10-09 16:00:03,684 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,685 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 70.28%
+2026-10-09 16:00:03,687 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,689 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 70.28%
+2026-10-09 16:00:03,690 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 70.28%
+2026-10-09 16:00:03,691 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 70.28%
+2026-10-09 16:00:03,693 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 70.28%
+2026-10-09 16:00:03,694 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 70.28%
+2026-10-09 16:00:03,696 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 70.28%
+2026-10-09 16:00:03,697 - app.application - INFO - Common AOI coverage across 31 acquisitions: 70.28%
+2026-10-09 16:00:03,698 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 16:02:06,174 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 16:03:29,448 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 16:03:29,449 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 16:03:29,452 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 16:03:29,454 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 16:03:29,456 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 16:03:29,458 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 16:03:29,460 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 16:03:29,461 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 16:03:29,464 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 16:03:29,467 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 16:03:29,497 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 16:03:29,507 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 16:03:29,530 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 16:03:29,536 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 16:03:29,539 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 16:03:29,541 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 16:03:29,562 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 16:03:29,564 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 16:03:29,566 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 16:03:29,568 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 16:03:29,571 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 16:03:29,596 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 16:03:29,598 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 16:03:29,603 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 16:03:29,606 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 16:03:29,609 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 16:03:29,611 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 16:03:29,612 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 16:03:29,616 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 16:03:29,617 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 16:03:29,619 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 16:03:29,621 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 16:03:29,640 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 16:03:29,643 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 16:03:29,647 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 16:03:29,649 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 16:03:29,651 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 16:03:29,653 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 16:03:29,655 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 16:03:29,656 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 16:03:29,658 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 16:03:29,659 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 16:03:29,660 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 16:03:29,695 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 73.25%
+2026-10-09 16:03:29,698 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 73.25%
+2026-10-09 16:03:29,700 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 73.25%
+2026-10-09 16:03:29,704 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 73.25%
+2026-10-09 16:03:29,708 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 73.25%
+2026-10-09 16:03:29,710 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 73.25%
+2026-10-09 16:03:29,713 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 73.25%
+2026-10-09 16:03:29,715 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 73.25%
+2026-10-09 16:03:29,717 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 73.25%
+2026-10-09 16:03:29,719 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 73.25%
+2026-10-09 16:03:29,722 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 73.25%
+2026-10-09 16:03:29,724 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 73.25%
+2026-10-09 16:03:29,726 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 73.25%
+2026-10-09 16:03:29,728 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 73.25%
+2026-10-09 16:03:29,730 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 73.25%
+2026-10-09 16:03:29,733 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 73.25%
+2026-10-09 16:03:29,735 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 73.25%
+2026-10-09 16:03:29,737 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 73.25%
+2026-10-09 16:03:29,740 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 73.25%
+2026-10-09 16:03:29,742 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 73.25%
+2026-10-09 16:03:29,744 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 73.25%
+2026-10-09 16:03:29,746 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 73.25%
+2026-10-09 16:03:29,749 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,751 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 73.25%
+2026-10-09 16:03:29,752 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,755 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 73.25%
+2026-10-09 16:03:29,757 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 73.25%
+2026-10-09 16:03:29,759 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 73.25%
+2026-10-09 16:03:29,762 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,765 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 73.25%
+2026-10-09 16:03:29,768 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 73.25%
+2026-10-09 16:03:29,772 - app.application - INFO - Common AOI coverage across 31 acquisitions: 73.25%
+2026-10-09 16:03:29,786 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 73.25%
+2026-10-09 16:03:29,788 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 73.25%
+2026-10-09 16:03:29,790 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 73.25%
+2026-10-09 16:03:29,792 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 73.25%
+2026-10-09 16:03:29,793 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 73.25%
+2026-10-09 16:03:29,796 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 73.25%
+2026-10-09 16:03:29,799 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 73.25%
+2026-10-09 16:03:29,801 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 73.25%
+2026-10-09 16:03:29,803 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 73.25%
+2026-10-09 16:03:29,805 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 73.25%
+2026-10-09 16:03:29,806 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 73.25%
+2026-10-09 16:03:29,808 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 73.25%
+2026-10-09 16:03:29,811 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 73.25%
+2026-10-09 16:03:29,812 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 73.25%
+2026-10-09 16:03:29,814 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 73.25%
+2026-10-09 16:03:29,815 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 73.25%
+2026-10-09 16:03:29,815 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 73.25%
+2026-10-09 16:03:29,815 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 73.25%
+2026-10-09 16:03:29,824 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 73.25%
+2026-10-09 16:03:29,825 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 73.25%
+2026-10-09 16:03:29,827 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 73.25%
+2026-10-09 16:03:29,829 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 73.25%
+2026-10-09 16:03:29,833 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,834 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 73.25%
+2026-10-09 16:03:29,836 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,840 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 73.25%
+2026-10-09 16:03:29,841 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 73.25%
+2026-10-09 16:03:29,843 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 73.25%
+2026-10-09 16:03:29,845 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 73.25%
+2026-10-09 16:03:29,847 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 73.25%
+2026-10-09 16:03:29,848 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 73.25%
+2026-10-09 16:03:29,851 - app.application - INFO - Common AOI coverage across 31 acquisitions: 73.25%
+2026-10-09 16:03:29,853 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-09 16:04:38,457 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 16:06:33,255 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-09 16:08:10,760 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-09 16:08:10,763 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-09 16:08:10,765 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-09 16:08:10,767 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-09 16:08:10,770 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-09 16:08:10,771 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-09 16:08:10,773 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-09 16:08:10,776 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-09 16:08:10,778 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-09 16:08:10,780 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-09 16:08:10,782 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-09 16:08:10,787 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-09 16:08:10,790 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-09 16:08:10,793 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-09 16:08:10,839 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-09 16:08:10,881 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-09 16:08:10,885 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-09 16:08:10,888 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-09 16:08:10,890 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-09 16:08:10,918 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-09 16:08:10,920 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-09 16:08:10,921 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-09 16:08:10,924 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-09 16:08:10,925 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-09 16:08:10,927 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-09 16:08:10,929 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-09 16:08:10,930 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-09 16:08:10,967 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-09 16:08:11,115 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-09 16:08:11,131 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-09 16:08:11,133 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-09 16:08:11,136 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-09 16:08:11,138 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-09 16:08:11,140 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-09 16:08:11,141 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-09 16:08:11,151 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-09 16:08:11,166 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-09 16:08:11,167 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-09 16:08:11,169 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-09 16:08:11,170 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-09 16:08:11,172 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-09 16:08:11,174 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-09 16:08:11,176 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-09 16:08:11,213 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-09 16:08:11,216 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-09 16:08:11,219 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-09 16:08:11,221 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-09 16:08:11,224 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-09 16:08:11,227 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-09 16:08:11,229 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-09 16:08:11,231 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-09 16:08:11,234 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-09 16:08:11,236 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-09 16:08:11,239 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-09 16:08:11,242 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-09 16:08:11,244 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-09 16:08:11,247 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-09 16:08:11,249 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-09 16:08:11,253 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-09 16:08:11,255 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-09 16:08:11,258 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-09 16:08:11,260 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-09 16:08:11,263 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-09 16:08:11,265 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-09 16:08:11,269 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-09 16:08:11,273 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,275 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-09 16:08:11,279 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,282 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-09 16:08:11,285 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-09 16:08:11,288 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-09 16:08:11,290 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,292 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-09 16:08:11,295 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-09 16:08:11,301 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-09 16:08:11,304 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-09 16:08:11,305 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-09 16:08:11,307 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-09 16:08:11,309 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-09 16:08:11,312 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-09 16:08:11,313 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-09 16:08:11,315 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-09 16:08:11,317 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-09 16:08:11,319 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-09 16:08:11,320 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-09 16:08:11,322 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-09 16:08:11,324 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-09 16:08:11,326 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-09 16:08:11,327 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-09 16:08:11,329 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-09 16:08:11,331 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-09 16:08:11,333 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-09 16:08:11,335 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-09 16:08:11,337 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-09 16:08:11,338 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-09 16:08:11,339 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-09 16:08:11,341 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-09 16:08:11,343 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,345 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-09 16:08:11,346 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,349 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-09 16:08:11,351 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-09 16:08:11,352 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-09 16:08:11,353 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-09 16:08:11,355 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-09 16:08:11,357 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-09 16:08:11,358 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-09 16:08:11,359 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-10 09:39:08,290 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-10 09:40:18,109 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-10 09:40:18,113 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-10 09:40:18,114 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-10 09:40:18,117 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-10 09:40:18,119 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-10 09:40:18,121 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-10 09:40:18,122 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-10 09:40:18,124 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-10 09:40:18,127 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-10 09:40:18,129 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-10 09:40:18,132 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-10 09:40:18,136 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-10 09:40:18,138 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-10 09:40:18,140 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-10 09:40:18,143 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-10 09:40:18,145 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-10 09:40:18,146 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-10 09:40:18,148 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-10 09:40:18,150 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-10 09:40:18,152 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-10 09:40:18,154 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-10 09:40:18,155 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-10 09:40:18,157 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-10 09:40:18,159 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-10 09:40:18,160 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-10 09:40:18,162 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-10 09:40:18,163 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-10 09:40:18,166 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-10 09:40:18,169 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-10 09:40:18,172 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-10 09:40:18,175 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-10 09:40:18,178 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-10 09:40:18,180 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-10 09:40:18,186 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-10 09:40:18,188 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-10 09:40:18,190 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-10 09:40:18,193 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-10 09:40:18,196 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-10 09:40:18,198 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-10 09:40:18,204 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-10 09:40:18,209 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-10 09:40:18,210 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-10 09:40:18,213 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-10 09:40:18,263 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 09:40:18,265 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 09:40:18,268 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 09:40:18,270 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 09:40:18,273 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 09:40:18,275 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 09:40:18,279 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 09:40:18,284 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 09:40:18,288 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 09:40:18,291 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 09:40:18,294 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 09:40:18,296 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 09:40:18,299 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 09:40:18,304 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 09:40:18,306 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 09:40:18,311 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 09:40:18,315 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 09:40:18,317 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 09:40:18,320 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 09:40:18,324 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 09:40:18,326 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 09:40:18,329 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 09:40:18,333 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 09:40:18,335 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 09:40:18,338 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 09:40:18,342 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 09:40:18,346 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 09:40:18,349 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 09:40:18,353 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 09:40:18,356 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 09:40:18,359 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 09:40:18,364 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-10 09:40:18,365 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,367 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,369 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,370 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,372 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,374 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,375 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,376 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,380 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,383 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,385 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,387 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,390 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,395 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,396 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,398 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,400 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,401 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,403 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,407 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,407 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,410 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,416 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,418 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,420 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,423 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,426 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,428 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,429 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,430 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,432 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.0000000000%
+2026-10-10 09:40:18,433 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.0000000000%
+2026-10-10 09:40:18,435 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-10 09:40:45,049 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-10 09:41:47,908 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-10 09:41:47,910 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-10 09:41:47,912 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-10 09:41:47,915 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-10 09:41:47,917 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-10 09:41:47,919 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-10 09:41:47,921 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-10 09:41:47,923 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-10 09:41:47,926 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-10 09:41:47,928 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-10 09:41:47,932 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-10 09:41:47,936 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-10 09:41:47,939 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-10 09:41:47,940 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-10 09:41:47,943 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-10 09:41:47,945 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-10 09:41:47,946 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-10 09:41:47,948 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-10 09:41:47,950 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-10 09:41:47,951 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-10 09:41:47,953 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-10 09:41:47,954 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-10 09:41:47,956 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-10 09:41:47,958 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-10 09:41:47,960 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-10 09:41:47,961 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-10 09:41:47,962 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-10 09:41:47,964 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-10 09:41:47,966 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-10 09:41:47,967 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-10 09:41:47,969 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-10 09:41:47,970 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-10 09:41:47,973 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-10 09:41:47,976 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-10 09:41:47,978 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-10 09:41:47,980 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-10 09:41:47,982 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-10 09:41:47,984 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-10 09:41:47,986 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-10 09:41:47,987 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-10 09:41:47,989 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-10 09:41:47,991 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-10 09:41:47,992 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-10 09:41:48,026 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 09:41:48,029 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 09:41:48,031 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 09:41:48,033 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 09:41:48,038 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 09:41:48,041 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 09:41:48,044 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 09:41:48,046 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 09:41:48,049 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 09:41:48,051 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 09:41:48,054 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 09:41:48,057 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 09:41:48,059 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 09:41:48,061 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 09:41:48,064 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 09:41:48,068 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 09:41:48,071 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 09:41:48,075 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 09:41:48,078 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 09:41:48,080 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 09:41:48,083 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 09:41:48,086 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 09:41:48,088 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,090 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 09:41:48,092 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,095 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 09:41:48,097 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 09:41:48,100 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 09:41:48,103 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,105 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 09:41:48,109 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 09:41:48,114 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 09:41:48,116 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 09:41:48,117 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 09:41:48,119 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 09:41:48,120 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 09:41:48,122 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 09:41:48,123 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 09:41:48,125 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 09:41:48,126 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 09:41:48,130 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 09:41:48,133 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 09:41:48,135 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 09:41:48,137 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 09:41:48,139 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 09:41:48,141 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 09:41:48,143 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 09:41:48,144 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 09:41:48,146 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 09:41:48,148 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 09:41:48,149 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 09:41:48,151 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 09:41:48,152 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 09:41:48,153 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,155 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 09:41:48,156 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,158 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 09:41:48,160 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 09:41:48,163 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 09:41:48,166 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 09:41:48,167 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 09:41:48,170 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 09:41:48,172 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-10 09:41:48,173 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-10 09:55:19,677 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-10 09:55:29,425 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-10 09:56:32,717 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-10 09:56:32,719 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-10 09:56:32,720 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-10 09:56:32,722 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-10 09:56:32,724 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-10 09:56:32,726 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-10 09:56:32,728 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-10 09:56:32,730 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-10 09:56:32,732 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-10 09:56:32,734 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-10 09:56:32,738 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-10 09:56:32,742 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-10 09:56:32,745 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-10 09:56:32,746 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-10 09:56:32,749 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-10 09:56:32,750 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-10 09:56:32,752 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-10 09:56:32,753 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-10 09:56:32,755 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-10 09:56:32,756 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-10 09:56:32,758 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-10 09:56:32,759 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-10 09:56:32,760 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-10 09:56:32,762 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-10 09:56:32,764 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-10 09:56:32,766 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-10 09:56:32,768 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-10 09:56:32,771 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-10 09:56:32,775 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-10 09:56:32,778 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-10 09:56:32,781 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-10 09:56:32,792 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-10 09:56:32,796 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-10 09:56:32,798 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-10 09:56:32,801 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-10 09:56:32,802 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-10 09:56:32,804 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-10 09:56:32,806 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-10 09:56:32,807 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-10 09:56:32,808 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-10 09:56:32,810 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-10 09:56:32,811 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-10 09:56:32,813 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-10 09:56:32,857 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 09:56:32,899 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 09:56:32,959 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 09:56:32,983 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 09:56:32,987 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 09:56:32,992 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 09:56:32,996 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 09:56:33,021 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 09:56:33,055 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 09:56:33,059 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 09:56:33,062 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 09:56:33,067 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 09:56:33,071 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 09:56:33,079 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 09:56:33,082 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 09:56:33,086 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 09:56:33,088 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 09:56:33,091 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 09:56:33,094 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 09:56:33,099 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 09:56:33,102 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 09:56:33,107 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 09:56:33,110 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,112 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 09:56:33,115 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,117 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 09:56:33,120 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 09:56:33,129 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 09:56:33,132 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,134 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 09:56:33,137 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 09:56:33,147 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 09:56:33,149 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 09:56:33,152 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 09:56:33,154 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 09:56:33,160 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 09:56:33,161 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 09:56:33,163 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 09:56:33,164 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 09:56:33,167 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 09:56:33,169 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 09:56:33,171 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 09:56:33,173 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 09:56:33,176 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 09:56:33,178 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 09:56:33,180 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 09:56:33,182 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 09:56:33,184 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 09:56:33,185 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 09:56:33,187 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 09:56:33,190 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 09:56:33,192 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 09:56:33,193 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 09:56:33,195 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,196 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 09:56:33,199 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,201 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 09:56:33,203 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 09:56:33,205 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 09:56:33,208 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 09:56:33,210 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 09:56:33,212 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 09:56:33,216 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-10 09:56:33,218 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 130963678, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 130963677, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 130963676, 'swath': 'IW3'}]
+2026-10-10 09:56:33,222 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 129084241, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 129084239, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129084240, 'swath': 'IW3'}]
+2026-10-10 09:56:33,225 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 123445929, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123445930, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 123445928, 'swath': 'IW3'}]
+2026-10-10 09:56:33,228 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 132467225, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 132467226, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 132467227, 'swath': 'IW3'}]
+2026-10-10 09:56:33,231 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 126077142, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 126077141, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126077140, 'swath': 'IW3'}]
+2026-10-10 09:56:33,234 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 123821817, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123821818, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 123821816, 'swath': 'IW3'}]
+2026-10-10 09:56:33,239 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 132091340, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 132091339, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 132091338, 'swath': 'IW3'}]
+2026-10-10 09:56:33,242 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 131715451, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 131715452, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 131715453, 'swath': 'IW3'}]
+2026-10-10 09:56:33,244 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 133970776, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 133970777, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133970775, 'swath': 'IW3'}]
+2026-10-10 09:56:33,253 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 124949479, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 124949478, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124949480, 'swath': 'IW3'}]
+2026-10-10 09:56:33,255 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 130587790, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 130587791, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 130587789, 'swath': 'IW3'}]
+2026-10-10 09:56:33,258 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 128708354, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 128708353, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 128708352, 'swath': 'IW3'}]
+2026-10-10 09:56:33,261 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 123070041, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123070043, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 123070042, 'swath': 'IW3'}]
+2026-10-10 09:56:33,265 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 125325366, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 125325365, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 125325367, 'swath': 'IW3'}]
+2026-10-10 09:56:33,323 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 129460126, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 129460128, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129460127, 'swath': 'IW3'}]
+2026-10-10 09:56:33,367 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 128332466, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 128332465, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 128332464, 'swath': 'IW3'}]
+2026-10-10 09:56:33,371 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 132843114, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 132843115, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 132843113, 'swath': 'IW3'}]
+2026-10-10 09:56:33,409 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 126828917, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 126828916, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126828915, 'swath': 'IW3'}]
+2026-10-10 09:56:33,414 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 127204802, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 127204803, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 127204804, 'swath': 'IW3'}]
+2026-10-10 09:56:33,417 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 129836016, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 129836014, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129836015, 'swath': 'IW3'}]
+2026-10-10 09:56:33,421 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 125701255, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 125701253, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 125701254, 'swath': 'IW3'}]
+2026-10-10 09:56:33,427 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 130211901, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 130211902, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 130211903, 'swath': 'IW3'}]
+2026-10-10 09:56:33,433 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 127580692, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 127580690, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 127580691, 'swath': 'IW3'}]
+2026-10-10 09:56:33,436 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 131339564, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 131339565, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 131339563, 'swath': 'IW3'}]
+2026-10-10 09:56:33,442 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 124573592, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124573593, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 124573591, 'swath': 'IW3'}]
+2026-10-10 09:56:33,445 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 126453028, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 126453029, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126453027, 'swath': 'IW3'}]
+2026-10-10 09:56:33,448 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 134346664, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 134346663, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 134346662, 'swath': 'IW3'}]
+2026-10-10 09:56:33,455 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 124197703, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124197705, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 124197704, 'swath': 'IW3'}]
+2026-10-10 09:56:33,460 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 133594890, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 133594889, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133594888, 'swath': 'IW3'}]
+2026-10-10 09:56:33,463 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 127956578, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 127956577, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 127956579, 'swath': 'IW3'}]
+2026-10-10 09:56:33,466 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 133219002, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 133219001, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133219000, 'swath': 'IW3'}]
+2026-10-10 09:56:33,471 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-10 10:04:54,748 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-10 10:05:55,186 - app.application - INFO - Found 463 Sentinel-1 bursts
+2026-10-10 10:05:55,188 - app.application - INFO - Platforms: Counter({'A': 276, 'C': 187})
+2026-10-10 10:05:55,190 - app.application - INFO - Tracks: Counter({('ASCENDING', 103, 'IW1'): 159, ('ASCENDING', 1, 'IW3'): 154, ('DESCENDING', 8, 'IW2'): 150})
+2026-10-10 10:05:55,192 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 31
+2026-10-10 10:05:55,195 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 30
+2026-10-10 10:05:55,197 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 31
+2026-10-10 10:05:55,198 - app.application - INFO - Group: ('C', 'ASCENDING', 1, 'IW3'), Unique SLC products: 21
+2026-10-10 10:05:55,201 - app.application - INFO - Group: ('C', 'ASCENDING', 103, 'IW1'), Unique SLC products: 46
+2026-10-10 10:05:55,203 - app.application - INFO - Group: ('C', 'DESCENDING', 8, 'IW2'), Unique SLC products: 19
+2026-10-10 10:05:55,205 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21', '2025-03-05', '2025-03-17', '2025-03-29', '2025-04-10', '2025-04-22', '2025-05-04', '2025-05-16', '2025-05-28', '2025-06-09', '2025-06-21', '2025-07-03', '2025-07-15', '2025-07-27', '2025-08-08', '2025-08-20', '2025-09-01', '2025-09-13', '2025-09-25', '2025-10-07', '2025-10-19', '2025-10-31', '2025-11-12', '2025-11-24', '2025-12-06', '2025-12-18', '2025-12-30']
+2026-10-10 10:05:55,208 - app.application - INFO - Sentinel-1 product ID info: {'total': 463, 'unique': 463, 'duplicates': 0}
+2026-10-10 10:05:55,212 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-1.280923, 37.651325], [-1.801921, 37.727386], [-2.294356, 37.797148], [-2.336068, 37.604716], [-1.844013, 37.539117], [-1.323416, 37.467227], [-1.280923, 37.651325]]]}
+2026-10-10 10:05:55,215 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst count: 3
+2026-10-10 10:05:55,216 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst count: 3
+2026-10-10 10:05:55,218 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-10 10:05:55,220 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst count: 3
+2026-10-10 10:05:55,221 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst count: 3
+2026-10-10 10:05:55,223 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-10 10:05:55,225 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst count: 3
+2026-10-10 10:05:55,226 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst count: 3
+2026-10-10 10:05:55,227 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst count: 3
+2026-10-10 10:05:55,229 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst count: 3
+2026-10-10 10:05:55,230 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst count: 3
+2026-10-10 10:05:55,232 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst count: 3
+2026-10-10 10:05:55,234 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-10 10:05:55,236 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst count: 3
+2026-10-10 10:05:55,237 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst count: 3
+2026-10-10 10:05:55,237 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst count: 3
+2026-10-10 10:05:55,240 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst count: 3
+2026-10-10 10:05:55,242 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst count: 3
+2026-10-10 10:05:55,243 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst count: 3
+2026-10-10 10:05:55,245 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst count: 3
+2026-10-10 10:05:55,247 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst count: 3
+2026-10-10 10:05:55,249 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst count: 3
+2026-10-10 10:05:55,251 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst count: 3
+2026-10-10 10:05:55,252 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst count: 3
+2026-10-10 10:05:55,255 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-10 10:05:55,258 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst count: 3
+2026-10-10 10:05:55,260 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst count: 3
+2026-10-10 10:05:55,262 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-10 10:05:55,263 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst count: 3
+2026-10-10 10:05:55,265 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst count: 3
+2026-10-10 10:05:55,267 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst count: 3
+2026-10-10 10:05:55,300 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 10:05:55,303 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 10:05:55,305 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 10:05:55,308 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 10:05:55,311 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 10:05:55,314 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 10:05:55,317 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 10:05:55,319 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 10:05:55,322 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 10:05:55,325 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 10:05:55,326 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 10:05:55,330 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 10:05:55,333 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 10:05:55,335 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 10:05:55,338 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 10:05:55,340 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 10:05:55,343 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 10:05:55,345 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 10:05:55,348 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 10:05:55,350 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 10:05:55,352 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 10:05:55,354 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 10:05:55,357 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,359 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 10:05:55,361 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,365 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 10:05:55,368 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 10:05:55,371 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 10:05:55,375 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,376 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 10:05:55,379 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 10:05:55,384 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | AOI coverage: 100.00%
+2026-10-10 10:05:55,385 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | AOI coverage: 100.00%
+2026-10-10 10:05:55,387 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-10 10:05:55,388 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | AOI coverage: 100.00%
+2026-10-10 10:05:55,390 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | AOI coverage: 100.00%
+2026-10-10 10:05:55,392 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-10 10:05:55,394 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | AOI coverage: 100.00%
+2026-10-10 10:05:55,396 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | AOI coverage: 100.00%
+2026-10-10 10:05:55,398 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | AOI coverage: 100.00%
+2026-10-10 10:05:55,400 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | AOI coverage: 100.00%
+2026-10-10 10:05:55,402 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | AOI coverage: 100.00%
+2026-10-10 10:05:55,404 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | AOI coverage: 100.00%
+2026-10-10 10:05:55,406 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-10 10:05:55,407 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | AOI coverage: 100.00%
+2026-10-10 10:05:55,409 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | AOI coverage: 100.00%
+2026-10-10 10:05:55,411 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | AOI coverage: 100.00%
+2026-10-10 10:05:55,412 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | AOI coverage: 100.00%
+2026-10-10 10:05:55,414 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | AOI coverage: 100.00%
+2026-10-10 10:05:55,416 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | AOI coverage: 100.00%
+2026-10-10 10:05:55,417 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | AOI coverage: 100.00%
+2026-10-10 10:05:55,419 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | AOI coverage: 100.00%
+2026-10-10 10:05:55,420 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | AOI coverage: 100.00%
+2026-10-10 10:05:55,421 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,424 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | AOI coverage: 100.00%
+2026-10-10 10:05:55,425 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,427 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | AOI coverage: 100.00%
+2026-10-10 10:05:55,428 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | AOI coverage: 100.00%
+2026-10-10 10:05:55,431 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-10 10:05:55,433 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | AOI coverage: 100.00%
+2026-10-10 10:05:55,434 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | AOI coverage: 100.00%
+2026-10-10 10:05:55,436 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | AOI coverage: 100.00%
+2026-10-10 10:05:55,438 - app.application - INFO - Common AOI coverage across 31 acquisitions: 100.00%
+2026-10-10 10:05:55,441 - app.application - INFO - Product: a847b3ba-4d73-4656-b3be-796e87f102fd | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 130963678, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 130963677, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 130963676, 'swath': 'IW3'}]
+2026-10-10 10:05:55,444 - app.application - INFO - Product: a7ce8e21-e2ae-4df0-9b98-d5f6fd8e5c00 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 129084241, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 129084239, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129084240, 'swath': 'IW3'}]
+2026-10-10 10:05:55,446 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 123445929, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123445930, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 123445928, 'swath': 'IW3'}]
+2026-10-10 10:05:55,449 - app.application - INFO - Product: aa7129f9-2a54-4528-8077-78ce9e76d0e2 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 132467225, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 132467226, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 132467227, 'swath': 'IW3'}]
+2026-10-10 10:05:55,451 - app.application - INFO - Product: b81cbbfa-5c13-40b9-afa4-5b293fe6344e | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 126077142, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 126077141, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126077140, 'swath': 'IW3'}]
+2026-10-10 10:05:55,453 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 123821817, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123821818, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 123821816, 'swath': 'IW3'}]
+2026-10-10 10:05:55,458 - app.application - INFO - Product: 17ce4859-79fc-404d-9709-4118edb7ee5a | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 132091340, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 132091339, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 132091338, 'swath': 'IW3'}]
+2026-10-10 10:05:55,460 - app.application - INFO - Product: b69ea467-da18-4cf1-939f-3d964ea49971 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 131715451, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 131715452, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 131715453, 'swath': 'IW3'}]
+2026-10-10 10:05:55,463 - app.application - INFO - Product: d118a44e-ae98-4e49-829f-8c35fd7b07c1 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 133970776, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 133970777, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133970775, 'swath': 'IW3'}]
+2026-10-10 10:05:55,465 - app.application - INFO - Product: a5318cf9-3341-40f5-90a7-986b8f389708 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 124949479, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 124949478, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124949480, 'swath': 'IW3'}]
+2026-10-10 10:05:55,467 - app.application - INFO - Product: 08595276-9c06-4ed4-b289-942d1ab7cb6e | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 130587790, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 130587791, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 130587789, 'swath': 'IW3'}]
+2026-10-10 10:05:55,470 - app.application - INFO - Product: b9cc012d-4791-469f-b0fd-701af6940f0d | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 128708354, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 128708353, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 128708352, 'swath': 'IW3'}]
+2026-10-10 10:05:55,474 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 123070041, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 123070043, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 123070042, 'swath': 'IW3'}]
+2026-10-10 10:05:55,477 - app.application - INFO - Product: 8eda08c2-7a59-423c-8b94-8b2ae2d4dada | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 125325366, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 125325365, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 125325367, 'swath': 'IW3'}]
+2026-10-10 10:05:55,479 - app.application - INFO - Product: 2abd51a5-41bb-4651-94f7-3b86527542df | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 129460126, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 129460128, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129460127, 'swath': 'IW3'}]
+2026-10-10 10:05:55,482 - app.application - INFO - Product: 7b13261a-8ddc-41f9-9b8e-6734270ce823 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 128332466, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 128332465, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 128332464, 'swath': 'IW3'}]
+2026-10-10 10:05:55,485 - app.application - INFO - Product: a4b8720b-3357-4c8c-8a2b-b105afaa153e | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 132843114, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 132843115, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 132843113, 'swath': 'IW3'}]
+2026-10-10 10:05:55,488 - app.application - INFO - Product: e5e2a9e0-83b9-4576-adca-99e5b244f855 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 126828917, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 126828916, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126828915, 'swath': 'IW3'}]
+2026-10-10 10:05:55,491 - app.application - INFO - Product: 738ab93a-d5d6-494a-8337-f0d4a9bd21c6 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 127204802, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 127204803, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 127204804, 'swath': 'IW3'}]
+2026-10-10 10:05:55,493 - app.application - INFO - Product: 3d3c4814-b4c4-4636-88a0-565bc07a095c | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 129836016, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 129836014, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 129836015, 'swath': 'IW3'}]
+2026-10-10 10:05:55,496 - app.application - INFO - Product: 974bd517-60fe-4b87-b848-6cf0a9355813 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 125701255, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 125701253, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 125701254, 'swath': 'IW3'}]
+2026-10-10 10:05:55,499 - app.application - INFO - Product: 0a458711-e6d9-4f20-b11a-820d10b713e7 | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 130211901, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 130211902, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 130211903, 'swath': 'IW3'}]
+2026-10-10 10:05:55,501 - app.application - INFO - Product: baaff158-4b61-455a-837d-4de37a6c4fe9 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 127580692, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 127580690, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 127580691, 'swath': 'IW3'}]
+2026-10-10 10:05:55,505 - app.application - INFO - Product: d9e3fe1e-6d90-4bd1-9ebf-63f526cbf664 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 131339564, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 131339565, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 131339563, 'swath': 'IW3'}]
+2026-10-10 10:05:55,508 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 124573592, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124573593, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 124573591, 'swath': 'IW3'}]
+2026-10-10 10:05:55,510 - app.application - INFO - Product: 60abc1ec-e481-462b-ac41-be19b4c64cc6 | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 126453028, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 126453029, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 126453027, 'swath': 'IW3'}]
+2026-10-10 10:05:55,513 - app.application - INFO - Product: c9204972-6fbe-4b15-8a19-724886cc76bd | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 134346664, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 134346663, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 134346662, 'swath': 'IW3'}]
+2026-10-10 10:05:55,515 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst identities: [{'burst_id': 218, 'absolute_burst_id': 124197703, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 124197705, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 124197704, 'swath': 'IW3'}]
+2026-10-10 10:05:55,518 - app.application - INFO - Product: a833ed31-71cf-405a-a3aa-ecee2f4d03e9 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 133594890, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 133594889, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133594888, 'swath': 'IW3'}]
+2026-10-10 10:05:55,521 - app.application - INFO - Product: 1dc2ea84-6111-46c0-8691-e748d5a2f4cf | Burst identities: [{'burst_id': 219, 'absolute_burst_id': 127956578, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 127956577, 'swath': 'IW3'}, {'burst_id': 220, 'absolute_burst_id': 127956579, 'swath': 'IW3'}]
+2026-10-10 10:05:55,523 - app.application - INFO - Product: 3e8a5d78-7b48-4c3c-b1b9-9f6b1a4a2494 | Burst identities: [{'burst_id': 220, 'absolute_burst_id': 133219002, 'swath': 'IW3'}, {'burst_id': 219, 'absolute_burst_id': 133219001, 'swath': 'IW3'}, {'burst_id': 218, 'absolute_burst_id': 133219000, 'swath': 'IW3'}]
+2026-10-10 10:05:55,526 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-10 10:05:55,528 - app.application - INFO - Burst-number consistency across 31 acquisitions: True
+2026-10-10 10:05:55,530 - app.application - INFO - Sentinel-1 burst search completed

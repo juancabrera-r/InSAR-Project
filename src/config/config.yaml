@@ -18,7 +18,7 @@ COPERNICUS_PRODUCT:
   PARENTPRODUCTTYPE: "IW_SLC__1S"
   POLARIZATION: "VV"
 
-AOI_GEOJSON: "data/aoi/alto_guadalentin.geojson"
+AOI_GEOJSON: "data/aoi/alto_guadalentin_processing.geojson"
 
 
 # Fingerprint for the bursts
