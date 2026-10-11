@@ -22,15 +22,16 @@ def main() -> None:
     )
 
     config = config_obj.load_yaml()
-    # env = config_obj.load_env()
+    env = config_obj.load_env()
 
     # Initialize logging
     LoggingManager.setup(debug=True, log_dir=str(LOG_DIR))
 
     # Initialize app
-    aoi_geojson_path = Path(config["AOI_GEOJSON"])
-
-    sentinel1_app(config=config, aoi_path=aoi_geojson_path)
+    sentinel1_app(
+        config=config,
+        env=env,
+    )
 
 
 if __name__ == "__main__":

@@ -76,8 +76,10 @@ class Sentinel1Ingestion:
 
         all_bursts = []
 
+        url = self.initial_url + "/odata/v1/Bursts"
+
         payload = self.request_first_page(
-            self.initial_url,
+            url,
             filter_expression,
         )
 

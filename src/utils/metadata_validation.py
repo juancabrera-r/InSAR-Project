@@ -122,6 +122,29 @@ class MetadataValidator:
 
         return mismatches
 
+    def inspect_orbit_metadata(self) -> dict:
+        """Inspect available orbit-related fields in selected bursts."""
+
+        self._require_nonempty_bursts_by_product()
+
+        first_product_id = next(iter(self.bursts_by_product))
+        first_burst = self.bursts_by_product[first_product_id][0]
+
+        orbit_related_fields = {
+            key: value
+            for key, value in first_burst.items()
+            if any(
+                keyword in key.lower()
+                for keyword in ("orbit", "position", "velocity", "statevector")
+            )
+        }
+
+        return {
+            "product_id": first_product_id,
+            "orbit_fields": orbit_related_fields,
+            "available_fields": sorted(first_burst.keys()),
+        }
+
     def _require_nonempty_bursts_by_product(self) -> None:
 
         if not self.bursts_by_product:

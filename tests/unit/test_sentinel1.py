@@ -266,7 +266,7 @@ def test_search_bursts_success(ingestion):
 
     args, _ = mock_first.call_args
 
-    assert args[0] == ingestion.initial_url
+    assert args[0] == f"{ingestion.initial_url.rstrip('/')}/odata/v1/Bursts"
 
     filter_expression = args[1]
 

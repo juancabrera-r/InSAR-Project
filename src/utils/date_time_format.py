@@ -1,10 +1,10 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 
 def to_iso_utc(date_str: str) -> str:
-    dt = datetime.strptime(
-        f"{date_str} +0000",
-        "%Y-%m-%d %H:%M:%S %z",
-    )
+    dt = datetime.fromisoformat(date_str)
 
-    return dt.isoformat()
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=UTC)
+
+    return dt.astimezone(UTC).isoformat()
