@@ -37,7 +37,7 @@ def zero_doppler(
         zero_doppler_residual,
     )
 
-    # 13. Evaluate zero-Doppler residual at orbit coverage endpoints
+    # 1. Evaluate zero-Doppler residual at orbit coverage endpoints
     first_vector = orbit_vectors[0]
     last_vector = orbit_vectors[-1]
 
@@ -94,7 +94,7 @@ def zero_doppler(
             product_id,
         )
 
-    # 14. Find and log zero-Doppler brackets within the orbit coverage
+    # 2. Find and log zero-Doppler brackets within the orbit coverage
     brackets = calculate_orbit.find_zero_doppler_brackets(
         orbit_vectors=orbit_vectors,
         ground_position=reference_ground_position,
@@ -116,7 +116,7 @@ def zero_doppler(
 
     first, second = brackets[0]
 
-    # 15. Solve for the zero-Doppler time within the identified bracket
+    # 3. Solve for the zero-Doppler time within the identified bracket
     zero_doppler_time = calculate_orbit.solve_zero_doppler_time(
         first=first,
         second=second,
@@ -129,7 +129,7 @@ def zero_doppler(
         zero_doppler_time,
     )
 
-    # 16. Interpolate the satellite state at the zero-Doppler time and compute the residual
+    # 4. Interpolate the satellite state at the zero-Doppler time and compute the residual
     zero_doppler_position, zero_doppler_velocity = calculate_orbit.interpolate_state(
         first,
         second,
@@ -150,7 +150,7 @@ def zero_doppler(
         residual,
     )
 
-    # 17. Compute the line-of-sight vector and the normalized zero-Doppler residual
+    # 5. Compute the line-of-sight vector and the normalized zero-Doppler residual
     line_of_sight = reference_ground_position - zero_doppler_position
 
     normalized_residual = abs(residual) / (
