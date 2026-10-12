@@ -4572,3 +4572,192 @@
 2026-10-12 11:48:07,447 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
 2026-10-12 11:48:07,450 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
 2026-10-12 11:48:07,452 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:21:33,492 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:21:47,869 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:21:47,870 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:21:47,878 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:21:47,881 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:21:47,884 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:21:47,885 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:21:47,887 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:21:47,891 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:21:47,894 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:21:47,937 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:21:47,940 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:21:47,943 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:21:47,945 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:21:47,948 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:21:47,960 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:21:47,962 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:21:47,964 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:21:47,965 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:21:47,972 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:21:47,974 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:21:47,978 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:21:47,981 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:21:47,984 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:21:47,988 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:21:47,991 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:21:47,995 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:21:47,997 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:21:50,090 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:21:52,640 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:21:52,655 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:21:52,657 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:21:52,659 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:21:52,661 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:21:52,679 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:21:52,697 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:21:52,708 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:21:52,711 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:21:52,715 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:21:52,717 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:21:52,719 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:21:52,722 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:21:52,724 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:21:52,726 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:21:52,728 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:21:53,069 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:21:55,435 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:21:55,453 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:21:55,456 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:21:55,458 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:21:55,460 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:21:55,489 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:21:55,511 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:21:55,516 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:21:55,523 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:21:55,525 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:21:55,527 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:21:55,530 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:21:55,534 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:21:55,538 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:21:55,542 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:21:55,548 - app.application - INFO - Reference product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Perpendicular baseline magnitude: 11.848 m
+2026-10-12 12:21:55,550 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:27:25,263 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:27:40,165 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:27:40,166 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:27:40,175 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:27:40,178 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:27:40,179 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:27:40,180 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:27:40,182 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:27:40,184 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:27:40,187 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:27:40,232 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:27:40,234 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:27:40,237 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:27:40,240 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:27:40,243 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:27:40,258 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:27:40,259 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:27:40,261 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:27:40,263 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:27:40,272 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:27:40,274 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:27:40,280 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:27:40,282 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:27:40,284 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:27:40,287 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:27:40,289 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:27:40,291 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:27:40,293 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:27:40,702 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:27:43,245 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:27:43,260 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:27:43,263 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:27:43,266 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:27:43,269 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:27:43,403 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:27:43,428 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:27:43,443 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:27:43,447 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:27:43,449 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:27:43,451 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:27:43,456 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:27:43,458 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:27:43,461 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:27:43,464 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:27:43,469 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:27:43,792 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:27:46,108 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:27:46,123 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:27:46,125 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:27:46,127 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:27:46,130 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:27:46,148 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:27:46,165 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:27:46,168 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:27:46,171 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:27:46,173 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:27:46,175 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:27:46,177 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:27:46,179 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:27:46,181 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:27:46,183 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:27:46,215 - app.application - INFO - Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
+2026-10-12 12:27:46,217 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:33:22,475 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:33:30,711 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:33:30,713 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:33:30,721 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:33:30,725 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:33:30,726 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:33:30,728 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:33:30,730 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:33:30,733 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:33:30,736 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:33:30,785 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:33:30,789 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:33:30,791 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:33:30,793 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:33:30,796 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:33:30,820 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:33:30,972 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:33:31,075 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:33:31,093 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:33:31,188 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:33:31,212 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:33:31,232 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:33:31,253 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:33:31,263 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:33:31,296 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:33:31,313 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:33:31,317 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:33:31,321 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:33:31,700 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:33:34,380 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:33:34,401 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:33:34,404 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:33:34,407 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:33:34,411 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:33:34,434 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:33:34,468 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:33:34,490 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:33:34,495 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:33:34,501 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:33:34,508 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:33:34,511 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:33:34,515 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:33:34,517 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:33:34,519 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:33:34,529 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:33:34,951 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:33:37,324 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:33:37,341 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:33:37,343 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:33:37,345 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:33:37,346 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:33:37,364 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:33:37,384 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:33:37,390 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:33:37,392 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:33:37,402 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:33:37,404 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:33:37,408 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:33:37,411 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:33:37,413 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:33:37,419 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:33:37,421 - app.application - INFO - Reference: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
+2026-10-12 12:33:37,423 - app.application - INFO - Sentinel-1 burst search completed

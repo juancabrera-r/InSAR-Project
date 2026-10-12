@@ -11098,3 +11098,420 @@ polarization: VV
 2026-10-12 11:48:07,447 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
 2026-10-12 11:48:07,450 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
 2026-10-12 11:48:07,452 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:21:33,492 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:21:33,508 - ingestion.sentinel1 - DEBUG - Searching acquisitions from 2025-01-01T00:00:00+00:00 to 2025-03-01T00:00:00+00:00 
+for polygons: POLYGON ((-1.6016780000000008 37.575725, -1.6016822747772754 37.575724467048666, -1.5964252773521126 37.55004003401504, -1.800000000000001 37.55, -1.800000000000001 37.75, -1.637339076546242 37.7500602872928, -1.6355760000000006 37.74145200000001, -1.635580596394731 37.74145142879892, -1.6096763210553984 37.61482327936081, -1.6096710000000003 37.614823999999984, -1.6052368834393334 37.59312192842534, -1.6016780000000008 37.575725)) 
+area: geography 
+parent product type: IW_SLC__1S 
+polarization: VV
+2026-10-12 12:21:33,514 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:37,373 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc HTTP/1.1" 200 31934
+2026-10-12 12:21:37,449 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:41,390 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=20 HTTP/1.1" 200 31969
+2026-10-12 12:21:41,483 - ingestion.sentinel1 - DEBUG - Page 2: 20 bursts
+2026-10-12 12:21:41,487 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:47,860 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=40 HTTP/1.1" 200 7817
+2026-10-12 12:21:47,866 - ingestion.sentinel1 - DEBUG - Page 3: 5 bursts
+2026-10-12 12:21:47,867 - ingestion.sentinel1 - DEBUG - New fingerprint: 7d5ec6bcc85e6f48fff185544dc4fbda4d962125e43b1dfc894ed73bec62912c
+2026-10-12 12:21:47,869 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:21:47,870 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:21:47,872 - app.application - DEBUG - Sentinel-1 burst: {'@odata.mediaContentType': 'application/octet-stream', 'Id': '05f90813-1eb7-4265-be96-d9e29930c14b', 'Name': 'S1A-SLC-20250116T181050-000219-IW3-VV-463776', 'ContentType': 'application/octet-stream', 'S3Path': '/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/01/16/S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE/measurement/s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff', 'ContentDate': {'Start': '2025-01-16T18:10:50.397390Z', 'End': '2025-01-16T18:10:51.296657Z'}, 'Footprint': "geography'SRID=4326;POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))'", 'GeoFootprint': {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}, 'ParentProductId': '216aff3b-f44e-4d82-9e71-f28a43fce10d', 'ParentProductName': 'S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE', 'ByteOffset': 460112379, 'BurstId': 219, 'AbsoluteBurstId': 123445929, 'AzimuthTime': '2025-01-16T18:10:49.266697Z', 'AzimuthAnxTime': 604.4002104369, 'ParentProductType': 'IW_SLC__1S', 'SwathIdentifier': 'IW3', 'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING', 'PlatformSerialIdentifier': 'A', 'PolarisationChannels': 'VV', 'OperationalMode': 'IW', 'DatatakeID': 463776, 'Lines': 4548, 'LinesPerBurst': 1516, 'SamplesPerBurst': 25286, 'BeginningDateTime': '2025-01-16T18:10:50.397390Z', 'EndingDateTime': '2025-01-16T18:10:51.296657Z'}
+2026-10-12 12:21:47,878 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:21:47,881 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:21:47,884 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:21:47,885 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:21:47,887 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:21:47,891 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:21:47,893 - ingestion.sentinel1 - DEBUG - No duplicate burst IDs found
+2026-10-12 12:21:47,894 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:21:47,897 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-12 12:21:47,899 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-12 12:21:47,900 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-12 12:21:47,901 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-12 12:21:47,902 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-12 12:21:47,937 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:21:47,940 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:21:47,943 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:21:47,945 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:21:47,948 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:21:47,951 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:21:47,952 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:21:47,954 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:21:47,956 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:21:47,958 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:21:47,960 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:21:47,962 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:21:47,964 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:21:47,965 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:21:47,967 - app.application - DEBUG - Orbit metadata for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: {'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING'}
+2026-10-12 12:21:47,969 - app.application - DEBUG - Available fields for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: ['@odata.mediaContentType', 'AbsoluteBurstId', 'AzimuthAnxTime', 'AzimuthTime', 'BeginningDateTime', 'BurstId', 'ByteOffset', 'ContentDate', 'ContentType', 'DatatakeID', 'EndingDateTime', 'Footprint', 'GeoFootprint', 'Id', 'Lines', 'LinesPerBurst', 'Name', 'OperationalMode', 'OrbitDirection', 'ParentProductId', 'ParentProductName', 'ParentProductType', 'PlatformSerialIdentifier', 'PolarisationChannels', 'RelativeOrbitNumber', 'S3Path', 'SamplesPerBurst', 'SwathIdentifier']
+2026-10-12 12:21:47,972 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:21:47,974 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:21:47,978 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:21:47,981 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:21:47,984 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:21:47,988 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:21:47,991 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:21:47,995 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:21:47,997 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:21:48,002 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:50,087 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61) HTTP/1.1" 200 1285
+2026-10-12 12:21:50,090 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:21:50,093 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:50,343 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:21:50,347 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:50,682 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:21:50,687 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:50,973 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:21:50,978 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:51,270 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:21:51,274 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value
+2026-10-12 12:21:51,277 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:21:51,891 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:21:51,896 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:52,202 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value HTTP/1.1" 200 830417
+2026-10-12 12:21:52,640 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:21:52,655 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:21:52,657 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:21:52,659 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:21:52,661 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:21:52,663 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:41.354609+00:00, t2=2025-01-04 18:09:51.354609+00:00
+2026-10-12 12:21:52,665 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:51.354609+00:00, t2=2025-01-04 18:10:01.354609+00:00
+2026-10-12 12:21:52,666 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:01.354609+00:00, t2=2025-01-04 18:10:11.354609+00:00
+2026-10-12 12:21:52,667 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:11.354609+00:00, t2=2025-01-04 18:10:21.354609+00:00
+2026-10-12 12:21:52,670 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:21.354609+00:00, t2=2025-01-04 18:10:31.354610+00:00
+2026-10-12 12:21:52,674 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:31.354610+00:00, t2=2025-01-04 18:10:41.354609+00:00
+2026-10-12 12:21:52,677 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:41.354609+00:00, t2=2025-01-04 18:10:51.354609+00:00
+2026-10-12 12:21:52,679 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:21:52,697 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:21:52,700 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-04T18:10:41.991590', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96933193985169, 'longitude': -2.387762810598634, 'height': 720.954042930156, 'line': 0, 'pixel': 0}
+2026-10-12 12:21:52,702 - app.application - DEBUG - Reference geolocation point: line=6064, pixel=12650, latitude=37.69792639, longitude=-2.04381227, height=974.934
+2026-10-12 12:21:52,708 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:21:52,711 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:21:52,715 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:21:52,717 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:21:52,719 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:21:52,722 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:21:52,724 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:21:52,726 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:21:52,728 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:21:52,732 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:53,067 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d) HTTP/1.1" 200 1289
+2026-10-12 12:21:53,069 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:21:53,073 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:21:53,315 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:21:53,319 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:53,605 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:21:53,610 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:53,899 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:21:53,905 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:54,159 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:21:54,164 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value
+2026-10-12 12:21:54,167 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:21:54,685 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:21:54,691 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:21:54,987 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value HTTP/1.1" 200 830397
+2026-10-12 12:21:55,435 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:21:55,453 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:21:55,456 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:21:55,458 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:21:55,460 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:21:55,462 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:40.367360+00:00, t2=2025-01-16 18:09:50.367360+00:00
+2026-10-12 12:21:55,465 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:50.367360+00:00, t2=2025-01-16 18:10:00.367359+00:00
+2026-10-12 12:21:55,468 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:00.367359+00:00, t2=2025-01-16 18:10:10.367359+00:00
+2026-10-12 12:21:55,473 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:10.367359+00:00, t2=2025-01-16 18:10:20.367359+00:00
+2026-10-12 12:21:55,476 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:20.367359+00:00, t2=2025-01-16 18:10:30.367359+00:00
+2026-10-12 12:21:55,480 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:30.367359+00:00, t2=2025-01-16 18:10:40.367359+00:00
+2026-10-12 12:21:55,484 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:40.367359+00:00, t2=2025-01-16 18:10:50.367359+00:00
+2026-10-12 12:21:55,487 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:50.367359+00:00, t2=2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:21:55,489 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:21:55,511 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:21:55,514 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-16T18:10:40.993167', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96958182302094, 'longitude': -2.387520118223122, 'height': 720.9540443113074, 'line': 0, 'pixel': 0}
+2026-10-12 12:21:55,516 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:21:55,523 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:21:55,525 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:21:55,527 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:21:55,530 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:21:55,534 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:21:55,538 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:21:55,542 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:21:55,548 - app.application - INFO - Reference product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Perpendicular baseline magnitude: 11.848 m
+2026-10-12 12:21:55,550 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:27:25,263 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:27:25,278 - ingestion.sentinel1 - DEBUG - Searching acquisitions from 2025-01-01T00:00:00+00:00 to 2025-03-01T00:00:00+00:00 
+for polygons: POLYGON ((-1.6016780000000008 37.575725, -1.6016822747772754 37.575724467048666, -1.5964252773521126 37.55004003401504, -1.800000000000001 37.55, -1.800000000000001 37.75, -1.637339076546242 37.7500602872928, -1.6355760000000006 37.74145200000001, -1.635580596394731 37.74145142879892, -1.6096763210553984 37.61482327936081, -1.6096710000000003 37.614823999999984, -1.6052368834393334 37.59312192842534, -1.6016780000000008 37.575725)) 
+area: geography 
+parent product type: IW_SLC__1S 
+polarization: VV
+2026-10-12 12:27:25,285 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:28,867 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc HTTP/1.1" 200 31934
+2026-10-12 12:27:28,942 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:36,271 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=20 HTTP/1.1" 200 31969
+2026-10-12 12:27:36,351 - ingestion.sentinel1 - DEBUG - Page 2: 20 bursts
+2026-10-12 12:27:36,354 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:40,158 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=40 HTTP/1.1" 200 7817
+2026-10-12 12:27:40,162 - ingestion.sentinel1 - DEBUG - Page 3: 5 bursts
+2026-10-12 12:27:40,164 - ingestion.sentinel1 - DEBUG - New fingerprint: 7d5ec6bcc85e6f48fff185544dc4fbda4d962125e43b1dfc894ed73bec62912c
+2026-10-12 12:27:40,165 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:27:40,166 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:27:40,168 - app.application - DEBUG - Sentinel-1 burst: {'@odata.mediaContentType': 'application/octet-stream', 'Id': '05f90813-1eb7-4265-be96-d9e29930c14b', 'Name': 'S1A-SLC-20250116T181050-000219-IW3-VV-463776', 'ContentType': 'application/octet-stream', 'S3Path': '/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/01/16/S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE/measurement/s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff', 'ContentDate': {'Start': '2025-01-16T18:10:50.397390Z', 'End': '2025-01-16T18:10:51.296657Z'}, 'Footprint': "geography'SRID=4326;POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))'", 'GeoFootprint': {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}, 'ParentProductId': '216aff3b-f44e-4d82-9e71-f28a43fce10d', 'ParentProductName': 'S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE', 'ByteOffset': 460112379, 'BurstId': 219, 'AbsoluteBurstId': 123445929, 'AzimuthTime': '2025-01-16T18:10:49.266697Z', 'AzimuthAnxTime': 604.4002104369, 'ParentProductType': 'IW_SLC__1S', 'SwathIdentifier': 'IW3', 'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING', 'PlatformSerialIdentifier': 'A', 'PolarisationChannels': 'VV', 'OperationalMode': 'IW', 'DatatakeID': 463776, 'Lines': 4548, 'LinesPerBurst': 1516, 'SamplesPerBurst': 25286, 'BeginningDateTime': '2025-01-16T18:10:50.397390Z', 'EndingDateTime': '2025-01-16T18:10:51.296657Z'}
+2026-10-12 12:27:40,175 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:27:40,178 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:27:40,179 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:27:40,180 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:27:40,182 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:27:40,184 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:27:40,186 - ingestion.sentinel1 - DEBUG - No duplicate burst IDs found
+2026-10-12 12:27:40,187 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:27:40,190 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-12 12:27:40,191 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-12 12:27:40,193 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-12 12:27:40,194 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-12 12:27:40,197 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-12 12:27:40,232 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:27:40,234 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:27:40,237 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:27:40,240 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:27:40,243 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:27:40,246 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:27:40,248 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:27:40,250 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:27:40,252 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:27:40,255 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:27:40,258 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:27:40,259 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:27:40,261 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:27:40,263 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:27:40,265 - app.application - DEBUG - Orbit metadata for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: {'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING'}
+2026-10-12 12:27:40,269 - app.application - DEBUG - Available fields for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: ['@odata.mediaContentType', 'AbsoluteBurstId', 'AzimuthAnxTime', 'AzimuthTime', 'BeginningDateTime', 'BurstId', 'ByteOffset', 'ContentDate', 'ContentType', 'DatatakeID', 'EndingDateTime', 'Footprint', 'GeoFootprint', 'Id', 'Lines', 'LinesPerBurst', 'Name', 'OperationalMode', 'OrbitDirection', 'ParentProductId', 'ParentProductName', 'ParentProductType', 'PlatformSerialIdentifier', 'PolarisationChannels', 'RelativeOrbitNumber', 'S3Path', 'SamplesPerBurst', 'SwathIdentifier']
+2026-10-12 12:27:40,272 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:27:40,274 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:27:40,280 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:27:40,282 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:27:40,284 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:27:40,287 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:27:40,289 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:27:40,291 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:27:40,293 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:27:40,310 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:40,699 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61) HTTP/1.1" 200 1285
+2026-10-12 12:27:40,702 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:27:40,706 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:40,960 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:27:40,963 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:41,311 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:27:41,318 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:41,594 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:27:41,602 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:41,865 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:27:41,868 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value
+2026-10-12 12:27:41,871 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:27:42,473 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:27:42,477 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:42,771 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value HTTP/1.1" 200 830417
+2026-10-12 12:27:43,245 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:27:43,260 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:27:43,263 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:27:43,266 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:27:43,269 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:27:43,271 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:41.354609+00:00, t2=2025-01-04 18:09:51.354609+00:00
+2026-10-12 12:27:43,275 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:51.354609+00:00, t2=2025-01-04 18:10:01.354609+00:00
+2026-10-12 12:27:43,316 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:01.354609+00:00, t2=2025-01-04 18:10:11.354609+00:00
+2026-10-12 12:27:43,379 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:11.354609+00:00, t2=2025-01-04 18:10:21.354609+00:00
+2026-10-12 12:27:43,386 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:21.354609+00:00, t2=2025-01-04 18:10:31.354610+00:00
+2026-10-12 12:27:43,395 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:31.354610+00:00, t2=2025-01-04 18:10:41.354609+00:00
+2026-10-12 12:27:43,398 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:41.354609+00:00, t2=2025-01-04 18:10:51.354609+00:00
+2026-10-12 12:27:43,403 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:27:43,428 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:27:43,431 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-04T18:10:41.991590', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96933193985169, 'longitude': -2.387762810598634, 'height': 720.954042930156, 'line': 0, 'pixel': 0}
+2026-10-12 12:27:43,435 - app.application - DEBUG - Reference geolocation point: line=6064, pixel=12650, latitude=37.69792639, longitude=-2.04381227, height=974.934
+2026-10-12 12:27:43,443 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:27:43,447 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:27:43,449 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:27:43,451 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:27:43,456 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:27:43,458 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:27:43,461 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:27:43,464 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:27:43,469 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:27:43,474 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:43,788 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d) HTTP/1.1" 200 1289
+2026-10-12 12:27:43,792 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:27:43,796 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:27:44,039 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:27:44,042 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:44,309 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:27:44,314 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:44,590 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:27:44,595 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:44,859 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:27:44,863 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value
+2026-10-12 12:27:44,865 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:27:45,334 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:27:45,339 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:27:45,660 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value HTTP/1.1" 200 830397
+2026-10-12 12:27:46,108 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:27:46,123 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:27:46,125 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:27:46,127 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:27:46,130 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:27:46,132 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:40.367360+00:00, t2=2025-01-16 18:09:50.367360+00:00
+2026-10-12 12:27:46,134 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:50.367360+00:00, t2=2025-01-16 18:10:00.367359+00:00
+2026-10-12 12:27:46,136 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:00.367359+00:00, t2=2025-01-16 18:10:10.367359+00:00
+2026-10-12 12:27:46,137 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:10.367359+00:00, t2=2025-01-16 18:10:20.367359+00:00
+2026-10-12 12:27:46,139 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:20.367359+00:00, t2=2025-01-16 18:10:30.367359+00:00
+2026-10-12 12:27:46,141 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:30.367359+00:00, t2=2025-01-16 18:10:40.367359+00:00
+2026-10-12 12:27:46,143 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:40.367359+00:00, t2=2025-01-16 18:10:50.367359+00:00
+2026-10-12 12:27:46,145 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:50.367359+00:00, t2=2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:27:46,148 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:27:46,165 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:27:46,167 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-16T18:10:40.993167', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96958182302094, 'longitude': -2.387520118223122, 'height': 720.9540443113074, 'line': 0, 'pixel': 0}
+2026-10-12 12:27:46,168 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:27:46,171 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:27:46,173 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:27:46,175 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:27:46,177 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:27:46,179 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:27:46,181 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:27:46,183 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:27:46,215 - app.application - INFO - Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
+2026-10-12 12:27:46,217 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-12 12:33:22,475 - app.application - INFO - Starting Sentinel-1 burst search
+2026-10-12 12:33:22,494 - ingestion.sentinel1 - DEBUG - Searching acquisitions from 2025-01-01T00:00:00+00:00 to 2025-03-01T00:00:00+00:00 
+for polygons: POLYGON ((-1.6016780000000008 37.575725, -1.6016822747772754 37.575724467048666, -1.5964252773521126 37.55004003401504, -1.800000000000001 37.55, -1.800000000000001 37.75, -1.637339076546242 37.7500602872928, -1.6355760000000006 37.74145200000001, -1.635580596394731 37.74145142879892, -1.6096763210553984 37.61482327936081, -1.6096710000000003 37.614823999999984, -1.6052368834393334 37.59312192842534, -1.6016780000000008 37.575725)) 
+area: geography 
+parent product type: IW_SLC__1S 
+polarization: VV
+2026-10-12 12:33:22,501 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:25,084 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc HTTP/1.1" 200 31934
+2026-10-12 12:33:25,164 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:28,061 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=20 HTTP/1.1" 200 31969
+2026-10-12 12:33:28,135 - ingestion.sentinel1 - DEBUG - Page 2: 20 bursts
+2026-10-12 12:33:28,139 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:30,702 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Bursts?%24filter=ContentDate%2FStart+ge+2025-01-01T00%3A00%3A00%2B00%3A00+and+ContentDate%2FStart+lt+2025-03-01T00%3A00%3A00%2B00%3A00+and+OData.CSC.Intersects%28area%3Dgeography%27SRID%3D4326%3BPOLYGON+%28%28-1.6016780000000008+37.575725%2C+-1.6016822747772754+37.575724467048666%2C+-1.5964252773521126+37.55004003401504%2C+-1.800000000000001+37.55%2C+-1.800000000000001+37.75%2C+-1.637339076546242+37.7500602872928%2C+-1.6355760000000006+37.74145200000001%2C+-1.635580596394731+37.74145142879892%2C+-1.6096763210553984+37.61482327936081%2C+-1.6096710000000003+37.614823999999984%2C+-1.6052368834393334+37.59312192842534%2C+-1.6016780000000008+37.575725%29%29%27%29+and+ParentProductType+eq+%27IW_SLC__1S%27+and+PolarisationChannels+eq+%27VV%27&%24orderby=Id+asc&%24skip=40 HTTP/1.1" 200 7817
+2026-10-12 12:33:30,706 - ingestion.sentinel1 - DEBUG - Page 3: 5 bursts
+2026-10-12 12:33:30,709 - ingestion.sentinel1 - DEBUG - New fingerprint: 7d5ec6bcc85e6f48fff185544dc4fbda4d962125e43b1dfc894ed73bec62912c
+2026-10-12 12:33:30,711 - ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-12 12:33:30,713 - app.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-12 12:33:30,715 - app.application - DEBUG - Sentinel-1 burst: {'@odata.mediaContentType': 'application/octet-stream', 'Id': '05f90813-1eb7-4265-be96-d9e29930c14b', 'Name': 'S1A-SLC-20250116T181050-000219-IW3-VV-463776', 'ContentType': 'application/octet-stream', 'S3Path': '/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/01/16/S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE/measurement/s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff', 'ContentDate': {'Start': '2025-01-16T18:10:50.397390Z', 'End': '2025-01-16T18:10:51.296657Z'}, 'Footprint': "geography'SRID=4326;POLYGON ((-2.497403 37.462143, -2.041154 37.520934, -1.601678 37.575725, -1.64358 37.780555, -2.083329 37.721187, -2.53984 37.657815, -2.497403 37.462143))'", 'GeoFootprint': {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}, 'ParentProductId': '216aff3b-f44e-4d82-9e71-f28a43fce10d', 'ParentProductName': 'S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE', 'ByteOffset': 460112379, 'BurstId': 219, 'AbsoluteBurstId': 123445929, 'AzimuthTime': '2025-01-16T18:10:49.266697Z', 'AzimuthAnxTime': 604.4002104369, 'ParentProductType': 'IW_SLC__1S', 'SwathIdentifier': 'IW3', 'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING', 'PlatformSerialIdentifier': 'A', 'PolarisationChannels': 'VV', 'OperationalMode': 'IW', 'DatatakeID': 463776, 'Lines': 4548, 'LinesPerBurst': 1516, 'SamplesPerBurst': 25286, 'BeginningDateTime': '2025-01-16T18:10:50.397390Z', 'EndingDateTime': '2025-01-16T18:10:51.296657Z'}
+2026-10-12 12:33:30,721 - app.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-12 12:33:30,725 - app.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-12 12:33:30,726 - app.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-12 12:33:30,728 - app.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-12 12:33:30,730 - app.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-12 12:33:30,733 - app.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-12 12:33:30,735 - ingestion.sentinel1 - DEBUG - No duplicate burst IDs found
+2026-10-12 12:33:30,736 - app.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-12 12:33:30,742 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst count: 3
+2026-10-12 12:33:30,744 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | Burst count: 3
+2026-10-12 12:33:30,745 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst count: 3
+2026-10-12 12:33:30,746 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | Burst count: 3
+2026-10-12 12:33:30,748 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | Burst count: 3
+2026-10-12 12:33:30,785 - app.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:33:30,789 - app.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:33:30,791 - app.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:33:30,793 - app.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:33:30,796 - app.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:33:30,799 - app.application - DEBUG - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-12 12:33:30,805 - app.application - DEBUG - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-12 12:33:30,811 - app.application - DEBUG - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-12 12:33:30,813 - app.application - DEBUG - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-12 12:33:30,815 - app.application - DEBUG - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-12 12:33:30,820 - app.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-12 12:33:30,972 - app.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-12 12:33:31,075 - app.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-12 12:33:31,093 - app.application - INFO - Acquisition metadata validation passed
+2026-10-12 12:33:31,119 - app.application - DEBUG - Orbit metadata for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: {'RelativeOrbitNumber': 1, 'OrbitDirection': 'ASCENDING'}
+2026-10-12 12:33:31,169 - app.application - DEBUG - Available fields for product 216aff3b-f44e-4d82-9e71-f28a43fce10d: ['@odata.mediaContentType', 'AbsoluteBurstId', 'AzimuthAnxTime', 'AzimuthTime', 'BeginningDateTime', 'BurstId', 'ByteOffset', 'ContentDate', 'ContentType', 'DatatakeID', 'EndingDateTime', 'Footprint', 'GeoFootprint', 'Id', 'Lines', 'LinesPerBurst', 'Name', 'OperationalMode', 'OrbitDirection', 'ParentProductId', 'ParentProductName', 'ParentProductType', 'PlatformSerialIdentifier', 'PolarisationChannels', 'RelativeOrbitNumber', 'S3Path', 'SamplesPerBurst', 'SwathIdentifier']
+2026-10-12 12:33:31,188 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-12 12:33:31,212 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-12 12:33:31,232 - app.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-12 12:33:31,253 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-12 12:33:31,263 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-12 12:33:31,296 - app.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-12 12:33:31,313 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:33:31,317 - app.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:33:31,321 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-12 12:33:31,325 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:31,696 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61) HTTP/1.1" 200 1285
+2026-10-12 12:33:31,700 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:33:31,703 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:31,959 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:33:31,998 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:32,389 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:33:32,399 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:32,718 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:33:32,724 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:32,992 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:33:32,997 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value
+2026-10-12 12:33:33,000 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:33:33,635 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:33:33,640 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:33,937 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(4770594e-9ee5-432a-9552-22f1e27efd61)/Nodes(S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml)/$value HTTP/1.1" 200 830417
+2026-10-12 12:33:34,380 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-12 12:33:34,401 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-12 12:33:34,404 - app.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-12 12:33:34,407 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-12 12:33:34,411 - app.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-12 12:33:34,415 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:41.354609+00:00, t2=2025-01-04 18:09:51.354609+00:00
+2026-10-12 12:33:34,417 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:09:51.354609+00:00, t2=2025-01-04 18:10:01.354609+00:00
+2026-10-12 12:33:34,421 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:01.354609+00:00, t2=2025-01-04 18:10:11.354609+00:00
+2026-10-12 12:33:34,423 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:11.354609+00:00, t2=2025-01-04 18:10:21.354609+00:00
+2026-10-12 12:33:34,427 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:21.354609+00:00, t2=2025-01-04 18:10:31.354610+00:00
+2026-10-12 12:33:34,429 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:31.354610+00:00, t2=2025-01-04 18:10:41.354609+00:00
+2026-10-12 12:33:34,432 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-04 18:10:41.354609+00:00, t2=2025-01-04 18:10:51.354609+00:00
+2026-10-12 12:33:34,434 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-12 12:33:34,468 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-12 12:33:34,472 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-04T18:10:41.991590', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96933193985169, 'longitude': -2.387762810598634, 'height': 720.954042930156, 'line': 0, 'pixel': 0}
+2026-10-12 12:33:34,476 - app.application - DEBUG - Reference geolocation point: line=6064, pixel=12650, latitude=37.69792639, longitude=-2.04381227, height=974.934
+2026-10-12 12:33:34,490 - app.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-12 12:33:34,495 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-12 12:33:34,501 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-12 12:33:34,508 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-12 12:33:34,511 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-12 12:33:34,515 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-12 12:33:34,517 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-12 12:33:34,519 - app.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-12 12:33:34,529 - app.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-12 12:33:34,533 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:34,947 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d) HTTP/1.1" 200 1289
+2026-10-12 12:33:34,951 - app.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-12 12:33:34,954 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): catalogue.dataspace.copernicus.eu:443
+2026-10-12 12:33:35,203 - urllib3.connectionpool - DEBUG - https://catalogue.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 301 162
+2026-10-12 12:33:35,219 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:35,492 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes HTTP/1.1" 200 414
+2026-10-12 12:33:35,503 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:35,801 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:33:35,806 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:36,072 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes HTTP/1.1" 200 None
+2026-10-12 12:33:36,077 - app.application - DEBUG - Annotation file URL: https://download.dataspace.copernicus.eu/odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value
+2026-10-12 12:33:36,080 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): identity.dataspace.copernicus.eu:443
+2026-10-12 12:33:36,538 - urllib3.connectionpool - DEBUG - https://identity.dataspace.copernicus.eu:443 "POST /auth/realms/CDSE/protocol/openid-connect/token HTTP/1.1" 200 3788
+2026-10-12 12:33:36,548 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): download.dataspace.copernicus.eu:443
+2026-10-12 12:33:36,861 - urllib3.connectionpool - DEBUG - https://download.dataspace.copernicus.eu:443 "GET /odata/v1/Products(216aff3b-f44e-4d82-9e71-f28a43fce10d)/Nodes(S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE)/Nodes(annotation)/Nodes(s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml)/$value HTTP/1.1" 200 830397
+2026-10-12 12:33:37,324 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-12 12:33:37,341 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-12 12:33:37,343 - app.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-12 12:33:37,345 - app.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-12 12:33:37,346 - app.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-12 12:33:37,348 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:40.367360+00:00, t2=2025-01-16 18:09:50.367360+00:00
+2026-10-12 12:33:37,350 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:09:50.367360+00:00, t2=2025-01-16 18:10:00.367359+00:00
+2026-10-12 12:33:37,352 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:00.367359+00:00, t2=2025-01-16 18:10:10.367359+00:00
+2026-10-12 12:33:37,354 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:10.367359+00:00, t2=2025-01-16 18:10:20.367359+00:00
+2026-10-12 12:33:37,356 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:20.367359+00:00, t2=2025-01-16 18:10:30.367359+00:00
+2026-10-12 12:33:37,358 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:30.367359+00:00, t2=2025-01-16 18:10:40.367359+00:00
+2026-10-12 12:33:37,360 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:40.367359+00:00, t2=2025-01-16 18:10:50.367359+00:00
+2026-10-12 12:33:37,361 - app.application - DEBUG - Checking orbit vector interval: t1=2025-01-16 18:10:50.367359+00:00, t2=2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:33:37,364 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-12 12:33:37,384 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-12 12:33:37,386 - app.application - DEBUG - First geolocation point: {'azimuth_time': '2025-01-16T18:10:40.993167', 'slant_range_time': 0.006017099064654127, 'latitude': 36.96958182302094, 'longitude': -2.387520118223122, 'height': 720.9540443113074, 'line': 0, 'pixel': 0}
+2026-10-12 12:33:37,390 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-12 12:33:37,392 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-12 12:33:37,402 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-12 12:33:37,404 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-12 12:33:37,408 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-12 12:33:37,411 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-12 12:33:37,413 - app.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-12 12:33:37,419 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-12 12:33:37,421 - app.application - INFO - Reference: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
+2026-10-12 12:33:37,423 - app.application - INFO - Sentinel-1 burst search completed

@@ -2,11 +2,14 @@ import logging
 from datetime import UTC, datetime
 from pathlib import Path
 
+import numpy as np
+
 from app.acquisition_geometry import zero_doppler
 from ingestion.annotation import extract_annotation_bursts
 from ingestion.cdse import CDSEIngestion
 from ingestion.metadata import metadata_summary, select_earliest_acquisitions
 from ingestion.sentinel1 import Sentinel1Ingestion
+from utils.baseline_geometry import calculate_baseline_geometry
 from utils.calculate_orbit import CalculateOrbit
 from utils.coordinate_transform import geodetic_to_ecef
 from utils.geojson_manage import GeojsonManager
@@ -395,6 +398,41 @@ def sentinel1_app(
     logger.info(
         "Orbit interpolation completed for %d acquisitions",
         len(satellite_positions),
+    )
+
+    # Calculate baseline geometry after processing both acquisitions.
+
+    reference_id = selected_pair[0]["product_id"]
+    secondary_id = selected_pair[1]["product_id"]
+
+    reference_position = satellite_positions[reference_id]
+    secondary_position = satellite_positions[secondary_id]
+
+    baseline = calculate_baseline_geometry(
+        reference_position=reference_position,
+        secondary_position=secondary_position,
+        ground_position=reference_ground_position,
+    )
+
+    # Validate baseline decomposition.
+    if not np.isclose(
+        baseline.total_m**2,
+        baseline.parallel_m**2 + baseline.perpendicular_m**2,
+        rtol=1e-10,
+        atol=1e-6,
+    ):
+        raise ValueError("Baseline decomposition validation failed")
+
+    logger.info(
+        "Reference: %s | Secondary: %s | "
+        "Total baseline: %.6f m | "
+        "Parallel baseline: %.6f m | "
+        "Perpendicular baseline: %.6f m",
+        reference_id,
+        secondary_id,
+        baseline.total_m,
+        baseline.parallel_m,
+        baseline.perpendicular_m,
     )
 
     logger.info("Sentinel-1 burst search completed")
