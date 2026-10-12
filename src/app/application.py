@@ -1,15 +1,14 @@
 import logging
 from datetime import UTC, datetime
 from pathlib import Path
-from xml.etree import ElementTree as ET
 
-import numpy as np
-
+from app.acquisition_geometry import zero_doppler
+from ingestion.annotation import extract_annotation_bursts
+from ingestion.cdse import CDSEIngestion
 from ingestion.metadata import metadata_summary, select_earliest_acquisitions
 from ingestion.sentinel1 import Sentinel1Ingestion
-from src.ingestion.cdse import CDSEIngestion
-from src.utils.calculate_orbit import CalculateOrbit
-from src.utils.coordinate_transform import geodetic_to_ecef
+from utils.calculate_orbit import CalculateOrbit
+from utils.coordinate_transform import geodetic_to_ecef
 from utils.geojson_manage import GeojsonManager
 from utils.metadata_validation import MetadataValidator
 from utils.spatial_validation import ValidateSpatial
@@ -260,14 +259,12 @@ def sentinel1_app(
         # 4. Download the annotation
         xml_file_path = Path(config["ANNOTATION_DATA_RAW"]) / annotation_node["Name"]
 
-        root = ET.parse(xml_file_path)
+        cdse_ingestion.download_annotation_file(
+            annotation_node=annotation_node,
+            destination_path=xml_file_path,
+        )
 
-        annotation_bursts = [
-            {
-                "azimuth_time": burst.findtext("azimuthTime"),
-            }
-            for burst in root.findall(".//swathTiming/burstList/burst")
-        ]
+        annotation_bursts = extract_annotation_bursts(xml_file_path=xml_file_path)
 
         burst_mapping = validation_metadata.map_catalogue_bursts_to_annotation(
             catalogue_bursts=bursts_by_product[product_id],
@@ -278,11 +275,6 @@ def sentinel1_app(
             "Product %s | Burst mapping: %s",
             product_id,
             burst_mapping,
-        )
-
-        cdse_ingestion.download_annotation_file(
-            annotation_node=annotation_node,
-            destination_path=xml_file_path,
         )
 
         # 5. Extract orbit vectors
@@ -387,148 +379,18 @@ def sentinel1_app(
             )
 
         # 12. Zero Doppler residual for the reference ground position
-        zero_doppler_residual = calculate_orbit.zero_doppler_residual(
-            satellite_position=catalogue_position,
-            satellite_velocity=catalogue_velocity,  # Using the interpolated satellite velocity
-            ground_position=reference_ground_position,
-        )
-
-        logger.info(
-            "Product %s | Zero Doppler residual (m²/s): %f",
-            product_id,
-            zero_doppler_residual,
-        )
-
-        # 13. Evaluate zero-Doppler residual at orbit coverage endpoints
-        first_vector = orbit_vectors[0]
-        last_vector = orbit_vectors[-1]
-
-        start_position = np.array(
-            [first_vector["position"][axis] for axis in ("x", "y", "z")],
-            dtype=float,
-        )
-        start_velocity = np.array(
-            [first_vector["velocity"][axis] for axis in ("x", "y", "z")],
-            dtype=float,
-        )
-
-        end_position = np.array(
-            [last_vector["position"][axis] for axis in ("x", "y", "z")],
-            dtype=float,
-        )
-        end_velocity = np.array(
-            [last_vector["velocity"][axis] for axis in ("x", "y", "z")],
-            dtype=float,
-        )
-
-        residual_start = calculate_orbit.zero_doppler_residual(
-            satellite_position=start_position,
-            satellite_velocity=start_velocity,
-            ground_position=reference_ground_position,
-        )
-
-        residual_end = calculate_orbit.zero_doppler_residual(
-            satellite_position=end_position,
-            satellite_velocity=end_velocity,
-            ground_position=reference_ground_position,
-        )
-
-        logger.info(
-            "Product %s | Start residual: %.3f m²/s | End residual: %.3f m²/s",
-            product_id,
-            residual_start,
-            residual_end,
-        )
-
-        if residual_start * residual_end < 0:
-            logger.info(
-                "Product %s | Zero-Doppler root is bracketed",
-                product_id,
-            )
-        elif residual_start == 0 or residual_end == 0:
-            logger.info(
-                "Product %s | Zero-Doppler condition satisfied at an endpoint",
-                product_id,
-            )
-        else:
-            logger.warning(
-                "Product %s | No zero-Doppler sign change between coverage endpoints",
-                product_id,
-            )
-
-        # 14. Find and log zero-Doppler brackets within the orbit coverage
-        brackets = calculate_orbit.find_zero_doppler_brackets(
+        result = zero_doppler(
+            logger=logger,
+            product_id=product_id,
+            calculate_orbit=calculate_orbit,
+            catalogue_position=catalogue_position,
+            catalogue_velocity=catalogue_velocity,
+            reference_ground_position=reference_ground_position,
             orbit_vectors=orbit_vectors,
-            ground_position=reference_ground_position,
+            satellite_positions=satellite_positions,
         )
 
-        for first, second in brackets:
-            logger.info(
-                "Product %s | Zero-Doppler bracket: %s to %s",
-                product_id,
-                first["timestamp"],
-                second["timestamp"],
-            )
-
-        if len(brackets) != 1:
-            raise ValueError(
-                f"Expected exactly one zero-Doppler bracket for {product_id}, "
-                f"found {len(brackets)}"
-            )
-
-        first, second = brackets[0]
-
-        # 15. Solve for the zero-Doppler time within the identified bracket
-        zero_doppler_time = calculate_orbit.solve_zero_doppler_time(
-            first=first,
-            second=second,
-            ground_position=reference_ground_position,
-        )
-
-        logger.info(
-            "Product %s | Zero-Doppler time: %s",
-            product_id,
-            zero_doppler_time,
-        )
-
-        # 16. Interpolate the satellite state at the zero-Doppler time and compute the residual
-        zero_doppler_position, zero_doppler_velocity = (
-            calculate_orbit.interpolate_state(
-                first,
-                second,
-                zero_doppler_time,
-            )
-        )
-
-        satellite_positions[product_id] = zero_doppler_position
-
-        residual = calculate_orbit.zero_doppler_residual(
-            satellite_position=zero_doppler_position,
-            satellite_velocity=zero_doppler_velocity,
-            ground_position=reference_ground_position,
-        )
-
-        logger.info(
-            "Product %s | Solved zero-Doppler residual: %.6f m²/s",
-            product_id,
-            residual,
-        )
-
-        # 17. Compute the line-of-sight vector and the normalized zero-Doppler residual
-        line_of_sight = reference_ground_position - zero_doppler_position
-
-        normalized_residual = abs(residual) / (
-            np.linalg.norm(line_of_sight) * np.linalg.norm(zero_doppler_velocity)
-        )
-
-        logger.info(
-            "Product %s | residual=%.12e | LOS norm=%.6f | velocity norm=%.6f | normalized=%.12e",
-            product_id,
-            residual,
-            np.linalg.norm(line_of_sight),
-            np.linalg.norm(zero_doppler_velocity),
-            normalized_residual,
-        )
+        satellite_positions[product_id] = result.satellite_position
 
     logger.info(
         "Orbit interpolation completed for %d acquisitions",
