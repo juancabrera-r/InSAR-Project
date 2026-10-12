@@ -2,9 +2,8 @@ from functools import reduce
 from logging import Logger
 
 from pyproj import Transformer
-from shapely import unary_union, wkt
+from shapely import transform, unary_union, wkt
 from shapely.geometry import shape
-from shapely.ops import transform
 
 
 class ValidateSpatial:
@@ -43,8 +42,9 @@ class ValidateSpatial:
         )
 
         aoi_projected = transform(
-            transformer.transform,
             aoi_geometry,
+            transformer.transform,
+            interleaved=False,
         )
 
         aoi_area = aoi_projected.area
@@ -69,8 +69,9 @@ class ValidateSpatial:
             acquisition_footprint = unary_union(geometries)
 
             footprint_projected = transform(
-                transformer.transform,
                 acquisition_footprint,
+                transformer.transform,
+                interleaved=False,
             )
 
             covered_region = aoi_projected.intersection(footprint_projected)

@@ -11,7 +11,7 @@ from utils.coordinate_transform import geodetic_to_ecef
 from utils.date_time_format import to_iso_utc
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-ANNOTATION_DIR = PROJECT_ROOT / "data" / "annotation"
+ANNOTATION_DIR = PROJECT_ROOT / "data" / "raw" / "annotation"
 
 SPEED_OF_LIGHT = 299_792_458.0
 

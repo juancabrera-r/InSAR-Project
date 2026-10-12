@@ -2,8 +2,8 @@ import json
 from pathlib import Path
 
 from pyproj import Transformer
+from shapely import transform
 from shapely.geometry import mapping
-from shapely.ops import transform
 
 
 def export_processing_aoi(
@@ -22,8 +22,9 @@ def export_processing_aoi(
     )
 
     footprint_wgs84 = transform(
-        transformer.transform,
         common_footprint,
+        transformer.transform,
+        interleaved=False,
     )
 
     geojson = {

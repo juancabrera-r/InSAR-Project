@@ -6,7 +6,7 @@ platforms = ["win-64", "linux-64"]
 version = "0.1.0"
 
 [dependencies]
-python = "3.12"
+python = "3.12.*"
 rich = "*"
 pyyaml = ">=6.0.3,<7"
 python-dotenv = ">=1.2.4,<2"
@@ -15,6 +15,8 @@ pip = ">=26.2.1,<27"
 shapely = ">=2.2.0,<3"
 pyproj = ">=3.8.0,<4"
 scipy = ">=1.18.1,<2"
+rasterio = ">=1.5.2,<2"
+matplotlib = ">=3.11.2,<4"
 
 [feature.dev.dependencies]
 pytest = "*"

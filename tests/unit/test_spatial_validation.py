@@ -2,8 +2,8 @@ import logging
 
 import pytest
 from pyproj import Transformer
+from shapely import transform
 from shapely.geometry import Polygon, box, mapping
-from shapely.ops import transform
 
 from utils.spatial_validation import ValidateSpatial
 
@@ -26,7 +26,12 @@ def to_wgs84():
 @pytest.fixture
 def aoi_wkt(to_wgs84):
     aoi = box(500000, 4400000, 501000, 4401000)
-    return transform(to_wgs84, aoi).wkt
+
+    return transform(
+        aoi,
+        to_wgs84,
+        interleaved=False,
+    ).wkt
 
 
 @pytest.fixture
@@ -35,8 +40,12 @@ def bursts_by_product(to_wgs84):
     product2 = box(500250, 4400000, 501000, 4401000)
 
     return {
-        "product1": [{"GeoFootprint": mapping(transform(to_wgs84, product1))}],
-        "product2": [{"GeoFootprint": mapping(transform(to_wgs84, product2))}],
+        "product1": [
+            {"GeoFootprint": mapping(transform(product1, to_wgs84, interleaved=False))}
+        ],
+        "product2": [
+            {"GeoFootprint": mapping(transform(product2, to_wgs84, interleaved=False))}
+        ],
     }
 
 

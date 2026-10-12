@@ -1,4 +1,4 @@
-# ADR-006: InSAR perpendicular baseline
+# ADR-008: InSAR perpendicular baseline
 
 ## Context
 
@@ -88,5 +88,12 @@ This confirms that your baseline decomposition is internally consistent. It does
 
 A relatively small perpendicular baseline is generally favorable for interferometric coherence because it reduces geometric decorrelation.
 
+We have completed an important part of InSAR acquisition-pair geometry:
+- Temporal baseline: 12 days.
+- Total spatial baseline: 21.652 m.
+- Signed LOS-parallel baseline: +18.123 m.
+- Unsigned perpendicular baseline: 11.848 m.
 
-## Validation
+These values are geometrically consistent, but they do not yet establish that the SAR images are correctly aligned or suitable for interferogram generation.
+
+The next major processing operation is coregistration

@@ -5,10 +5,14 @@ from pathlib import Path
 import numpy as np
 
 from app.acquisition_geometry import zero_doppler
-from ingestion.annotation import extract_annotation_bursts
+from ingestion.annotation import (
+    extract_annotation_bursts,
+    extract_image_sampling_metadata,
+)
 from ingestion.cdse import CDSEIngestion
 from ingestion.metadata import metadata_summary, select_earliest_acquisitions
 from ingestion.sentinel1 import Sentinel1Ingestion
+from src.utils.explore_sar_tiff import ExploreSARTiff
 from utils.baseline_geometry import calculate_baseline_geometry
 from utils.calculate_orbit import CalculateOrbit
 from utils.coordinate_transform import geodetic_to_ecef
@@ -239,8 +243,65 @@ def sentinel1_app(
 
         children_node = cdse_ingestion.get_children_node(product_nodes=nodes)
 
-        annotation_files = cdse_ingestion.get_children_node_annotation(
-            children_node=children_node
+        annotation_files = cdse_ingestion.get_directory_files(
+            children_node=children_node,
+            directory_name="annotation",
+        )
+
+        # 3. Retrieve measurement files
+        measurement_files = cdse_ingestion.get_directory_files(
+            children_node=children_node,
+            directory_name="measurement",
+        )
+
+        iw3_vv_measurements = [
+            node
+            for node in measurement_files["result"]
+            if node["Name"].lower().startswith("s1a-iw3-slc-vv-")
+            and node["Name"].lower().endswith(".tiff")
+        ]
+
+        if len(iw3_vv_measurements) != 1:
+            raise ValueError(
+                f"Expected one IW3 VV measurement for {product_id}, "
+                f"found {len(iw3_vv_measurements)}"
+            )
+
+        measurement_node = iw3_vv_measurements[0]
+
+        logger.info(
+            "Product %s | Selected measurement: %s",
+            product_id,
+            measurement_node["Name"],
+        )
+
+        # 3. Download the measurement file
+        # Download the selected IW3 VV measurement for each acquisition.
+        measurement_path = (
+            Path(config["MEASUREMENT_DATA_RAW"]) / product_id / measurement_node["Name"]
+        )
+
+        if measurement_path.is_file() and measurement_path.stat().st_size > 0:
+            logger.info(
+                "Measurement already exists: %s",
+                measurement_path,
+            )
+        else:
+            logger.info(
+                "Downloading IW3 VV measurement for product %s: %s",
+                product_id,
+                measurement_node["Name"],
+            )
+
+            cdse_ingestion.download_measurement_file(
+                measurement_node=measurement_node,
+                destination_path=measurement_path,
+            )
+
+        logger.info(
+            "Product %s | Measurement size: %.2f GiB",
+            product_id,
+            measurement_path.stat().st_size / (1024**3),
         )
 
         # 3. Select the IW3 VV annotation
@@ -278,6 +339,61 @@ def sentinel1_app(
             "Product %s | Burst mapping: %s",
             product_id,
             burst_mapping,
+        )
+
+        catalogue_burst_id = 219
+
+        annotation_index = burst_mapping[catalogue_burst_id]
+        selected_burst = annotation_bursts[annotation_index]
+
+        logger.info(
+            "Product %s | Burst %s | Azimuth start time: %s",
+            product_id,
+            catalogue_burst_id,
+            selected_burst["azimuth_time"],
+        )
+
+        first_valid_samples = selected_burst["first_valid_samples"]
+        last_valid_samples = selected_burst["last_valid_samples"]
+
+        logger.info(
+            "Product %s | Burst %s | Annotation index %s | Validity entries: %s",
+            product_id,
+            catalogue_burst_id,
+            annotation_index,
+            len(first_valid_samples),
+        )
+
+        valid_line_count = sum(
+            first >= 0 and last >= first
+            for first, last in zip(
+                first_valid_samples,
+                last_valid_samples,
+            )
+        )
+
+        logger.info(
+            "Product %s | Burst 219 | Valid azimuth lines: %s / %s",
+            product_id,
+            valid_line_count,
+            len(first_valid_samples),
+        )
+
+        next_burst = annotation_bursts[annotation_index + 1]
+
+        logger.info(
+            "Product %s | Burst 219 start: %s | Burst 220 start: %s",
+            product_id,
+            selected_burst["azimuth_time"],
+            next_burst["azimuth_time"],
+        )
+
+        sampling_metadata = extract_image_sampling_metadata(xml_file_path)
+
+        logger.info(
+            "Product %s | Sampling metadata: %s",
+            product_id,
+            sampling_metadata,
         )
 
         # 5. Extract orbit vectors
@@ -370,6 +486,14 @@ def sentinel1_app(
                 point["height"],
             )
 
+            logger.info(
+                "Reference geolocation point | "
+                "Azimuth time: %s | Global line: %d | Range pixel: %d",
+                point["azimuth_time"],
+                point["line"],
+                point["pixel"],
+            )
+
             reference_ground_position = geodetic_to_ecef(
                 latitude=point["latitude"],
                 longitude=point["longitude"],
@@ -391,6 +515,36 @@ def sentinel1_app(
             reference_ground_position=reference_ground_position,
             orbit_vectors=orbit_vectors,
             satellite_positions=satellite_positions,
+        )
+
+        # Calculate the target's azimuth coordinate relative to burst 219.
+        burst_start = datetime.fromisoformat(selected_burst["azimuth_time"]).replace(
+            tzinfo=UTC
+        )
+
+        target_time = result.time.astimezone(UTC)
+
+        local_line = (
+            target_time - burst_start
+        ).total_seconds() / sampling_metadata.azimuth_time_interval
+
+        line_index = round(local_line)
+
+        if not 0 <= line_index < len(first_valid_samples):
+            raise ValueError(
+                f"Target azimuth line {line_index} is outside burst {catalogue_burst_id}"
+            )
+
+        first_valid = first_valid_samples[line_index]
+        last_valid = last_valid_samples[line_index]
+
+        logger.info(
+            "Product %s | Burst %s | Line %d | Valid range samples: %d to %d",
+            product_id,
+            catalogue_burst_id,
+            line_index,
+            first_valid,
+            last_valid,
         )
 
         satellite_positions[product_id] = result.satellite_position
@@ -434,5 +588,25 @@ def sentinel1_app(
         baseline.parallel_m,
         baseline.perpendicular_m,
     )
+
+    # Inspect tiff
+    tiff_path_04 = Path(
+        "data/raw/measurement/"
+        "4770594e-9ee5-432a-9552-22f1e27efd61/"
+        "s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.tiff"
+    )
+    tiff_path_16 = Path(
+        "data/raw/measurement/"
+        "216aff3b-f44e-4d82-9e71-f28a43fce10d/"
+        "s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff"
+    )
+
+    explorer_04 = ExploreSARTiff(tiff_path=tiff_path_04, logger=logger)
+    explorer_04.inspect_metadata()
+    explorer_04.inspect_small_amplitude_window()
+
+    explorer_16 = ExploreSARTiff(tiff_path=tiff_path_16, logger=logger)
+    explorer_16.inspect_metadata()
+    explorer_16.inspect_small_amplitude_window()
 
     logger.info("Sentinel-1 burst search completed")

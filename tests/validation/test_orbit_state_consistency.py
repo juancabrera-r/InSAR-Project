@@ -8,7 +8,7 @@ import pytest
 from utils.calculate_orbit import CalculateOrbit
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-ANNOTATION_DIR = PROJECT_ROOT / "data" / "annotation"
+ANNOTATION_DIR = PROJECT_ROOT / "data" / "raw" / "annotation"
 
 ANNOTATION_PATHS = [
     ANNOTATION_DIR

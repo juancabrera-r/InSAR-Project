@@ -82,20 +82,29 @@ class CDSEIngestion:
 
         return children
 
-    def get_children_node_annotation(self, children_node: dict) -> dict:
-
-        annotation_node = next(
-            node for node in children_node["result"] if node["Name"] == "annotation"
+    def get_directory_files(
+        self,
+        children_node: dict,
+        directory_name: str,
+    ) -> dict:
+        directory_node = next(
+            (
+                node
+                for node in children_node["result"]
+                if node["Name"] == directory_name
+            ),
+            None,
         )
 
-        annotation_url = annotation_node["Nodes"]["uri"]
+        if directory_node is None:
+            raise ValueError(f"Directory {directory_name!r} not found in SAFE product")
 
-        response = requests.get(annotation_url, timeout=30)
+        directory_url = directory_node["Nodes"]["uri"]
+
+        response = requests.get(directory_url, timeout=30)
         response.raise_for_status()
 
-        annotation_files = response.json()
-
-        return annotation_files
+        return response.json()
 
     def download_annotation_file(
         self,
@@ -130,3 +139,47 @@ class CDSEIngestion:
 
         with open(destination_path, "wb") as f:
             f.writelines(response.iter_content(chunk_size=8192))
+
+    def download_measurement_file(
+        self,
+        measurement_node: dict,
+        destination_path: Path,
+    ) -> None:
+        node_uri = measurement_node["Nodes"]["uri"]
+
+        if not node_uri.endswith("/Nodes"):
+            raise ValueError("Unexpected CDSE node URI structure")
+
+        file_url = node_uri.removesuffix("/Nodes") + "/$value"
+
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary_path = destination_path.with_name(destination_path.name + ".part")
+
+        if destination_path.is_file():
+            return
+
+        access_token = self.authenticate()
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+        }
+
+        try:
+            with requests.get(
+                file_url,
+                headers=headers,
+                stream=True,
+                timeout=(30, 120),
+            ) as response:
+                response.raise_for_status()
+
+                with temporary_path.open("wb") as output:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            output.write(chunk)
+
+            temporary_path.replace(destination_path)
+
+        except Exception:
+            temporary_path.unlink(missing_ok=True)
+            raise

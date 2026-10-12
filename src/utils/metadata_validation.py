@@ -1,5 +1,7 @@
+from collections.abc import Sequence
 from logging import Logger
 
+from ingestion.annotation import AnnotationBurst
 from utils.date_time_format import to_iso_utc
 
 
@@ -150,7 +152,7 @@ class MetadataValidator:
     def map_catalogue_bursts_to_annotation(
         self,
         catalogue_bursts: list[dict],
-        annotation_bursts: list[dict],
+        annotation_bursts: Sequence[AnnotationBurst],
     ) -> dict[int, int]:
         annotation_by_time = {}
 
