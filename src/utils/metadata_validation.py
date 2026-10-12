@@ -1,5 +1,7 @@
 from logging import Logger
 
+from utils.date_time_format import to_iso_utc
+
 
 class MetadataValidator:
     def __init__(
@@ -144,6 +146,39 @@ class MetadataValidator:
             "orbit_fields": orbit_related_fields,
             "available_fields": sorted(first_burst.keys()),
         }
+
+    def map_catalogue_bursts_to_annotation(
+        self,
+        catalogue_bursts: list[dict],
+        annotation_bursts: list[dict],
+    ) -> dict[int, int]:
+        annotation_by_time = {}
+
+        for index, burst in enumerate(annotation_bursts):
+            azimuth_time = to_iso_utc(burst["azimuth_time"])
+
+            if azimuth_time in annotation_by_time:
+                raise ValueError(
+                    f"Duplicate annotation azimuth timestamp: {azimuth_time}"
+                )
+
+            annotation_by_time[azimuth_time] = index
+
+        mapping = {}
+
+        for burst in catalogue_bursts:
+            burst_id = burst["BurstId"]
+            azimuth_time = to_iso_utc(burst["AzimuthTime"])
+
+            if burst_id in mapping:
+                raise ValueError(f"Duplicate catalogue BurstId: {burst_id}")
+
+            if azimuth_time not in annotation_by_time:
+                raise ValueError(f"No annotation match for catalogue burst {burst_id}")
+
+            mapping[burst_id] = annotation_by_time[azimuth_time]
+
+        return mapping
 
     def _require_nonempty_bursts_by_product(self) -> None:
 

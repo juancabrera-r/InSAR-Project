@@ -1,10 +1,11 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from itertools import pairwise
 from logging import Logger
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
 import numpy as np
+from scipy.optimize import brentq
 
 from src.utils.date_time_format import to_iso_utc
 
@@ -172,6 +173,86 @@ class CalculateOrbit:
 
         return points
 
+    def find_zero_doppler_brackets(
+        self,
+        orbit_vectors: list[dict],
+        ground_position: np.ndarray,
+    ) -> list[tuple[dict, dict]]:
+        brackets = []
+
+        for first, second in pairwise(orbit_vectors):
+            p1 = np.array(
+                [first["position"][axis] for axis in ("x", "y", "z")],
+                dtype=float,
+            )
+            v1 = np.array(
+                [first["velocity"][axis] for axis in ("x", "y", "z")],
+                dtype=float,
+            )
+
+            p2 = np.array(
+                [second["position"][axis] for axis in ("x", "y", "z")],
+                dtype=float,
+            )
+            v2 = np.array(
+                [second["velocity"][axis] for axis in ("x", "y", "z")],
+                dtype=float,
+            )
+
+            residual_first = self.zero_doppler_residual(p1, v1, ground_position)
+            residual_second = self.zero_doppler_residual(p2, v2, ground_position)
+
+            if residual_first * residual_second < 0:
+                brackets.append((first, second))
+
+        return brackets
+
+    def solve_zero_doppler_time(
+        self,
+        first: dict,
+        second: dict,
+        ground_position: np.ndarray,
+    ) -> datetime:
+        start_time = first["timestamp"]
+        duration = (second["timestamp"] - start_time).total_seconds()
+
+        if duration <= 0:
+            raise ValueError("Invalid zero-Doppler bracket")
+
+        def residual_at_seconds(seconds: float) -> float:
+            candidate_time = start_time + timedelta(seconds=seconds)
+
+            position, velocity = self.interpolate_state(
+                first,
+                second,
+                candidate_time,
+            )
+
+            return self.zero_doppler_residual(
+                satellite_position=position,
+                satellite_velocity=velocity,
+                ground_position=ground_position,
+            )
+
+        root_seconds = brentq(
+            residual_at_seconds,
+            0.0,
+            duration,
+            xtol=1e-6,
+        )
+
+        return start_time + timedelta(seconds=root_seconds)
+
+    @staticmethod
+    def zero_doppler_residual(
+        satellite_position: np.ndarray,
+        satellite_velocity: np.ndarray,
+        ground_position: np.ndarray,
+    ) -> float:
+        line_of_sight = ground_position - satellite_position
+
+        return float(np.dot(line_of_sight, satellite_velocity))
+
     @staticmethod
     def _required_float(element: ET.Element, tag: str) -> float:
         value = element.findtext(tag)
@@ -190,3 +271,31 @@ class CalculateOrbit:
             raise ValueError(f"Non-finite XML value for {tag}: {value!r}")
 
         return number
+
+    @staticmethod
+    def select_central_geolocation_point(points):
+        if not points:
+            raise ValueError("Geolocation grid is empty")
+
+        lines = [point["line"] for point in points]
+        pixels = [point["pixel"] for point in points]
+
+        min_line, max_line = min(lines), max(lines)
+        min_pixel, max_pixel = min(pixels), max(pixels)
+
+        line_span = max_line - min_line
+        pixel_span = max_pixel - min_pixel
+
+        if line_span == 0 or pixel_span == 0:
+            raise ValueError("Geolocation grid has a zero-length dimension")
+
+        center_line = (min_line + max_line) / 2
+        center_pixel = (min_pixel + max_pixel) / 2
+
+        return min(
+            points,
+            key=lambda point: (
+                ((point["line"] - center_line) / line_span) ** 2
+                + ((point["pixel"] - center_pixel) / pixel_span) ** 2
+            ),
+        )

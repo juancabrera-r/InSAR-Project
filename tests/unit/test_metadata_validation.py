@@ -517,3 +517,118 @@ def test_validate_acquisition_metadata_does_not_mutate_input(validator):
     validator.validate_acquisition_metadata()
 
     assert validator.bursts_by_product == original
+
+
+# ============================================================
+# 6. map_catalogue_bursts_to_annotation
+# ============================================================
+
+
+@pytest.fixture
+def catalogue_bursts_for_mapping():
+    return [
+        {"BurstId": 220, "AzimuthTime": "2025-01-04T18:10:53.027789Z"},
+        {"BurstId": 218, "AzimuthTime": "2025-01-04T18:10:47.512731Z"},
+        {"BurstId": 219, "AzimuthTime": "2025-01-04T18:10:50.271288Z"},
+    ]
+
+
+@pytest.fixture
+def annotation_bursts_for_mapping():
+    return [
+        {"azimuth_time": "2025-01-04T18:10:41.991507"},
+        {"azimuth_time": "2025-01-04T18:10:44.758286"},
+        {"azimuth_time": "2025-01-04T18:10:47.512731"},
+        {"azimuth_time": "2025-01-04T18:10:50.271288"},
+        {"azimuth_time": "2025-01-04T18:10:53.027789"},
+    ]
+
+
+def test_burst_mapping_valid(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    result = validator.map_catalogue_bursts_to_annotation(
+        catalogue_bursts=catalogue_bursts_for_mapping,
+        annotation_bursts=annotation_bursts_for_mapping,
+    )
+
+    assert result == {218: 2, 219: 3, 220: 4}
+
+
+def test_burst_mapping_independent_of_catalogue_order(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    reversed_bursts = list(reversed(catalogue_bursts_for_mapping))
+
+    result = validator.map_catalogue_bursts_to_annotation(
+        catalogue_bursts=reversed_bursts,
+        annotation_bursts=annotation_bursts_for_mapping,
+    )
+
+    assert result == {218: 2, 219: 3, 220: 4}
+
+
+def test_burst_mapping_missing_timestamp(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    catalogue_bursts_for_mapping[0]["AzimuthTime"] = "2025-01-04T18:12:00.000000Z"
+
+    with pytest.raises(ValueError):
+        validator.map_catalogue_bursts_to_annotation(
+            catalogue_bursts=catalogue_bursts_for_mapping,
+            annotation_bursts=annotation_bursts_for_mapping,
+        )
+
+
+def test_burst_mapping_duplicate_annotation_timestamp(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    annotation_bursts_for_mapping[1]["azimuth_time"] = annotation_bursts_for_mapping[2][
+        "azimuth_time"
+    ]
+
+    with pytest.raises(ValueError):
+        validator.map_catalogue_bursts_to_annotation(
+            catalogue_bursts=catalogue_bursts_for_mapping,
+            annotation_bursts=annotation_bursts_for_mapping,
+        )
+
+
+def test_burst_mapping_duplicate_catalogue_id(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    duplicate = deepcopy(catalogue_bursts_for_mapping[0])
+    catalogue_bursts_for_mapping.append(duplicate)
+
+    with pytest.raises(ValueError):
+        validator.map_catalogue_bursts_to_annotation(
+            catalogue_bursts=catalogue_bursts_for_mapping,
+            annotation_bursts=annotation_bursts_for_mapping,
+        )
+
+
+def test_burst_mapping_does_not_mutate_inputs(
+    validator,
+    catalogue_bursts_for_mapping,
+    annotation_bursts_for_mapping,
+):
+    original_catalogue = deepcopy(catalogue_bursts_for_mapping)
+    original_annotation = deepcopy(annotation_bursts_for_mapping)
+
+    validator.map_catalogue_bursts_to_annotation(
+        catalogue_bursts=catalogue_bursts_for_mapping,
+        annotation_bursts=annotation_bursts_for_mapping,
+    )
+
+    assert catalogue_bursts_for_mapping == original_catalogue
+    assert annotation_bursts_for_mapping == original_annotation
