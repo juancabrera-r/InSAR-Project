@@ -1,8 +1,8 @@
 from collections.abc import Sequence
 from logging import Logger
 
-from ingestion.annotation import AnnotationBurst
-from utils.date_time_format import to_iso_utc
+from insar_platform.ingestion.annotation import AnnotationBurst
+from insar_platform.utils.date_time_format import to_iso_utc
 
 
 class MetadataValidator:

@@ -24,9 +24,9 @@ ruff = "*"
 pre-commit = "*"
 
 [tasks]
-insar = "python main.py"
+insar = "python -m src.isar_platform.app.main"
 test = "python -m pytest tests/ -v"
-validation = "python -m pytest tests/validation/ -v -s"
+validation = "python -m pytest tests/scientific -v -s"
 format = "ruff format ."
 format-check = "ruff format --check ."
 lint = "ruff check ."

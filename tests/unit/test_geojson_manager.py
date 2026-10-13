@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from utils.geojson_manage import GeojsonManager
+from src.insar_platform.geometry.geojson_manage import GeojsonManager
 
 # ---------------------------------------
 # Fixtures

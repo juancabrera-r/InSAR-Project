@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from ingestion.metadata import metadata_summary
+from src.insar_platform.ingestion.metadata import metadata_summary
 
 # ============================================================
 # FIXTURES

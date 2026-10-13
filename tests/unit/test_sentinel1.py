@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 import requests
 
-from ingestion.sentinel1 import Sentinel1Ingestion
+from src.insar_platform.ingestion.sentinel1 import Sentinel1Ingestion
 
 
 # ------------------------------
@@ -124,7 +124,7 @@ def _make_burst(
 # ------------------------------
 # Test for first page
 # ------------------------------
-@patch("ingestion.sentinel1.requests.get")
+@patch("insar_platform.ingestion.sentinel1.requests.get")
 def test_request_first_page_success(mock_get, ingestion):
     url = "https://example.com/bursts"
     filter_expression = "PlatformSerialIdentifier eq 'A'"
@@ -157,7 +157,7 @@ def test_request_first_page_success(mock_get, ingestion):
     mock_get.return_value.raise_for_status.assert_called_once_with()
 
 
-@patch("ingestion.sentinel1.requests.get")
+@patch("insar_platform.ingestion.sentinel1.requests.get")
 def test_request_first_page_http_error(mock_get, ingestion):
     url = "https://example.com/bursts"
     filter_expression = "PlatformSerialIdentifier eq 'A'"
@@ -176,7 +176,7 @@ def test_request_first_page_http_error(mock_get, ingestion):
 # ------------------------------
 # Test for next page
 # ------------------------------
-@patch("ingestion.sentinel1.requests.get")
+@patch("insar_platform.ingestion.sentinel1.requests.get")
 def test_request_next_page_success(mock_get, ingestion):
     url = "https://example.com/bursts?page=2"
 
@@ -201,7 +201,7 @@ def test_request_next_page_success(mock_get, ingestion):
     mock_get.return_value.raise_for_status.assert_called_once_with()
 
 
-@patch("ingestion.sentinel1.requests.get")
+@patch("insar_platform.ingestion.sentinel1.requests.get")
 def test_request_next_page_http_error(mock_get, ingestion):
     url = "https://example.com/bursts?page=2"
 

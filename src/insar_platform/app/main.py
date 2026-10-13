@@ -2,14 +2,15 @@
 
 from pathlib import Path
 
-from app.application import sentinel1_app
-from config.config import ConfigLoader
-from config.logger import LoggingManager
+from insar_platform.config.config import ConfigLoader
+from insar_platform.config.logger import LoggingManager
+from insar_platform.pipelines.application import sentinel1_app
 
-BASE_DIR = Path(__file__).resolve().parent
-CONFIG_PATH = BASE_DIR / "src" / "config" / "config.yaml"
-ENV_PATH = BASE_DIR / ".env"
-LOG_DIR = BASE_DIR / "logs"
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+CONFIG_PATH = BASE_DIR / "config" / "config.yaml"
+ENV_PATH = BASE_DIR.parents[1] / ".env"
+LOG_DIR = BASE_DIR.parents[1] / "logs"
 
 
 def main() -> None:

@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from utils.calculate_orbit import CalculateOrbit
+from src.insar_platform.geometry.calculate_orbit import CalculateOrbit
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ANNOTATION_DIR = PROJECT_ROOT / "data" / "raw" / "annotation"

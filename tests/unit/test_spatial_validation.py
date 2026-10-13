@@ -5,7 +5,7 @@ from pyproj import Transformer
 from shapely import transform
 from shapely.geometry import Polygon, box, mapping
 
-from utils.spatial_validation import ValidateSpatial
+from src.insar_platform.geometry.spatial_validation import ValidateSpatial
 
 
 @pytest.fixture

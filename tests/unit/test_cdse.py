@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 import requests
 
-from src.ingestion.cdse import CDSEIngestion
+from src.insar_platform.ingestion.cdse import CDSEIngestion
 
 
 @pytest.fixture
@@ -45,7 +45,7 @@ def test_initialization(ingestion):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.post")
+@patch("insar_platform.ingestion.cdse.requests.post")
 def test_authenticate_success(mock_post, ingestion, mock_response):
     mock_response.json.return_value = {"access_token": "test_access_token"}
     mock_post.return_value = mock_response
@@ -68,7 +68,7 @@ def test_authenticate_success(mock_post, ingestion, mock_response):
     mock_response.raise_for_status.assert_called_once()
 
 
-@patch("src.ingestion.cdse.requests.post")
+@patch("insar_platform.ingestion.cdse.requests.post")
 def test_authenticate_http_error(mock_post, ingestion, mock_response):
     mock_response.raise_for_status.side_effect = requests.HTTPError("401 Unauthorized")
     mock_post.return_value = mock_response
@@ -77,7 +77,7 @@ def test_authenticate_http_error(mock_post, ingestion, mock_response):
         ingestion.authenticate()
 
 
-@patch("src.ingestion.cdse.requests.post")
+@patch("insar_platform.ingestion.cdse.requests.post")
 def test_authenticate_missing_access_token(mock_post, ingestion, mock_response):
     mock_response.json.return_value = {}
     mock_post.return_value = mock_response
@@ -86,7 +86,7 @@ def test_authenticate_missing_access_token(mock_post, ingestion, mock_response):
         ingestion.authenticate()
 
 
-@patch("src.ingestion.cdse.requests.post")
+@patch("insar_platform.ingestion.cdse.requests.post")
 def test_authenticate_connection_error(mock_post, ingestion):
     mock_post.side_effect = requests.ConnectionError("Connection failed")
 
@@ -99,7 +99,7 @@ def test_authenticate_connection_error(mock_post, ingestion):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_product_metadata_success(mock_get, ingestion, mock_response):
     metadata = {
         "Id": "product_1",
@@ -119,7 +119,7 @@ def test_get_product_metadata_success(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.assert_called_once()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_product_metadata_http_error(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.side_effect = requests.HTTPError("404 Not Found")
     mock_get.return_value = mock_response
@@ -133,7 +133,7 @@ def test_get_product_metadata_http_error(mock_get, ingestion, mock_response):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_product_nodes_success(mock_get, ingestion, mock_response):
     nodes = {
         "result": [
@@ -157,7 +157,7 @@ def test_get_product_nodes_success(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.assert_called_once()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_product_nodes_http_error(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.side_effect = requests.HTTPError("500 Server Error")
     mock_get.return_value = mock_response
@@ -171,7 +171,7 @@ def test_get_product_nodes_http_error(mock_get, ingestion, mock_response):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_children_node_success(mock_get, ingestion, mock_response):
     product_nodes = {"result": [{"Nodes": {"uri": "https://example.com/root/Nodes"}}]}
 
@@ -205,7 +205,7 @@ def test_get_children_node_missing_result(ingestion):
         ingestion.get_children_node({})
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_children_node_http_error(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.side_effect = requests.HTTPError("403 Forbidden")
     mock_get.return_value = mock_response
@@ -221,7 +221,7 @@ def test_get_children_node_http_error(mock_get, ingestion, mock_response):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_directory_files_success(mock_get, ingestion, mock_response):
     children_node = {
         "result": [
@@ -254,7 +254,7 @@ def test_get_directory_files_success(mock_get, ingestion, mock_response):
     )
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_directory_files_missing_directory(mock_get, ingestion):
     children_node = {
         "result": [
@@ -277,7 +277,7 @@ def test_get_directory_files_missing_directory(mock_get, ingestion):
     mock_get.assert_not_called()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 def test_get_directory_files_http_error(mock_get, ingestion, mock_response):
     mock_response.raise_for_status.side_effect = requests.HTTPError(
         "503 Service Unavailable"
@@ -305,7 +305,7 @@ def test_get_directory_files_http_error(mock_get, ingestion, mock_response):
 # ============================================================
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_annotation_file_success(
     mock_auth,
@@ -365,7 +365,7 @@ def test_download_annotation_file_invalid_uri(mock_auth, ingestion, tmp_path):
     mock_auth.assert_not_called()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_annotation_file_http_error(
     mock_auth,
@@ -402,7 +402,7 @@ def measurement_node():
     return {"Nodes": {"uri": "https://example.com/measurement.tiff/Nodes"}}
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_success(
     mock_auth,
@@ -448,7 +448,7 @@ def test_download_measurement_file_success(
     response.iter_content.assert_called_once_with(chunk_size=1024 * 1024)
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_existing_destination(
     mock_auth,
@@ -471,7 +471,7 @@ def test_download_measurement_file_existing_destination(
     mock_get.assert_not_called()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_empty_chunks(
     mock_auth,
@@ -526,7 +526,7 @@ def test_download_measurement_file_invalid_uri(
     mock_auth.assert_not_called()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_http_error(
     mock_auth,
@@ -556,7 +556,7 @@ def test_download_measurement_file_http_error(
     assert not temporary.exists()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_interrupted_stream(
     mock_auth,
@@ -593,7 +593,7 @@ def test_download_measurement_file_interrupted_stream(
     assert not temporary.exists()
 
 
-@patch("src.ingestion.cdse.requests.get")
+@patch("insar_platform.ingestion.cdse.requests.get")
 @patch.object(CDSEIngestion, "authenticate")
 def test_download_measurement_file_replace_failure(
     mock_auth,

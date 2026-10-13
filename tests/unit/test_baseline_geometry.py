@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from utils.baseline_geometry import calculate_baseline_geometry
+from src.insar_platform.geometry.baseline_geometry import calculate_baseline_geometry
 
 
 def test_known_baseline_geometry():

@@ -4,21 +4,24 @@ from pathlib import Path
 
 import numpy as np
 
-from app.acquisition_geometry import zero_doppler
-from ingestion.annotation import (
+from insar_platform.geometry.baseline_geometry import calculate_baseline_geometry
+from insar_platform.geometry.calculate_orbit import CalculateOrbit
+from insar_platform.geometry.coordinate_transform import geodetic_to_ecef
+from insar_platform.geometry.geojson_manage import GeojsonManager
+from insar_platform.geometry.metadata_validation import MetadataValidator
+from insar_platform.geometry.spatial_validation import ValidateSpatial
+from insar_platform.ingestion.annotation import (
     extract_annotation_bursts,
     extract_image_sampling_metadata,
 )
-from ingestion.cdse import CDSEIngestion
-from ingestion.metadata import metadata_summary, select_earliest_acquisitions
-from ingestion.sentinel1 import Sentinel1Ingestion
-from src.utils.explore_sar_tiff import ExploreSARTiff
-from utils.baseline_geometry import calculate_baseline_geometry
-from utils.calculate_orbit import CalculateOrbit
-from utils.coordinate_transform import geodetic_to_ecef
-from utils.geojson_manage import GeojsonManager
-from utils.metadata_validation import MetadataValidator
-from utils.spatial_validation import ValidateSpatial
+from insar_platform.ingestion.cdse import CDSEIngestion
+from insar_platform.ingestion.metadata import (
+    metadata_summary,
+    select_earliest_acquisitions,
+)
+from insar_platform.ingestion.sentinel1 import Sentinel1Ingestion
+from insar_platform.pipelines.acquisition_geometry import zero_doppler
+from scrips.explore_sar_tiff import ExploreSARTiff
 
 
 # Application entry point for the InSAR platform

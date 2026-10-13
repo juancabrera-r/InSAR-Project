@@ -7,7 +7,7 @@ from xml.etree import ElementTree as ET
 import numpy as np
 from scipy.optimize import brentq
 
-from src.utils.date_time_format import to_iso_utc
+from insar_platform.utils.date_time_format import to_iso_utc
 
 
 class CalculateOrbit:

@@ -6,9 +6,9 @@ from xml.etree import ElementTree as ET
 import numpy as np
 import pytest
 
-from utils.calculate_orbit import CalculateOrbit
-from utils.coordinate_transform import geodetic_to_ecef
-from utils.date_time_format import to_iso_utc
+from src.insar_platform.geometry.calculate_orbit import CalculateOrbit
+from src.insar_platform.geometry.coordinate_transform import geodetic_to_ecef
+from src.insar_platform.utils.date_time_format import to_iso_utc
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ANNOTATION_DIR = PROJECT_ROOT / "data" / "raw" / "annotation"

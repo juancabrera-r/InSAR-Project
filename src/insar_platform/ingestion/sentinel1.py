@@ -4,7 +4,7 @@ from collections import Counter, defaultdict
 
 import requests
 
-from utils.date_time_format import to_iso_utc
+from insar_platform.utils.date_time_format import to_iso_utc
 
 
 class Sentinel1Ingestion:

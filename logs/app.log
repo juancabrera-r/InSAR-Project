@@ -6219,3 +6219,85 @@
 2026-10-12 17:28:30,305 - app.application - INFO - Orbit interpolation completed for 2 acquisitions
 2026-10-12 17:28:30,308 - app.application - INFO - Reference: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
 2026-10-12 17:33:03,595 - app.application - INFO - Sentinel-1 burst search completed
+2026-10-13 09:11:52,131 - isar_platform.pipelines.application - INFO - Starting Sentinel-1 burst search
+2026-10-13 09:12:02,150 - isar_platform.ingestion.sentinel1 - WARNING - Fingerprint does not match the original
+2026-10-13 09:12:02,151 - isar_platform.pipelines.application - INFO - Found 45 Sentinel-1 bursts
+2026-10-13 09:12:02,158 - isar_platform.pipelines.application - INFO - Metadata summary: {'platform_counts': Counter({'A': 45}), 'track_counts': Counter({('ASCENDING', 1, 'IW3'): 15, ('DESCENDING', 8, 'IW2'): 15, ('ASCENDING', 103, 'IW1'): 15})}
+2026-10-13 09:12:02,161 - isar_platform.pipelines.application - INFO - Group: ('A', 'ASCENDING', 1, 'IW3'), Unique SLC products: 5
+2026-10-13 09:12:02,163 - isar_platform.pipelines.application - INFO - Group: ('A', 'ASCENDING', 103, 'IW1'), Unique SLC products: 5
+2026-10-13 09:12:02,165 - isar_platform.pipelines.application - INFO - Group: ('A', 'DESCENDING', 8, 'IW2'), Unique SLC products: 5
+2026-10-13 09:12:02,167 - isar_platform.pipelines.application - INFO - Sentinel-1 burst dates: ['2025-01-04', '2025-01-16', '2025-01-28', '2025-02-09', '2025-02-21']
+2026-10-13 09:12:02,169 - isar_platform.pipelines.application - INFO - Sentinel-1 product ID info: {'total': 45, 'unique': 45, 'duplicates': 0}
+2026-10-13 09:12:02,173 - isar_platform.pipelines.application - INFO - GeoFootprint: {'type': 'Polygon', 'coordinates': [[[-2.497403, 37.462143], [-2.041154, 37.520934], [-1.601678, 37.575725], [-1.64358, 37.780555], [-2.083329, 37.721187], [-2.53984, 37.657815], [-2.497403, 37.462143]]]}
+2026-10-13 09:12:03,341 - isar_platform.pipelines.application - INFO - Product: 216aff3b-f44e-4d82-9e71-f28a43fce10d | AOI coverage: 100.00%
+2026-10-13 09:12:03,343 - isar_platform.pipelines.application - INFO - Product: 93d28217-1ebe-4b5b-b4a3-087750eedf52 | AOI coverage: 100.00%
+2026-10-13 09:12:03,345 - isar_platform.pipelines.application - INFO - Product: 4770594e-9ee5-432a-9552-22f1e27efd61 | AOI coverage: 100.00%
+2026-10-13 09:12:03,348 - isar_platform.pipelines.application - INFO - Product: eb491195-776f-4f40-8202-ccd637cbead9 | AOI coverage: 100.00%
+2026-10-13 09:12:03,351 - isar_platform.pipelines.application - INFO - Product: 00a60d0f-3463-4e45-a9a5-d5dd7853407a | AOI coverage: 100.00%
+2026-10-13 09:12:03,362 - isar_platform.pipelines.application - INFO - Common AOI coverage across 5 acquisitions: 100.00%
+2026-10-13 09:12:03,363 - isar_platform.pipelines.application - INFO - Reference burst IDs: [218, 219, 220]
+2026-10-13 09:12:03,365 - isar_platform.pipelines.application - INFO - Burst-number consistency across 5 acquisitions: True
+2026-10-13 09:12:03,367 - isar_platform.pipelines.application - INFO - Acquisition metadata validation passed
+2026-10-13 09:12:03,376 - isar_platform.pipelines.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=218 | AzimuthTime=2025-01-04T18:10:47.512731Z | Start=2025-01-04T18:10:48.641646Z | End=2025-01-04T18:10:49.540913Z
+2026-10-13 09:12:03,378 - isar_platform.pipelines.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=219 | AzimuthTime=2025-01-04T18:10:50.271288Z | Start=2025-01-04T18:10:51.399923Z | End=2025-01-04T18:10:52.299190Z
+2026-10-13 09:12:03,380 - isar_platform.pipelines.application - INFO - Product=4770594e-9ee5-432a-9552-22f1e27efd61 | BurstId=220 | AzimuthTime=2025-01-04T18:10:53.027789Z | Start=2025-01-04T18:10:54.158200Z | End=2025-01-04T18:10:55.057467Z
+2026-10-13 09:12:03,384 - isar_platform.pipelines.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=218 | AzimuthTime=2025-01-16T18:10:46.508141Z | Start=2025-01-16T18:10:47.639113Z | End=2025-01-16T18:10:48.538380Z
+2026-10-13 09:12:03,386 - isar_platform.pipelines.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=219 | AzimuthTime=2025-01-16T18:10:49.266697Z | Start=2025-01-16T18:10:50.397390Z | End=2025-01-16T18:10:51.296657Z
+2026-10-13 09:12:03,388 - isar_platform.pipelines.application - INFO - Product=216aff3b-f44e-4d82-9e71-f28a43fce10d | BurstId=220 | AzimuthTime=2025-01-16T18:10:52.025254Z | Start=2025-01-16T18:10:53.155667Z | End=2025-01-16T18:10:54.054934Z
+2026-10-13 09:12:03,390 - isar_platform.pipelines.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Date: 2025-01-04T18:10:48.641646Z | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-13 09:12:03,393 - isar_platform.pipelines.application - INFO - Selected SLC: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Date: 2025-01-16T18:10:50.397390Z | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-13 09:12:03,395 - isar_platform.pipelines.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Product ID: 4770594e-9ee5-432a-9552-22f1e27efd61
+2026-10-13 09:12:03,702 - isar_platform.pipelines.application - INFO - Product: S1A_IW_SLC__1SDV_20250104T181041_20250104T181108_057298_070CB8_BB77.SAFE | Size: 7.51 GiB | Online: True
+2026-10-13 09:12:05,270 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Selected measurement: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.tiff
+2026-10-13 09:12:05,272 - isar_platform.pipelines.application - INFO - Measurement already exists: data\raw\measurement\4770594e-9ee5-432a-9552-22f1e27efd61\s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.tiff
+2026-10-13 09:12:05,274 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Measurement size: 1.29 GiB
+2026-10-13 09:12:06,772 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst mapping: {218: 2, 220: 4, 219: 3}
+2026-10-13 09:12:06,777 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst 219 | Azimuth start time: 2025-01-04T18:10:50.271288
+2026-10-13 09:12:06,779 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst 219 | Annotation index 3 | Validity entries: 1516
+2026-10-13 09:12:06,781 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst 219 | Valid azimuth lines: 1462 / 1516
+2026-10-13 09:12:06,783 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst 219 start: 2025-01-04T18:10:50.271288 | Burst 220 start: 2025-01-04T18:10:53.027789
+2026-10-13 09:12:06,798 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Sampling metadata: BaselineResult(azimuth_time_interval=0.002055556299999998, slant_range_time=0.006017099064654127, range_sampling_rate=64345238.12571428)
+2026-10-13 09:12:06,816 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Extracted 16 orbit vectors
+2026-10-13 09:12:06,821 - isar_platform.pipelines.application - INFO - Acquisition time: 2025-01-04 18:10:48.641646+00:00
+2026-10-13 09:12:06,824 - isar_platform.pipelines.application - INFO - Annotation file: s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.xml
+2026-10-13 09:12:06,827 - isar_platform.pipelines.application - INFO - Orbit coverage: 2025-01-04 18:09:41.354609+00:00 to 2025-01-04 18:12:11.354609+00:00
+2026-10-13 09:12:06,847 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Interpolated ECEF position (m): [5642675.27361074 -834839.91750574 4178568.54006552]
+2026-10-13 09:12:06,866 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Geolocation points: 210
+2026-10-13 09:12:06,873 - isar_platform.pipelines.application - INFO - Reference geolocation point | Azimuth time: 2025-01-04T18:10:53.027970 | Global line: 6064 | Range pixel: 12650
+2026-10-13 09:12:06,892 - isar_platform.pipelines.application - INFO - Reference ground target ECEF (m): [5050558.07352236 -180236.18997743 3879565.23050099]
+2026-10-13 09:12:07,000 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero Doppler residual (m²/s): 225314107.650578
+2026-10-13 09:12:07,005 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Start residual: 3680113797.460 m²/s | End residual: -4015873631.895 m²/s
+2026-10-13 09:12:07,007 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler root is bracketed
+2026-10-13 09:12:07,012 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler bracket: 2025-01-04 18:10:51.354609+00:00 to 2025-01-04 18:11:01.354609+00:00
+2026-10-13 09:12:07,015 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Zero-Doppler time: 2025-01-04 18:10:53.027970+00:00
+2026-10-13 09:12:07,017 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Solved zero-Doppler residual: -4.796365 m²/s
+2026-10-13 09:12:07,018 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | residual=-4.796365499496e+00 | LOS norm=931409.419969 | velocity norm=7593.969192 | normalized=6.781141606056e-10
+2026-10-13 09:12:07,021 - isar_platform.pipelines.application - INFO - Product 4770594e-9ee5-432a-9552-22f1e27efd61 | Burst 219 | Line 1341 | Valid range samples: 298 to 23969
+2026-10-13 09:12:07,023 - isar_platform.pipelines.application - INFO - Processing acquisition: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Product ID: 216aff3b-f44e-4d82-9e71-f28a43fce10d
+2026-10-13 09:12:07,367 - isar_platform.pipelines.application - INFO - Product: S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_057473_0713A0_B857.SAFE | Size: 7.51 GiB | Online: True
+2026-10-13 09:12:08,745 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Selected measurement: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff
+2026-10-13 09:12:08,747 - isar_platform.pipelines.application - INFO - Measurement already exists: data\raw\measurement\216aff3b-f44e-4d82-9e71-f28a43fce10d\s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff
+2026-10-13 09:12:08,750 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Measurement size: 1.29 GiB
+2026-10-13 09:12:10,074 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst mapping: {219: 3, 220: 4, 218: 2}
+2026-10-13 09:12:10,076 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst 219 | Azimuth start time: 2025-01-16T18:10:49.266697
+2026-10-13 09:12:10,077 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst 219 | Annotation index 3 | Validity entries: 1516
+2026-10-13 09:12:10,079 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst 219 | Valid azimuth lines: 1462 / 1516
+2026-10-13 09:12:10,081 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst 219 start: 2025-01-16T18:10:49.266697 | Burst 220 start: 2025-01-16T18:10:52.025254
+2026-10-13 09:12:10,096 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Sampling metadata: BaselineResult(azimuth_time_interval=0.002055556299999998, slant_range_time=0.006017099064654127, range_sampling_rate=64345238.12571428)
+2026-10-13 09:12:10,115 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Extracted 16 orbit vectors
+2026-10-13 09:12:10,117 - isar_platform.pipelines.application - INFO - Acquisition time: 2025-01-16 18:10:50.397390+00:00
+2026-10-13 09:12:10,120 - isar_platform.pipelines.application - INFO - Annotation file: s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.xml
+2026-10-13 09:12:10,121 - isar_platform.pipelines.application - INFO - Orbit coverage: 2025-01-16 18:09:40.367360+00:00 to 2025-01-16 18:12:10.367359+00:00
+2026-10-13 09:12:10,142 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Interpolated ECEF position (m): [5629999.64990235 -837796.96900756 4194981.28352449]
+2026-10-13 09:12:10,161 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Geolocation points: 210
+2026-10-13 09:12:10,165 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero Doppler residual (m²/s): 83660379.604083
+2026-10-13 09:12:10,167 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Start residual: 3679366509.992 m²/s | End residual: -4016626064.906 m²/s
+2026-10-13 09:12:10,169 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler root is bracketed
+2026-10-13 09:12:10,174 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler bracket: 2025-01-16 18:10:50.367359+00:00 to 2025-01-16 18:11:00.367360+00:00
+2026-10-13 09:12:10,176 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Zero-Doppler time: 2025-01-16 18:10:52.026087+00:00
+2026-10-13 09:12:10,179 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Solved zero-Doppler residual: 19.018443 m²/s
+2026-10-13 09:12:10,182 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | residual=1.901844251156e+01 | LOS norm=931391.297036 | velocity norm=7593.966592 | normalized=2.688896527838e-09
+2026-10-13 09:12:10,184 - isar_platform.pipelines.application - INFO - Product 216aff3b-f44e-4d82-9e71-f28a43fce10d | Burst 219 | Line 1342 | Valid range samples: 298 to 23969
+2026-10-13 09:12:10,186 - isar_platform.pipelines.application - INFO - Orbit interpolation completed for 2 acquisitions
+2026-10-13 09:12:10,190 - isar_platform.pipelines.application - INFO - Reference: 4770594e-9ee5-432a-9552-22f1e27efd61 | Secondary: 216aff3b-f44e-4d82-9e71-f28a43fce10d | Total baseline: 21.652086 m | Parallel baseline: 18.123008 m | Perpendicular baseline: 11.847761 m
+2026-10-13 09:12:38,349 - isar_platform.pipelines.application - INFO - Sentinel-1 burst search completed

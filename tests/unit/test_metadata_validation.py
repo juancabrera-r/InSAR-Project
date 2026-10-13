@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from utils.metadata_validation import MetadataValidator
+from src.insar_platform.geometry.metadata_validation import MetadataValidator
 
 # ============================================================
 # FIXTURES

@@ -5,7 +5,7 @@ from xml.etree import ElementTree as ET
 import numpy as np
 import pytest
 
-from utils.calculate_orbit import CalculateOrbit
+from src.insar_platform.geometry.calculate_orbit import CalculateOrbit
 
 EARTH_RADIUS = 6_371_000.0
 T0 = datetime(2025, 1, 1, 12, tzinfo=UTC)

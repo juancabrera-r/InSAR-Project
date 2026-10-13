@@ -1,6 +1,6 @@
 import pytest
 
-from utils.date_time_format import to_iso_utc
+from src.insar_platform.utils.date_time_format import to_iso_utc
 
 
 @pytest.mark.parametrize(
