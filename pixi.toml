@@ -18,13 +18,16 @@ scipy = ">=1.18.1,<2"
 rasterio = ">=1.5.2,<2"
 matplotlib = ">=3.11.2,<4"
 
+[pypi-dependencies]
+insar-platform = { path = ".", editable = true }
+
 [feature.dev.dependencies]
 pytest = "*"
 ruff = "*"
 pre-commit = "*"
 
 [tasks]
-insar = "python -m src.isar_platform.app.main"
+insar = "python -m src.insar_platform.app.main"
 test = "python -m pytest tests/ -v"
 validation = "python -m pytest tests/scientific -v -s"
 format = "ruff format ."
