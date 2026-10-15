@@ -50,6 +50,7 @@ class CDSEIngestion:
         return token_data["access_token"]
 
     def get_product_metadata(self, product_id: str) -> dict:
+        """Retrieve the metadata for a given product."""
 
         url = self.initial_url + f"/odata/v1/Products({product_id})"
 
@@ -59,6 +60,7 @@ class CDSEIngestion:
         return response.json()
 
     def get_product_nodes(self, product_id: str) -> dict:
+        """Retrieve the nodes for a given product."""
 
         url = self.initial_url + f"/odata/v1/Products({product_id})/Nodes"
 
@@ -71,6 +73,7 @@ class CDSEIngestion:
         self,
         product_nodes: dict,
     ) -> dict:
+        """Retrieve the children node for a given product's root node."""
 
         root_node = product_nodes["result"][0]
         children_url = root_node["Nodes"]["uri"]
@@ -87,6 +90,8 @@ class CDSEIngestion:
         children_node: dict,
         directory_name: str,
     ) -> dict:
+        """Retrieve the files for a given directory node."""
+
         directory_node = next(
             (
                 node
@@ -111,6 +116,7 @@ class CDSEIngestion:
         annotation_node: dict,
         destination_path: Path,
     ) -> None:
+        """Download the specified annotation file to the given destination path."""
 
         node_uri = annotation_node["Nodes"]["uri"]
 
@@ -145,6 +151,8 @@ class CDSEIngestion:
         measurement_node: dict,
         destination_path: Path,
     ) -> None:
+        """Download the specified measurement file to the given destination path."""
+
         node_uri = measurement_node["Nodes"]["uri"]
 
         if not node_uri.endswith("/Nodes"):

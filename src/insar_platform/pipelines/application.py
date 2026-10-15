@@ -1,615 +1,77 @@
 import logging
-from datetime import UTC, datetime
 from pathlib import Path
 
-import numpy as np
-
-from insar_platform.geometry.baseline_geometry import calculate_baseline_geometry
-from insar_platform.geometry.calculate_orbit import CalculateOrbit
-from insar_platform.geometry.coordinate_transform import geodetic_to_ecef
+from insar_platform.database.services.processing_run import run_tracked_pipeline
 from insar_platform.geometry.geojson_manage import GeojsonManager
-from insar_platform.geometry.metadata_validation import MetadataValidator
-from insar_platform.geometry.spatial_validation import ValidateSpatial
-from insar_platform.ingestion.annotation import (
-    extract_annotation_bursts,
-    extract_image_sampling_metadata,
-)
-from insar_platform.ingestion.cdse import CDSEIngestion
-from insar_platform.ingestion.metadata import (
-    metadata_summary,
-    select_earliest_acquisitions,
-)
 from insar_platform.ingestion.sentinel1 import Sentinel1Ingestion
-from insar_platform.pipelines.acquisition_geometry import zero_doppler
-from scrips.explore_sar_tiff import ExploreSARTiff
+from insar_platform.pipelines.acquisition import acquisition_pipeline
+from insar_platform.pipelines.catalog import catalog_discovery_pipeline
+from insar_platform.pipelines.insar import insar_processing_pipeline
 
 
-# Application entry point for the InSAR platform
 def sentinel1_app(
     config: dict,
     env: dict,
 ) -> None:
+
     logger = logging.getLogger(__name__)
 
-    logger.info("Starting Sentinel-1 burst search")
+    logger.info("Starting Sentinel-1 processing")
 
+    # 1. Load AOI
     aoi_path = Path(config["AOI_GEOJSON"])
 
     geojson_manager = GeojsonManager(aoi_path)
-
     aoi_wkt = geojson_manager.polygon_to_wkt()
 
-    sentinel1_ingestion = Sentinel1Ingestion(config=config, aoi_wkt=aoi_wkt)
-
-    # Search for Sentinel-1 bursts within the AOI
-    bursts = sentinel1_ingestion.search_bursts()
-
-    if not bursts:
-        raise ValueError("No Sentinel-1 bursts found")
-
-    logger.info("Found %d Sentinel-1 bursts", len(bursts))
-    logger.debug("Sentinel-1 burst: %s", bursts[0])
-
-    metadata = metadata_summary(bursts=bursts)
-    logger.info("Metadata summary: %s", metadata)
-
-    # Group bursts by their respective SLC products
-    products_by_group = sentinel1_ingestion.get_products_by_group(bursts)
-    for group, products in sorted(products_by_group.items()):
-        logger.info("Group: %s, Unique SLC products: %d", group, len(products))
-
-    # Retrieve burst dates for the found bursts
-    bursts_dates = sentinel1_ingestion.get_bursts_dates(bursts)
-    logger.info("Sentinel-1 burst dates: %s", bursts_dates)
-
-    # Retrieve product ID information for the found bursts
-    product_id_info = sentinel1_ingestion.get_id(bursts)
-    logger.info("Sentinel-1 product ID info: %s", product_id_info)
-
-    # Retrieve deduplicated burst IDs for the found bursts
-    deduplicated_id = sentinel1_ingestion.get_deduplicated_id(bursts)
-    if deduplicated_id:
-        logger.info("Duplicate burst IDs: %s", deduplicated_id)
-
-    burst = bursts[0]
-    logger.info(
-        "GeoFootprint: %s",
-        burst["GeoFootprint"],
-    )
-
-    # Retrieve bursts grouped by their respective products
-    bursts_by_product = sentinel1_ingestion.get_bursts_by_product(bursts)
-    for product_id, product_bursts in bursts_by_product.items():
-        logger.debug(
-            "Product: %s | Burst count: %d",
-            product_id,
-            len(product_bursts),
-        )
-
-    validate_spatial_instance = ValidateSpatial(
-        logger=logger,
-        bursts_by_product=bursts_by_product,
+    # 2. Initialize Sentinel-1 ingestion
+    sentinel1_ingestion = Sentinel1Ingestion(
+        config=config,
         aoi_wkt=aoi_wkt,
     )
 
-    # Quantify spatial coverage of bursts within the AOI
-    coverage_acquisition = validate_spatial_instance.quantify_coverage()
-
-    # ? Script for exporting the common footprint of the AOI (currently commented out)
-    # common_footprint = coverage_acquisition["common_footprint"]
-
-    # export_processing_aoi(
-    #     common_footprint=common_footprint,
-    #     output_path=Path("data/aoi/alto_guadalentin_processing.geojson"),
-    # )
-
-    acquisitions = coverage_acquisition["acquisitions"]
-    common_coverage_percentage = coverage_acquisition["common_coverage_percentage"]
-
-    for product_id, acquisition_info in acquisitions.items():
-        coverage_percentage = acquisition_info["coverage_percentage"]
-
-        logger.debug(
-            "Product: %s | AOI coverage: %.2f%%",
-            product_id,
-            coverage_percentage,
-        )
-
-    logger.info(
-        "Common AOI coverage across %d acquisitions: %.2f%%",
-        len(acquisitions),
-        common_coverage_percentage,
-    )
-
-    validation_metadata = MetadataValidator(
-        bursts_by_product=bursts_by_product,
+    # 3. Discover and validate catalog
+    catalog = run_tracked_pipeline(
+        "catalog",
+        catalog_discovery_pipeline,
+        tracking_logger=logger,  # Logger used by the tracking wrapper
+        sentinel1_ingestion=sentinel1_ingestion,
+        logger=logger,  # Logger forwarded to catalog_discovery_pipeline
+        aoi_wkt=aoi_wkt,
         config=config,
-        logger=logger,
     )
 
-    # Validate burst identity across products
-    identity_results = validation_metadata.validate_burst_identity()
-
-    logger.info(
-        "Reference burst IDs: %s",
-        identity_results["reference_burst_ids"],
-    )
-
-    logger.info(
-        "Burst-number consistency across %d acquisitions: %s",
-        len(identity_results["products"]),
-        identity_results["all_consistent"],
-    )
-
-    for product_id, result in identity_results["products"].items():
-        if not result["is_consistent"]:
-            logger.warning(
-                "Product %s | Missing: %s | Unexpected: %s | Duplicates: %s",
-                product_id,
-                result["missing"],
-                result["unexpected"],
-                result["has_duplicates"],
-            )
-
-    # Validate acquisition metadata against expected values
-    metadata_mismatches = validation_metadata.validate_acquisition_metadata()
-
-    if metadata_mismatches:
-        for mismatch in metadata_mismatches:
-            logger.error("Acquisition metadata mismatch: %s", mismatch)
-
-        raise ValueError("Acquisition metadata validation failed")
-
-    logger.info("Acquisition metadata validation passed")
-
-    # Inspect orbit metadata
-    orbit_metadata = validation_metadata.inspect_orbit_metadata()
-    logger.debug(
-        "Orbit metadata for product %s: %s",
-        orbit_metadata["product_id"],
-        orbit_metadata["orbit_fields"],
-    )
-
-    logger.debug(
-        "Available fields for product %s: %s",
-        orbit_metadata["product_id"],
-        orbit_metadata["available_fields"],
-    )
-
-    # Select the two earliest acquisitions from each product
-    selected_pair = select_earliest_acquisitions(
-        bursts_by_product,
-        count=2,
-    )
-
-    # Temporary: Log all bursts for the selected acquisitions
-    for acquisition in selected_pair:
-        product_id = acquisition["product_id"]
-
-        product_bursts = sorted(
-            bursts_by_product[product_id],
-            key=lambda burst: burst["BurstId"],
-        )
-
-        for burst in product_bursts:
-            logger.info(
-                "Product=%s | BurstId=%s | AzimuthTime=%s | Start=%s | End=%s",
-                product_id,
-                burst["BurstId"],
-                burst["AzimuthTime"],
-                burst["ContentDate"]["Start"],
-                burst["ContentDate"]["End"],
-            )
-
-    for acquisition in selected_pair:
-        logger.info(
-            "Selected SLC: %s | Date: %s | Product ID: %s",
-            acquisition["product_name"],
-            acquisition["acquisition_time"],
-            acquisition["product_id"],
-        )
-
-    # Inspect the catalogue's parent-product metadata (not the SAFE)
-    cdse_ingestion = CDSEIngestion(
+    # 4. Download and prepare acquisitions
+    acquisitions = run_tracked_pipeline(
+        "acquisition",
+        acquisition_pipeline,
+        tracking_logger=logger,
+        catalog=catalog,
         config=config,
-        selected_pair=selected_pair,
         env=env,
         logger=logger,
     )
 
-    calculate_orbit = CalculateOrbit(logger)
-
-    satellite_positions = {}
-    reference_ground_position = None
-
-    for acquisition in selected_pair:
-        product_id = acquisition["product_id"]
-
-        logger.info(
-            "Processing acquisition: %s | Product ID: %s",
-            acquisition["product_name"],
-            product_id,
-        )
-
-        # 1. Retrieve metadata for this acquisition
-        product_metadata = cdse_ingestion.get_product_metadata(product_id=product_id)
-
-        logger.info(
-            "Product: %s | Size: %.2f GiB | Online: %s",
-            product_metadata["Name"],
-            product_metadata["ContentLength"] / (1024**3),
-            product_metadata["Online"],
-        )
-
-        # 2. Retrieve this product's nodes
-        nodes = cdse_ingestion.get_product_nodes(product_id=product_id)
-
-        children_node = cdse_ingestion.get_children_node(product_nodes=nodes)
-
-        annotation_files = cdse_ingestion.get_directory_files(
-            children_node=children_node,
-            directory_name="annotation",
-        )
-
-        # 3. Retrieve measurement files
-        measurement_files = cdse_ingestion.get_directory_files(
-            children_node=children_node,
-            directory_name="measurement",
-        )
-
-        iw3_vv_measurements = [
-            node
-            for node in measurement_files["result"]
-            if node["Name"].lower().startswith("s1a-iw3-slc-vv-")
-            and node["Name"].lower().endswith(".tiff")
-        ]
-
-        if len(iw3_vv_measurements) != 1:
-            raise ValueError(
-                f"Expected one IW3 VV measurement for {product_id}, "
-                f"found {len(iw3_vv_measurements)}"
-            )
-
-        measurement_node = iw3_vv_measurements[0]
-
-        logger.info(
-            "Product %s | Selected measurement: %s",
-            product_id,
-            measurement_node["Name"],
-        )
-
-        # 3. Download the measurement file
-        # Download the selected IW3 VV measurement for each acquisition.
-        measurement_path = (
-            Path(config["MEASUREMENT_DATA_RAW"]) / product_id / measurement_node["Name"]
-        )
-
-        if measurement_path.is_file() and measurement_path.stat().st_size > 0:
-            logger.info(
-                "Measurement already exists: %s",
-                measurement_path,
-            )
-        else:
-            logger.info(
-                "Downloading IW3 VV measurement for product %s: %s",
-                product_id,
-                measurement_node["Name"],
-            )
-
-            cdse_ingestion.download_measurement_file(
-                measurement_node=measurement_node,
-                destination_path=measurement_path,
-            )
-
-        logger.info(
-            "Product %s | Measurement size: %.2f GiB",
-            product_id,
-            measurement_path.stat().st_size / (1024**3),
-        )
-
-        # 3. Select the IW3 VV annotation
-        iw3_vv_files = [
-            node
-            for node in annotation_files["result"]
-            if node["Name"].lower().startswith("s1a-iw3-slc-vv-")
-            and node["Name"].lower().endswith(".xml")
-        ]
-
-        if len(iw3_vv_files) != 1:
-            raise ValueError(
-                f"Expected one IW3 VV annotation for {product_id}, "
-                f"found {len(iw3_vv_files)}"
-            )
-
-        annotation_node = iw3_vv_files[0]
-
-        # 4. Download the annotation
-        xml_file_path = Path(config["ANNOTATION_DATA_RAW"]) / annotation_node["Name"]
-
-        cdse_ingestion.download_annotation_file(
-            annotation_node=annotation_node,
-            destination_path=xml_file_path,
-        )
-
-        annotation_bursts = extract_annotation_bursts(xml_file_path=xml_file_path)
-
-        burst_mapping = validation_metadata.map_catalogue_bursts_to_annotation(
-            catalogue_bursts=bursts_by_product[product_id],
-            annotation_bursts=annotation_bursts,
-        )
-
-        logger.info(
-            "Product %s | Burst mapping: %s",
-            product_id,
-            burst_mapping,
-        )
-
-        catalogue_burst_id = 219
-
-        annotation_index = burst_mapping[catalogue_burst_id]
-        selected_burst = annotation_bursts[annotation_index]
-
-        logger.info(
-            "Product %s | Burst %s | Azimuth start time: %s",
-            product_id,
-            catalogue_burst_id,
-            selected_burst["azimuth_time"],
-        )
-
-        first_valid_samples = selected_burst["first_valid_samples"]
-        last_valid_samples = selected_burst["last_valid_samples"]
-
-        logger.info(
-            "Product %s | Burst %s | Annotation index %s | Validity entries: %s",
-            product_id,
-            catalogue_burst_id,
-            annotation_index,
-            len(first_valid_samples),
-        )
-
-        valid_line_count = sum(
-            first >= 0 and last >= first
-            for first, last in zip(
-                first_valid_samples,
-                last_valid_samples,
-            )
-        )
-
-        logger.info(
-            "Product %s | Burst 219 | Valid azimuth lines: %s / %s",
-            product_id,
-            valid_line_count,
-            len(first_valid_samples),
-        )
-
-        next_burst = annotation_bursts[annotation_index + 1]
-
-        logger.info(
-            "Product %s | Burst 219 start: %s | Burst 220 start: %s",
-            product_id,
-            selected_burst["azimuth_time"],
-            next_burst["azimuth_time"],
-        )
-
-        sampling_metadata = extract_image_sampling_metadata(xml_file_path)
-
-        logger.info(
-            "Product %s | Sampling metadata: %s",
-            product_id,
-            sampling_metadata,
-        )
-
-        # 5. Extract orbit vectors
-        orbit_vectors = calculate_orbit.extract_orbit_xml_file(
-            xml_file_path=xml_file_path
-        )
-
-        logger.info(
-            "Product %s | Extracted %d orbit vectors",
-            product_id,
-            len(orbit_vectors),
-        )
-
-        # 6. Use the current acquisition timestamp
-        raw_time = acquisition["acquisition_time"]
-
-        if isinstance(raw_time, datetime):
-            acquisition_time = raw_time
-        else:
-            acquisition_time = datetime.fromisoformat(raw_time)
-
-        if acquisition_time.tzinfo is None:
-            raise ValueError(f"Acquisition timestamp lacks timezone: {raw_time}")
-
-        acquisition_time = acquisition_time.astimezone(UTC)
-
-        # 7. Validate orbit coverage
-        orbit_start = orbit_vectors[0]["timestamp"]
-        orbit_end = orbit_vectors[-1]["timestamp"]
-
-        logger.info("Acquisition time: %s", acquisition_time)
-        logger.info("Annotation file: %s", xml_file_path.name)
-        logger.info(
-            "Orbit coverage: %s to %s",
-            orbit_start,
-            orbit_end,
-        )
-
-        if not orbit_start <= acquisition_time <= orbit_end:
-            raise ValueError(
-                f"Acquisition {acquisition_time} is outside orbit "
-                f"coverage [{orbit_start}, {orbit_end}]"
-            )
-
-        # 8. Find bracketing vectors
-        first, second = calculate_orbit.find_bracketing_vectors(
-            orbit_vectors=orbit_vectors,
-            acquisition_time=acquisition_time,
-        )
-
-        # 9. Interpolate satellite position
-        catalogue_position, catalogue_velocity = calculate_orbit.interpolate_state(
-            first=first,
-            second=second,
-            acquisition_time=acquisition_time,
-        )
-
-        logger.info(
-            "Product %s | Interpolated ECEF position (m): %s",
-            product_id,
-            catalogue_position,
-        )
-
-        # 10. Extract geolocation points from the annotation XML
-        geolocation_points = calculate_orbit.extract_geolocation_grid(xml_file_path)
-
-        logger.info(
-            "Product %s | Geolocation points: %d",
-            product_id,
-            len(geolocation_points),
-        )
-
-        logger.debug(
-            "First geolocation point: %s",
-            geolocation_points[0],
-        )
-
-        # 11. Convert geolocation points from geodetic to ECEF coordinates
-
-        if reference_ground_position is None:
-            point = calculate_orbit.select_central_geolocation_point(geolocation_points)
-
-            logger.debug(
-                "Reference geolocation point: line=%d, pixel=%d, "
-                "latitude=%.8f, longitude=%.8f, height=%.3f",
-                point["line"],
-                point["pixel"],
-                point["latitude"],
-                point["longitude"],
-                point["height"],
-            )
-
-            logger.info(
-                "Reference geolocation point | "
-                "Azimuth time: %s | Global line: %d | Range pixel: %d",
-                point["azimuth_time"],
-                point["line"],
-                point["pixel"],
-            )
-
-            reference_ground_position = geodetic_to_ecef(
-                latitude=point["latitude"],
-                longitude=point["longitude"],
-                height=point["height"],
-            )
-
-            logger.info(
-                "Reference ground target ECEF (m): %s",
-                reference_ground_position,
-            )
-
-        # 12. Zero Doppler residual for the reference ground position
-        result = zero_doppler(
-            logger=logger,
-            product_id=product_id,
-            calculate_orbit=calculate_orbit,
-            catalogue_position=catalogue_position,
-            catalogue_velocity=catalogue_velocity,
-            reference_ground_position=reference_ground_position,
-            orbit_vectors=orbit_vectors,
-            satellite_positions=satellite_positions,
-        )
-
-        # Calculate the target's azimuth coordinate relative to burst 219.
-        burst_start = datetime.fromisoformat(selected_burst["azimuth_time"]).replace(
-            tzinfo=UTC
-        )
-
-        target_time = result.time.astimezone(UTC)
-
-        local_line = (
-            target_time - burst_start
-        ).total_seconds() / sampling_metadata.azimuth_time_interval
-
-        line_index = round(local_line)
-
-        if not 0 <= line_index < len(first_valid_samples):
-            raise ValueError(
-                f"Target azimuth line {line_index} is outside burst {catalogue_burst_id}"
-            )
-
-        first_valid = first_valid_samples[line_index]
-        last_valid = last_valid_samples[line_index]
-
-        logger.info(
-            "Product %s | Burst %s | Line %d | Valid range samples: %d to %d",
-            product_id,
-            catalogue_burst_id,
-            line_index,
-            first_valid,
-            last_valid,
-        )
-
-        satellite_positions[product_id] = result.satellite_position
-
-    logger.info(
-        "Orbit interpolation completed for %d acquisitions",
-        len(satellite_positions),
+    # 5. Process geometry
+    baseline = run_tracked_pipeline(
+        "insar",
+        insar_processing_pipeline,
+        tracking_logger=logger,
+        acquisitions=acquisitions,
+        logger=logger,
+        catalogue_burst_id=219,
     )
 
-    # Calculate baseline geometry after processing both acquisitions.
-
-    reference_id = selected_pair[0]["product_id"]
-    secondary_id = selected_pair[1]["product_id"]
-
-    reference_position = satellite_positions[reference_id]
-    secondary_position = satellite_positions[secondary_id]
-
-    baseline = calculate_baseline_geometry(
-        reference_position=reference_position,
-        secondary_position=secondary_position,
-        ground_position=reference_ground_position,
-    )
-
-    # Validate baseline decomposition.
-    if not np.isclose(
-        baseline.total_m**2,
-        baseline.parallel_m**2 + baseline.perpendicular_m**2,
-        rtol=1e-10,
-        atol=1e-6,
-    ):
-        raise ValueError("Baseline decomposition validation failed")
+    # TODO: Remove, only for test
+    # explore_sar_tiff = ExploreSARTiff(
+    #     tiff_path=Path(
+    #         "data/raw/measurement/216aff3b-f44e-4d82-9e71-f28a43fce10d/s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff"
+    #     ),
+    #     logger=logger,
+    # )
+    # explore_sar_tiff.run()
 
     logger.info(
-        "Reference: %s | Secondary: %s | "
-        "Total baseline: %.6f m | "
-        "Parallel baseline: %.6f m | "
-        "Perpendicular baseline: %.6f m",
-        reference_id,
-        secondary_id,
+        "Sentinel-1 processing completed | Baseline: %.3f m",
         baseline.total_m,
-        baseline.parallel_m,
-        baseline.perpendicular_m,
     )
-
-    # Inspect tiff
-    tiff_path_04 = Path(
-        "data/raw/measurement/"
-        "4770594e-9ee5-432a-9552-22f1e27efd61/"
-        "s1a-iw3-slc-vv-20250104t181041-20250104t181107-057298-070cb8-006.tiff"
-    )
-    tiff_path_16 = Path(
-        "data/raw/measurement/"
-        "216aff3b-f44e-4d82-9e71-f28a43fce10d/"
-        "s1a-iw3-slc-vv-20250116t181040-20250116t181106-057473-0713a0-006.tiff"
-    )
-
-    explorer_04 = ExploreSARTiff(tiff_path=tiff_path_04, logger=logger)
-    explorer_04.inspect_metadata()
-    explorer_04.inspect_small_amplitude_window()
-
-    explorer_16 = ExploreSARTiff(tiff_path=tiff_path_16, logger=logger)
-    explorer_16.inspect_metadata()
-    explorer_16.inspect_small_amplitude_window()
-
-    logger.info("Sentinel-1 burst search completed")

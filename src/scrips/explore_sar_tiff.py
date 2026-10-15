@@ -16,7 +16,11 @@ class ExploreSARTiff:
         self.tiff_path = tiff_path
         self.logger = logger
 
-    def inspect_metadata(self):
+    def run(self):
+        self._inspect_metadata()
+        self._inspect_small_amplitude_window()
+
+    def _inspect_metadata(self):
         with rasterio.open(self.tiff_path) as src:
             self.logger.debug("Driver: %s", src.driver)
             self.logger.debug("Width: %s", src.width)
@@ -26,7 +30,7 @@ class ExploreSARTiff:
             self.logger.debug("CRS: %s", src.crs)
             self.logger.debug("Transform: %s", src.transform)
 
-    def inspect_small_amplitude_window(self):
+    def _inspect_small_amplitude_window(self):
         with rasterio.open(self.tiff_path) as src:
             # Small subset, not the entire SLC
             window = Window(

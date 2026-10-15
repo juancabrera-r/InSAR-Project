@@ -1,3 +1,4 @@
+README.md
 pyproject.toml
 src/insar_platform.egg-info/PKG-INFO
 src/insar_platform.egg-info/SOURCES.txt

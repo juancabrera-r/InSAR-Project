@@ -3,6 +3,8 @@ from pathlib import Path
 from typing import TypedDict
 from xml.etree import ElementTree as ET
 
+from insar_platform.utils.date_time_format import to_iso_utc
+
 
 class AnnotationBurst(TypedDict):
     azimuth_time: str
@@ -84,7 +86,7 @@ def extract_annotation_bursts(
 
         bursts.append(
             {
-                "azimuth_time": azimuth_time,
+                "azimuth_time": to_iso_utc(azimuth_time),
                 "first_valid_samples": first_valid_samples,
                 "last_valid_samples": last_valid_samples,
             }
@@ -108,13 +110,10 @@ def extract_image_sampling_metadata(xml_file_path) -> BaselineResult:
     slant_range_time = root.findtext(".//imageInformation/slantRangeTime")
     range_sampling_rate = root.findtext(".//productInformation/rangeSamplingRate")
 
-    if any(
-        value is None
-        for value in (
-            azimuth_time_interval,
-            slant_range_time,
-            range_sampling_rate,
-        )
+    if (
+        azimuth_time_interval is None
+        or slant_range_time is None
+        or range_sampling_rate is None
     ):
         raise ValueError("Missing required Sentinel-1 sampling metadata")
 

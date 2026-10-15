@@ -182,7 +182,6 @@ class Sentinel1Ingestion:
         }
 
         if not duplicate_ids:
-            self.logger.debug("No duplicate burst IDs found")
             return {}
 
         return duplicate_ids

@@ -46,3 +46,8 @@ The initially design the database have five entities:
 | processing_run_inputs |	Track exactly which artifacts were used by  |each processing run
 
 The database stores their metadata and references, not the large raster arrays.
+
+## solution
+
+**connection.py** initializes the connection infrastructure without creating tables automatically. Schema changes should be managed through Alembic.
+

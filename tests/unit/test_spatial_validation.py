@@ -75,7 +75,7 @@ def test_require_nonempty_bursts_by_product(ingestion, bursts_by_product):
 def test_quantify_coverage(ingestion):
     result = ingestion.quantify_coverage()
 
-    acquisitions = result["acquisitions"]
+    acquisitions = result.acquisitions
 
     assert len(acquisitions) == 2
 
@@ -87,13 +87,13 @@ def test_quantify_coverage(ingestion):
         75.0, abs=1e-5
     )
 
-    assert result["common_coverage_percentage"] == pytest.approx(50.0, abs=1e-5)
+    assert result.common_coverage_percentage == pytest.approx(50.0, abs=1e-5)
 
 
 def test_quantify_coverage_empty_aoi(ingestion):
     ingestion.aoi_wkt = "POLYGON EMPTY"
 
-    with pytest.raises(ValueError, match="AOI geometry is invalid or empty"):
+    with pytest.raises(ValueError, match="AOI is invalid or empty"):
         ingestion.quantify_coverage()
 
 
@@ -101,7 +101,7 @@ def test_quantify_coverage_zero_area_aoi(ingestion):
     ingestion.aoi_wkt = "POINT (-3.0 40.0)"
 
     with pytest.raises(
-        ValueError, match="AOI projected area must be greater than zero"
+        ValueError, match="AOI projected area must be positive and finite"
     ):
         ingestion.quantify_coverage()
 
@@ -119,9 +119,7 @@ def test_quantify_coverage_empty_acquisitions(ingestion):
 def test_quantify_coverage_empty_product(ingestion):
     ingestion.bursts_by_product = {"product1": []}
 
-    with pytest.raises(
-        ValueError, match="Invalid or missing burst geometries for product product1"
-    ):
+    with pytest.raises(ValueError, match="No bursts available for product product1"):
         ingestion.quantify_coverage()
 
 
@@ -130,10 +128,10 @@ def test_quantify_coverage_invariants(ingestion):
 
     percentages = [
         acquisition["coverage_percentage"]
-        for acquisition in result["acquisitions"].values()
+        for acquisition in result.acquisitions.values()
     ]
 
-    common = result["common_coverage_percentage"]
+    common = result.common_coverage_percentage
 
     assert all(0 <= percentage <= 100 for percentage in percentages)
 
@@ -159,6 +157,6 @@ def test_quantify_coverage_invalid_geometry(ingestion):
 
     with pytest.raises(
         ValueError,
-        match="Invalid or missing burst geometries for product product1",
+        match="Product product1, burst 0 is invalid or empty",
     ):
         ingestion.quantify_coverage()

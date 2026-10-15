@@ -18,6 +18,11 @@ scipy = ">=1.18.1,<2"
 rasterio = ">=1.5.2,<2"
 matplotlib = ">=3.11.2,<4"
 
+sqlalchemy = ">=2.0,<3"
+psycopg = ">=3.2,<4"
+alembic = ">=1.16,<2"
+geoalchemy2 = ">=0.17,<1"
+
 [pypi-dependencies]
 insar-platform = { path = ".", editable = true }
 
