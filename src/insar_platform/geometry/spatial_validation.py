@@ -4,10 +4,9 @@ from logging import Logger
 from math import isfinite
 
 from pyproj import Transformer
-from shapely import unary_union, wkt
+from shapely import transform, unary_union, wkt
 from shapely.geometry import shape
 from shapely.geometry.base import BaseGeometry
-from shapely.ops import transform
 
 
 @dataclass
@@ -147,7 +146,11 @@ class ValidateSpatial:
             always_xy=True,
         )
 
-        projected = transform(transformer.transform, geometry)
+        projected = transform(
+            geometry,
+            transformer.transform,  # type: ignore
+            interleaved=False,
+        )  # pyright: ignore[reportCallIssue]
         self._validate_geometry(projected, "Projected geometry")
 
         return projected
