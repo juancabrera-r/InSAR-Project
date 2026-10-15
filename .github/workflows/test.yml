@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
@@ -18,6 +18,12 @@ jobs:
         with:
           cache: true
           frozen: true
+
+      - name: Show environment
+        run: |
+          pixi --version
+          pixi run -e dev python --version
+          pixi run -e dev pytest --version
 
       - name: Run tests
         run: pixi run -e dev test
