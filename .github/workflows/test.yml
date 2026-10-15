@@ -27,3 +27,5 @@ jobs:
 
       - name: Run tests
         run: pixi run -e dev test
+        env:
+          DATABASE_URL: postgresql+psycopg://test:test@localhost:5432/insar_test
