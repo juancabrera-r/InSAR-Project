@@ -33,7 +33,7 @@ pre-commit = "*"
 
 [tasks]
 insar = "python -m src.insar_platform.app.main"
-test = "python -m pytest tests/ -v"
+test = "python -m pytest tests/unit tests/ingestion -v"
 validation = "python -m pytest tests/scientific -v -s"
 format = "ruff format ."
 format-check = "ruff format --check ."
