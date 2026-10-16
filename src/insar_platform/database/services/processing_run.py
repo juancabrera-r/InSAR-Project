@@ -26,6 +26,7 @@ def run_tracked_pipeline[R](
     tracking_logger: Logger,
     *args: Any,
     tracking_options: TrackingOptions | None = None,
+    pass_run_id: bool = False,
     **kwargs: Any,
 ) -> R:
     """
@@ -58,6 +59,9 @@ def run_tracked_pipeline[R](
 
     # 2. Execute pipeline
     try:
+        if pass_run_id:
+            kwargs["run_id"] = run_id
+
         result = pipeline(*args, **kwargs)
 
         if tracking_options is not None:

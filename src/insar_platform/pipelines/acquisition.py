@@ -3,6 +3,7 @@ Acquisition pipeline for processing selected Sentinel-1 acquisitions.
 
 """
 
+import uuid
 from dataclasses import dataclass
 from datetime import datetime
 from logging import Logger
@@ -42,6 +43,7 @@ def acquisition_pipeline(
     config: dict,
     env: dict,
     logger: Logger,
+    run_id: uuid.UUID | None = None,
 ) -> list[AcquisitionResult]:
 
     # Select the two earliest acquisitions from each product
@@ -321,7 +323,7 @@ def acquisition_pipeline(
 
     inserted_count = register_sar_product_files(
         records=records,
-        download_run_id=None,
+        download_run_id=run_id,
     )
 
     logger.info(

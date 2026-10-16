@@ -1,9 +1,14 @@
 import logging
+import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
 import numpy as np
 
+from insar_platform.database.services.insar_baseline import (
+    InSARBaselineRecord,
+    register_insar_baseline,
+)
 from insar_platform.geometry.baseline_geometry import (
     calculate_baseline_geometry,
 )
@@ -24,6 +29,7 @@ def insar_processing_pipeline(
     acquisitions: list[AcquisitionResult],
     logger: logging.Logger,
     catalogue_burst_id: int = 219,
+    run_id: uuid.UUID | None = None,
 ) -> BaselineGeometryResult:
 
     if len(acquisitions) != 2:
@@ -206,6 +212,31 @@ def insar_processing_pipeline(
         baseline.total_m,
         baseline.parallel_m,
         baseline.perpendicular_m,
+    )
+
+    if run_id is None:
+        raise ValueError(
+            "InSAR processing run_id is required for database registration"
+        )
+
+    record = InSARBaselineRecord(
+        reference_product_name=acquisitions[0].product_name,
+        secondary_product_name=acquisitions[1].product_name,
+        catalogue_burst_id=catalogue_burst_id,
+        total_m=baseline.total_m,
+        perpendicular_m=baseline.perpendicular_m,
+        parallel_m=baseline.parallel_m,
+    )
+
+    baseline_id = register_insar_baseline(
+        run_id=run_id,
+        record=record,
+    )
+
+    logger.info(
+        "Registered InSAR baseline: %s | Run ID: %s",
+        baseline_id,
+        run_id,
     )
 
     return BaselineGeometryResult(
