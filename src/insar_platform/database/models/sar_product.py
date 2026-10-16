@@ -14,6 +14,9 @@ if TYPE_CHECKING:
         ProcessingRunInput,
     )
 
+if TYPE_CHECKING:
+    from insar_platform.database.models.sar_product_file import SARProductFile
+
 
 class SARProduct(Base):
     __tablename__ = "sar_product"
@@ -59,5 +62,9 @@ class SARProduct(Base):
     )
 
     run_inputs: Mapped[list["ProcessingRunInput"]] = relationship(
+        back_populates="product",
+    )
+
+    files: Mapped[list["SARProductFile"]] = relationship(
         back_populates="product",
     )
