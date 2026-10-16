@@ -1,7 +1,10 @@
 import logging
 from pathlib import Path
 
-from insar_platform.database.services.processing_run import run_tracked_pipeline
+from insar_platform.database.services.processing_run import (
+    run_tracked_pipeline,
+    run_tracked_pipeline_with_products,
+)
 from insar_platform.geometry.geojson_manage import GeojsonManager
 from insar_platform.ingestion.sentinel1 import Sentinel1Ingestion
 from insar_platform.pipelines.acquisition import acquisition_pipeline
@@ -31,12 +34,17 @@ def sentinel1_app(
     )
 
     # 3. Discover and validate catalog
-    catalog = run_tracked_pipeline(
+    catalog = run_tracked_pipeline_with_products(
         "catalog",
         catalog_discovery_pipeline,
         tracking_logger=logger,  # Logger used by the tracking wrapper
         sentinel1_ingestion=sentinel1_ingestion,
         logger=logger,  # Logger forwarded to catalog_discovery_pipeline
+        product_names_from_result=lambda result: [
+            bursts[0]["ParentProductName"]
+            for bursts in result.bursts_by_product.values()
+            if bursts
+        ],
         aoi_wkt=aoi_wkt,
         config=config,
     )

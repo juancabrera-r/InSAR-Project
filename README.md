@@ -55,3 +55,8 @@ Apply it:
 ```bash
 pixi run alembic upgrade head
 ```
+
+Rollback:
+```bash
+pixi run alembic downgrade -1
+```

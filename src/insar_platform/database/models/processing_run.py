@@ -1,10 +1,11 @@
 import uuid
 from datetime import datetime
 from enum import StrEnum
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, Enum, Text, func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from insar_platform.database.base import Base
 
@@ -15,6 +16,12 @@ class ProcessingStatus(StrEnum):
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
+
+
+if TYPE_CHECKING:
+    from insar_platform.database.models.processing_run_input import (
+        ProcessingRunInput,
+    )
 
 
 class ProcessingRun(Base):
@@ -60,4 +67,9 @@ class ProcessingRun(Base):
     error_message: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
+    )
+
+    inputs: Mapped[list["ProcessingRunInput"]] = relationship(
+        back_populates="run",
+        cascade="all, delete-orphan",
     )

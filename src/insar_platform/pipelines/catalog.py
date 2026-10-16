@@ -4,8 +4,13 @@ Pipeline for discovering and validating Sentinel-1 catalog acquisitions within a
 
 import logging
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Any
 
+from insar_platform.database.services.sar_product import (
+    SARProductRecord,
+    register_sar_products,
+)
 from insar_platform.geometry.metadata_validation import MetadataValidator
 from insar_platform.geometry.spatial_validation import ValidateSpatial
 from insar_platform.ingestion.metadata import metadata_summary
@@ -152,6 +157,45 @@ def catalog_discovery_pipeline(
         raise ValueError("Acquisition metadata validation failed")
 
     logger.info("Acquisition metadata validation passed")
+
+    products_to_register = []
+
+    for product_id, product_bursts in bursts_by_product.items():
+        if not product_bursts:
+            continue
+
+        burst = product_bursts[0]
+
+        # Product identifier
+        product_name = burst["ParentProductName"]
+
+        # Satellite: A -> S1A
+        satellite = f"S1{burst['PlatformSerialIdentifier']}"
+
+        # Acquisition time from parent product name
+        # Example:
+        # S1A_IW_SLC__1SDV_20250116T181040_20250116T181106_...
+        product_parts = product_name.split("_")
+
+        acquisition_time = datetime.strptime(
+            product_parts[5],
+            "%Y%m%dT%H%M%S",
+        ).replace(tzinfo=UTC)
+
+        # Relative orbit
+        relative_orbit = int(burst["RelativeOrbitNumber"])
+
+        products_to_register.append(
+            SARProductRecord(
+                product_name=product_name,
+                satellite=satellite,
+                acquisition_time=acquisition_time,
+                relative_orbit=relative_orbit,
+            )
+        )
+    register_sar_products(products=products_to_register)
+
+    logger.info("Registered %d SAR products", len(products_to_register))
 
     # Inspect orbit metadata
     orbit_metadata = validation_metadata.inspect_orbit_metadata()

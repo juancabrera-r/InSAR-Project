@@ -317,3 +317,37 @@ def test_initial_registration_failure_does_not_execute_pipeline(
     pipeline.assert_not_called()
     logger.info.assert_not_called()
     logger.exception.assert_not_called()
+
+
+def test_pipeline_registers_product_inputs(
+    mocked_sessions,
+    monkeypatch,
+):
+    pipeline = MagicMock(return_value={"products": ["S1A_PRODUCT"]})
+    logger = MagicMock(spec=Logger)
+
+    register_mock = MagicMock(return_value=1)
+
+    monkeypatch.setattr(
+        tracking,
+        "register_processing_run_inputs",
+        register_mock,
+    )
+
+    extractor = lambda result: result["products"]
+
+    result = tracking.run_tracked_pipeline_with_products(
+        "catalog_discovery",
+        pipeline,
+        logger,
+        extractor,
+    )
+
+    assert result == {"products": ["S1A_PRODUCT"]}
+
+    pipeline.assert_called_once_with()
+
+    register_mock.assert_called_once_with(
+        run_id=1,
+        product_names=["S1A_PRODUCT"],
+    )

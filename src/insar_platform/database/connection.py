@@ -3,6 +3,7 @@ from collections.abc import Generator
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session, sessionmaker
 
 load_dotenv()
@@ -21,6 +22,8 @@ SessionLocal = sessionmaker(
     autoflush=False,
     expire_on_commit=False,
 )
+
+url = make_url(DATABASE_URL)
 
 
 def get_db() -> Generator[Session, None, None]:

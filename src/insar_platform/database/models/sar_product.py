@@ -1,12 +1,18 @@
 import uuid
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from geoalchemy2 import Geometry
 from sqlalchemy import DateTime, Integer, String, func
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from insar_platform.database.base import Base
+
+if TYPE_CHECKING:
+    from insar_platform.database.models.processing_run_input import (
+        ProcessingRunInput,
+    )
 
 
 class SARProduct(Base):
@@ -50,4 +56,8 @@ class SARProduct(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         nullable=False,
+    )
+
+    run_inputs: Mapped[list["ProcessingRunInput"]] = relationship(
+        back_populates="product",
     )
