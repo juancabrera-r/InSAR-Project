@@ -25,6 +25,7 @@ def insar_processing_pipeline(
     logger: logging.Logger,
     catalogue_burst_id: int = 219,
 ) -> BaselineGeometryResult:
+
     if len(acquisitions) != 2:
         raise ValueError(f"Expected 2 acquisitions, found {len(acquisitions)}")
 

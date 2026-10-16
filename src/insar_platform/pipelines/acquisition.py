@@ -9,6 +9,11 @@ from logging import Logger
 from pathlib import Path
 from typing import Any
 
+from insar_platform.database.models.sar_product_file import SARFileType
+from insar_platform.database.services.sar_product_file import (
+    SARProductFileRecord,
+    register_sar_product_files,
+)
 from insar_platform.geometry.metadata_validation import MetadataValidator
 from insar_platform.ingestion.annotation import (
     AnnotationBurst,
@@ -294,5 +299,34 @@ def acquisition_pipeline(
                 sampling_metadata=sampling_metadata,
             )
         )
+
+    # Register files after processing ALL acquisitions
+    records = []
+
+    for acquisition in results:
+        records.extend(
+            [
+                SARProductFileRecord(
+                    product_name=acquisition.product_name,
+                    file_type=SARFileType.MEASUREMENT,
+                    file_path=acquisition.measurement_path,
+                ),
+                SARProductFileRecord(
+                    product_name=acquisition.product_name,
+                    file_type=SARFileType.ANNOTATION,
+                    file_path=acquisition.annotation_path,
+                ),
+            ]
+        )
+
+    inserted_count = register_sar_product_files(
+        records=records,
+        download_run_id=None,
+    )
+
+    logger.info(
+        "Registered %d new SAR product files",
+        inserted_count,
+    )
 
     return results
