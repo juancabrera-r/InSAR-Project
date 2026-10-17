@@ -1,6 +1,9 @@
 
 # Configuration file for the InSAR project
 
+# General configuration for the InSAR project
+DEBUG_MODE: true
+
 # Copernicus Data Catalogue URL
 URL: "https://catalogue.dataspace.copernicus.eu"
 

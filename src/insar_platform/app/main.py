@@ -36,7 +36,7 @@ def main() -> None:
     env = config_obj.load_env()
 
     # Initialize logging
-    LoggingManager.setup(debug=True, log_dir=str(LOG_DIR))
+    LoggingManager.setup(debug=config["DEBUG_MODE"], log_dir=str(LOG_DIR))
 
     # Initialize app
     sentinel1_app(
