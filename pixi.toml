@@ -35,7 +35,7 @@ pre-commit = "*"
 debugpy = ">=1.8.22, <2"
 
 [tasks]
-insar = "python -m src.insar_platform.app.main"
+insar = "python -m insar_platform.app.main"
 test = "python -m pytest tests/unit -v"
 validation = "python -m pytest tests/scientific -v -s"
 format = "ruff format ."

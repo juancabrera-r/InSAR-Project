@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import os
-import sys
 from pathlib import Path
 
 from insar_platform.config.config import ConfigLoader
@@ -18,10 +17,6 @@ LOG_DIR = BASE_DIR.parents[1] / "logs"
 def main() -> None:
     """Main entry point for the application."""
 
-    print("PYTHON:", sys.executable)
-    print("CONDA_PREFIX:", os.getenv("CONDA_PREFIX"))
-    print("PIXI_ENVIRONMENT_NAME:", os.getenv("PIXI_ENVIRONMENT_NAME"))
-    print("PATH:")
     for path in os.environ.get("PATH", "").split(os.pathsep):
         if "pixi" in path.lower() or "conda" in path.lower():
             print(" ", path)
