@@ -1,98 +1,18 @@
-from dataclasses import dataclass
+import math
+from dataclasses import asdict, dataclass
+from logging import Logger
 from pathlib import Path
-from typing import TypedDict
+from typing import Any
 from xml.etree import ElementTree as ET
 
 from insar_platform.utils.date_time_format import to_iso_utc
 
 
-class AnnotationBurst(TypedDict):
+@dataclass(frozen=True)
+class AnnotationBurst:
     azimuth_time: str
     first_valid_samples: list[int]
     last_valid_samples: list[int]
-
-
-def extract_annotation_bursts(
-    xml_file_path: Path,
-) -> list[AnnotationBurst]:
-    """Extract and validate Sentinel-1 burst timing and sample boundaries."""
-
-    root = ET.parse(xml_file_path).getroot()
-
-    lines_per_burst_text = root.findtext(".//swathTiming/linesPerBurst")
-    samples_per_burst_text = root.findtext(".//swathTiming/samplesPerBurst")
-
-    if lines_per_burst_text is None:
-        raise ValueError("Missing linesPerBurst")
-
-    if samples_per_burst_text is None:
-        raise ValueError("Missing samplesPerBurst")
-
-    lines_per_burst = int(lines_per_burst_text)
-    samples_per_burst = int(samples_per_burst_text)
-
-    if lines_per_burst <= 0 or samples_per_burst <= 0:
-        raise ValueError("Burst dimensions must be positive")
-
-    burst_elements = root.findall(".//swathTiming/burstList/burst")
-
-    if not burst_elements:
-        raise ValueError(f"No bursts found in annotation: {xml_file_path}")
-
-    bursts: list[AnnotationBurst] = []
-
-    for index, element in enumerate(burst_elements):
-        azimuth_time = element.findtext("azimuthTime")
-        first_valid_text = element.findtext("firstValidSample")
-        last_valid_text = element.findtext("lastValidSample")
-
-        if not azimuth_time:
-            raise ValueError(f"Missing azimuthTime in burst {index}")
-
-        if not first_valid_text or not last_valid_text:
-            raise ValueError(f"Missing valid-sample boundaries in burst {index}")
-
-        try:
-            first_valid_samples = [int(value) for value in first_valid_text.split()]
-            last_valid_samples = [int(value) for value in last_valid_text.split()]
-        except ValueError as exc:
-            raise ValueError(
-                f"Non-integer valid-sample boundary in burst {index}"
-            ) from exc
-
-        if (
-            len(first_valid_samples) != lines_per_burst
-            or len(last_valid_samples) != lines_per_burst
-        ):
-            raise ValueError(
-                f"Burst {index}: expected {lines_per_burst} validity entries, "
-                f"got {len(first_valid_samples)} first and "
-                f"{len(last_valid_samples)} last entries"
-            )
-
-        for line_index, (first, last) in enumerate(
-            zip(first_valid_samples, last_valid_samples)
-        ):
-            # -1 in both arrays indicates a line without valid samples.
-            if first == -1 and last == -1:
-                continue
-
-            if not (0 <= first <= last < samples_per_burst):
-                raise ValueError(
-                    f"Burst {index}, line {line_index}: "
-                    f"invalid sample boundaries ({first}, {last}) "
-                    f"for {samples_per_burst} samples per burst"
-                )
-
-        bursts.append(
-            {
-                "azimuth_time": to_iso_utc(azimuth_time),
-                "first_valid_samples": first_valid_samples,
-                "last_valid_samples": last_valid_samples,
-            }
-        )
-
-    return bursts
 
 
 @dataclass(frozen=True)
@@ -102,23 +22,166 @@ class BaselineResult:
     range_sampling_rate: float
 
 
-def extract_image_sampling_metadata(xml_file_path) -> BaselineResult:
-
-    root = ET.parse(xml_file_path).getroot()
-
-    azimuth_time_interval = root.findtext(".//imageInformation/azimuthTimeInterval")
-    slant_range_time = root.findtext(".//imageInformation/slantRangeTime")
-    range_sampling_rate = root.findtext(".//productInformation/rangeSamplingRate")
-
-    if (
-        azimuth_time_interval is None
-        or slant_range_time is None
-        or range_sampling_rate is None
+class AnnotationManager:
+    def __init__(
+        self,
+        annotation_path: Path,
+        logger: Logger,
     ):
-        raise ValueError("Missing required Sentinel-1 sampling metadata")
+        self.annotation_path = annotation_path
+        self.logger = logger
 
-    return BaselineResult(
-        azimuth_time_interval=float(azimuth_time_interval),
-        slant_range_time=float(slant_range_time),
-        range_sampling_rate=float(range_sampling_rate),
-    )
+    def extract_annotation_bursts(
+        self,
+        root: ET.Element,
+    ) -> tuple[list[AnnotationBurst], int, int]:
+
+        lines_text = root.findtext(".//swathTiming/linesPerBurst")
+        samples_text = root.findtext(".//swathTiming/samplesPerBurst")
+
+        if lines_text is None or samples_text is None:
+            raise ValueError("Missing burst dimensions")
+
+        lines_per_burst = int(lines_text)
+        samples_per_burst = int(samples_text)
+
+        if lines_per_burst <= 0 or samples_per_burst <= 0:
+            raise ValueError("Burst dimensions must be positive")
+
+        burst_elements = root.findall(".//swathTiming/burstList/burst")
+
+        if not burst_elements:
+            raise ValueError("No bursts found in annotation XML")
+
+        bursts: list[AnnotationBurst] = []
+
+        for index, element in enumerate(burst_elements):
+            azimuth_time = element.findtext("azimuthTime")
+            first_text = element.findtext("firstValidSample")
+            last_text = element.findtext("lastValidSample")
+
+            if not azimuth_time:
+                raise ValueError(f"Missing azimuthTime in burst {index}")
+
+            if not first_text or not last_text:
+                raise ValueError(f"Missing sample boundaries in burst {index}")
+
+            try:
+                first = [int(v) for v in first_text.split()]
+                last = [int(v) for v in last_text.split()]
+            except ValueError as exc:
+                raise ValueError(
+                    f"Non-integer sample boundary in burst {index}"
+                ) from exc
+
+            if len(first) != lines_per_burst or len(last) != lines_per_burst:
+                raise ValueError(
+                    f"Burst {index}: expected {lines_per_burst} lines, "
+                    f"got {len(first)} first and {len(last)} last"
+                )
+
+            for line_index, (f, l) in enumerate(zip(first, last)):
+                if f == -1 and l == -1:
+                    continue
+
+                if not (0 <= f <= l < samples_per_burst):
+                    raise ValueError(
+                        f"Burst {index}, line {line_index}: "
+                        f"invalid boundaries ({f}, {l})"
+                    )
+
+            bursts.append(
+                AnnotationBurst(
+                    azimuth_time=to_iso_utc(azimuth_time),
+                    first_valid_samples=first,
+                    last_valid_samples=last,
+                )
+            )
+
+        return bursts, lines_per_burst, samples_per_burst
+
+    def extract_image_sampling_metadata(
+        self,
+        root: ET.Element,
+    ) -> BaselineResult:
+
+        azimuth_text = root.findtext(".//imageInformation/azimuthTimeInterval")
+        slant_text = root.findtext(".//imageInformation/slantRangeTime")
+        range_text = root.findtext(".//productInformation/rangeSamplingRate")
+
+        if azimuth_text is None or slant_text is None or range_text is None:
+            raise ValueError("Missing required Sentinel-1 sampling metadata")
+
+        result = BaselineResult(
+            azimuth_time_interval=float(azimuth_text),
+            slant_range_time=float(slant_text),
+            range_sampling_rate=float(range_text),
+        )
+
+        if (
+            not math.isfinite(result.azimuth_time_interval)
+            or result.azimuth_time_interval <= 0
+            or not math.isfinite(result.slant_range_time)
+            or result.slant_range_time < 0
+            or not math.isfinite(result.range_sampling_rate)
+            or result.range_sampling_rate <= 0
+        ):
+            raise ValueError("Invalid Sentinel-1 sampling metadata")
+
+        return result
+
+    def inspect_annotation(self) -> dict[str, Any]:
+        self.logger.info(
+            "Inspecting annotation XML: %s",
+            self.annotation_path,
+        )
+
+        root = ET.parse(self.annotation_path).getroot()
+
+        bursts, lines_per_burst, samples_per_burst = self.extract_annotation_bursts(
+            root
+        )
+
+        sampling = self.extract_image_sampling_metadata(root)
+
+        total_pixels = lines_per_burst * samples_per_burst
+
+        burst_statistics = []
+
+        for index, burst in enumerate(bursts):
+            first = burst.first_valid_samples
+            last = burst.last_valid_samples
+
+            valid_lines = sum(f >= 0 for f in first)
+
+            valid_pixels = sum(l - f + 1 for f, l in zip(first, last) if f >= 0)
+
+            statistics = {
+                "burst_index": index,
+                "azimuth_time": burst.azimuth_time,
+                "valid_lines": valid_lines,
+                "total_lines": lines_per_burst,
+                "valid_pixels": valid_pixels,
+                "total_pixels": total_pixels,
+                "valid_fraction": valid_pixels / total_pixels,
+            }
+
+            burst_statistics.append(statistics)
+
+            self.logger.info(
+                "Burst %d | valid lines=%d/%d | valid pixels=%d/%d (%.2f%%)",
+                index,
+                valid_lines,
+                lines_per_burst,
+                valid_pixels,
+                total_pixels,
+                100 * statistics["valid_fraction"],
+            )
+
+        return {
+            "lines_per_burst": lines_per_burst,
+            "samples_per_burst": samples_per_burst,
+            "burst_count": len(bursts),
+            "sampling": asdict(sampling),
+            "bursts": burst_statistics,
+        }

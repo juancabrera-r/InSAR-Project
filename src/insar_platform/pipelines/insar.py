@@ -141,15 +141,15 @@ def insar_processing_pipeline(
 
         selected_burst = acquisition.annotation_bursts[annotation_index]
 
-        first_valid_samples = selected_burst["first_valid_samples"]
-        last_valid_samples = selected_burst["last_valid_samples"]
+        first_valid_samples = selected_burst.first_valid_samples
+        last_valid_samples = selected_burst.last_valid_samples
 
         # 9. Calculate local azimuth line
-        burst_start = datetime.fromisoformat(selected_burst["azimuth_time"])
+        burst_start = datetime.fromisoformat(selected_burst.azimuth_time)
 
         if burst_start.tzinfo is None:
             raise ValueError(
-                f"Burst timestamp lacks timezone: {selected_burst['azimuth_time']}"
+                f"Burst timestamp lacks timezone: {selected_burst.azimuth_time}"
             )
 
         burst_start = burst_start.astimezone(UTC)

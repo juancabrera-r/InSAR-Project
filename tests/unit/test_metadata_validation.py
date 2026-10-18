@@ -1,8 +1,10 @@
 import logging
 from copy import deepcopy
+from dataclasses import replace
 
 import pytest
 
+from insar_platform.ingestion.annotation import AnnotationBurst
 from src.insar_platform.geometry.metadata_validation import MetadataValidator
 
 # ============================================================
@@ -535,12 +537,21 @@ def catalogue_bursts_for_mapping():
 
 @pytest.fixture
 def annotation_bursts_for_mapping():
+    timestamps = [
+        "2025-01-04T18:10:41.991507",
+        "2025-01-04T18:10:44.758286",
+        "2025-01-04T18:10:47.512731",
+        "2025-01-04T18:10:50.271288",
+        "2025-01-04T18:10:53.027789",
+    ]
+
     return [
-        {"azimuth_time": "2025-01-04T18:10:41.991507"},
-        {"azimuth_time": "2025-01-04T18:10:44.758286"},
-        {"azimuth_time": "2025-01-04T18:10:47.512731"},
-        {"azimuth_time": "2025-01-04T18:10:50.271288"},
-        {"azimuth_time": "2025-01-04T18:10:53.027789"},
+        AnnotationBurst(
+            azimuth_time=timestamp,
+            first_valid_samples=[0],
+            last_valid_samples=[100],
+        )
+        for timestamp in timestamps
     ]
 
 
@@ -591,9 +602,10 @@ def test_burst_mapping_duplicate_annotation_timestamp(
     catalogue_bursts_for_mapping,
     annotation_bursts_for_mapping,
 ):
-    annotation_bursts_for_mapping[1]["azimuth_time"] = annotation_bursts_for_mapping[2][
-        "azimuth_time"
-    ]
+    annotation_bursts_for_mapping[1] = replace(
+        annotation_bursts_for_mapping[1],
+        azimuth_time=annotation_bursts_for_mapping[2].azimuth_time,
+    )
 
     with pytest.raises(ValueError):
         validator.map_catalogue_bursts_to_annotation(

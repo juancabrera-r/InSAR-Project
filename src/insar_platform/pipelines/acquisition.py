@@ -9,18 +9,18 @@ from datetime import datetime
 from logging import Logger
 from pathlib import Path
 from typing import Any
+from xml.etree import ElementTree as ET
 
+from insar_platform.app.validations.sar_measurement_validator import (
+    SARMeasurementValidator,
+)
 from insar_platform.database.models.sar_product_file import SARFileType
 from insar_platform.database.services.sar_product_file import (
     SARProductFileRecord,
     register_sar_product_files,
 )
 from insar_platform.geometry.metadata_validation import MetadataValidator
-from insar_platform.ingestion.annotation import (
-    AnnotationBurst,
-    extract_annotation_bursts,
-    extract_image_sampling_metadata,
-)
+from insar_platform.ingestion.annotation import AnnotationBurst, AnnotationManager
 from insar_platform.ingestion.cdse import CDSEIngestion
 from insar_platform.ingestion.metadata import select_earliest_acquisitions
 from insar_platform.pipelines.catalog import CatalogDiscoveryResult
@@ -52,6 +52,9 @@ def acquisition_pipeline(
         count=2,
     )
 
+    if not selected_pair:
+        raise ValueError("No acquisitions selected from the catalog.")
+
     results: list[AcquisitionResult] = []
 
     # Temporary: Log all bursts for the selected acquisitions
@@ -80,10 +83,6 @@ def acquisition_pipeline(
             acquisition["acquisition_time"],
             acquisition["product_id"],
         )
-
-    # Inspect the catalogue's parent-product metadata (not the SAFE)
-    if selected_pair is None or len(selected_pair) == 0:
-        raise ValueError("No acquisitions selected from the catalog.")
 
     cdse_ingestion = CDSEIngestion(
         config=config,
@@ -212,8 +211,19 @@ def acquisition_pipeline(
             annotation_node=annotation_node,
             destination_path=xml_file_path,
         )
+        annotation_manager = AnnotationManager(
+            annotation_path=xml_file_path,
+            logger=logger,
+        )
+        root = ET.parse(xml_file_path).getroot()
 
-        annotation_bursts = extract_annotation_bursts(xml_file_path=xml_file_path)
+        annotation_bursts, lines_per_burst, _ = (
+            annotation_manager.extract_annotation_bursts(root=root)
+        )
+
+        sampling_metadata = annotation_manager.extract_image_sampling_metadata(
+            root=root
+        )
 
         burst_mapping = validation_metadata.map_catalogue_bursts_to_annotation(
             catalogue_bursts=catalog.bursts_by_product[product_id],
@@ -226,25 +236,33 @@ def acquisition_pipeline(
             burst_mapping,
         )
 
-        catalogue_burst_id = config["CATALOGUE_BURST_ID"]
+        catalogue_burst_id = int(config["CATALOGUE_BURST_ID"])
 
-        if burst_mapping[catalogue_burst_id] is None:
+        annotation_index = burst_mapping.get(catalogue_burst_id)
+
+        if annotation_index is None:
             raise ValueError(
-                f"No annotation found for catalogue burst {catalogue_burst_id} in product {product_id}"
+                f"No annotation found for catalogue burst "
+                f"{catalogue_burst_id} in product {product_id}"
             )
 
-        annotation_index = burst_mapping[catalogue_burst_id]
+        if not 0 <= annotation_index < len(annotation_bursts):
+            raise ValueError(
+                f"Invalid annotation index {annotation_index} "
+                f"for catalogue burst {catalogue_burst_id}"
+            )
+
         selected_burst = annotation_bursts[annotation_index]
 
         logger.info(
             "Product %s | Burst %s | Azimuth start time: %s",
             product_id,
             catalogue_burst_id,
-            selected_burst["azimuth_time"],
+            selected_burst.azimuth_time,
         )
 
-        first_valid_samples = selected_burst["first_valid_samples"]
-        last_valid_samples = selected_burst["last_valid_samples"]
+        first_valid_samples = selected_burst.first_valid_samples
+        last_valid_samples = selected_burst.last_valid_samples
 
         logger.info(
             "Product %s | Burst %s | Annotation index %s | Validity entries: %s",
@@ -277,16 +295,59 @@ def acquisition_pipeline(
                 "Product %s | Burst %s start: %s | Next burst start: %s",
                 product_id,
                 catalogue_burst_id,
-                selected_burst["azimuth_time"],
-                next_burst["azimuth_time"],
+                selected_burst.azimuth_time,
+                next_burst.azimuth_time,
             )
-
-        sampling_metadata = extract_image_sampling_metadata(xml_file_path)
 
         logger.info(
             "Product %s | Sampling metadata: %s",
             product_id,
             sampling_metadata,
+        )
+
+        # Validate the selected annotation burst against the measurement TIFF.
+        validator = SARMeasurementValidator(
+            measurement_path=measurement_path,
+            logger=logger,
+            max_invalid_nonzero_fraction=config["MAX_INVALID_NONZERO_FRACTION"],
+        )
+
+        mask_validation = validator.compare_mask_with_tiff(
+            annotation_bursts=annotation_bursts,
+            burst_index=annotation_index,
+            lines_per_burst=lines_per_burst,
+        )
+
+        logger.info(
+            "Product %s | Burst %s | Mask validation: %s",
+            product_id,
+            catalogue_burst_id,
+            mask_validation,
+        )
+
+        # Validate an adjacent burst boundary.
+        if len(annotation_bursts) < 2:
+            raise ValueError(
+                f"Product {product_id}: insufficient bursts for boundary validation"
+            )
+
+        boundary_index = (
+            annotation_index + 1
+            if annotation_index + 1 < len(annotation_bursts)
+            else annotation_index
+        )
+
+        boundary_result = validator.inspect_boundary(
+            annotation_bursts=annotation_bursts,
+            boundary_index=boundary_index,
+            lines_per_burst=lines_per_burst,
+        )
+
+        logger.info(
+            "Product %s | Boundary index %d | Result: %s",
+            product_id,
+            boundary_index,
+            boundary_result,
         )
 
         results.append(
@@ -322,6 +383,7 @@ def acquisition_pipeline(
         )
 
     inserted_count = register_sar_product_files(
+        logger=logger,
         records=records,
         download_run_id=run_id,
     )

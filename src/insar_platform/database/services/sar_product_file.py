@@ -1,6 +1,7 @@
 import uuid
 from collections.abc import Iterable
 from dataclasses import dataclass
+from logging import Logger
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,8 @@ from insar_platform.database.models.sar_product_file import (
     SARFileType,
     SARProductFile,
 )
+from insar_platform.geometry.rasterio_manage import RasterioManager
+from insar_platform.ingestion.annotation import AnnotationManager
 
 
 @dataclass(frozen=True)
@@ -24,6 +27,7 @@ class SARProductFileRecord:
 
 
 def register_sar_product_files(
+    logger: Logger,
     records: Iterable[SARProductFileRecord],
     download_run_id: uuid.UUID | None = None,
 ) -> int:
@@ -86,6 +90,22 @@ def register_sar_product_files(
 
             seen.add(key)
 
+            metadata = record.metadata_json
+
+            if record.file_type == SARFileType.MEASUREMENT:
+                raster_manager = RasterioManager(
+                    tiff_path=str(path),
+                    logger=logger,
+                )
+                metadata = raster_manager.inspect_metadata_tiff()
+
+            elif record.file_type == SARFileType.ANNOTATION:
+                annotation_manager = AnnotationManager(
+                    annotation_path=path,
+                    logger=logger,
+                )
+                metadata = annotation_manager.inspect_annotation()
+
             values.append(
                 {
                     "product_id": product_id,
@@ -93,7 +113,7 @@ def register_sar_product_files(
                     "file_type": record.file_type,
                     "file_path": str(path),
                     "file_size_bytes": file_size,
-                    "metadata_json": record.metadata_json,
+                    "metadata_json": metadata,
                 }
             )
 

@@ -157,7 +157,7 @@ class MetadataValidator:
         annotation_by_time = {}
 
         for index, burst in enumerate(annotation_bursts):
-            azimuth_time = to_iso_utc(burst["azimuth_time"])
+            azimuth_time = to_iso_utc(burst.azimuth_time)
 
             if azimuth_time in annotation_by_time:
                 raise ValueError(
