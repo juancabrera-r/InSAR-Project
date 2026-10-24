@@ -4,6 +4,8 @@ from datetime import datetime
 import numpy as np
 from numpy.typing import NDArray
 
+SPEED_OF_LIGHT_M_S = 299_792_458.0
+
 
 @dataclass(frozen=True)
 class ZeroDopplerResult:
@@ -23,7 +25,24 @@ def zero_doppler(
     reference_ground_position,
     orbit_vectors,
     satellite_positions,
+    max_normalized_residual,
+    acquisition_start: datetime,
+    acquisition_end: datetime,
 ) -> ZeroDopplerResult:
+
+    if max_normalized_residual is not None:
+        if isinstance(max_normalized_residual, bool):
+            raise TypeError("max_normalized_residual must be a number")
+
+        try:
+            max_normalized_residual = float(max_normalized_residual)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "max_normalized_residual must be a valid number or None"
+            ) from exc
+
+        if not np.isfinite(max_normalized_residual) or max_normalized_residual <= 0:
+            raise ValueError("max_normalized_residual must be finite and positive")
 
     zero_doppler_residual = calculate_orbit.zero_doppler_residual(
         satellite_position=catalogue_position,
@@ -94,27 +113,52 @@ def zero_doppler(
             product_id,
         )
 
-    # 2. Find and log zero-Doppler brackets within the orbit coverage
+    # 2. Restrict orbit vectors to the acquisition interval,
+    # retaining one vector on either side for interpolation.
+
+    if acquisition_start >= acquisition_end:
+        raise ValueError("Invalid acquisition time interval")
+
+    orbit_vectors = sorted(
+        orbit_vectors,
+        key=lambda vector: vector["timestamp"],
+    )
+
+    timestamps = [vector["timestamp"] for vector in orbit_vectors]
+
+    if acquisition_start < timestamps[0] or acquisition_end > timestamps[-1]:
+        raise ValueError(
+            f"Orbit coverage does not contain acquisition interval "
+            f"{acquisition_start}–{acquisition_end}"
+        )
+
     brackets = calculate_orbit.find_zero_doppler_brackets(
         orbit_vectors=orbit_vectors,
         ground_position=reference_ground_position,
     )
 
-    for first, second in brackets:
-        logger.info(
-            "Product %s | Zero-Doppler bracket: %s to %s",
-            product_id,
-            first["timestamp"],
-            second["timestamp"],
-        )
+    valid_brackets = [
+        (first, second)
+        for first, second in brackets
+        if first["timestamp"] <= acquisition_end
+        and second["timestamp"] >= acquisition_start
+    ]
 
-    if len(brackets) != 1:
+    logger.info(
+        "Product %s | Found %d brackets, %d within acquisition",
+        product_id,
+        len(brackets),
+        len(valid_brackets),
+    )
+
+    if len(valid_brackets) != 1:
         raise ValueError(
-            f"Expected exactly one zero-Doppler bracket for {product_id}, "
-            f"found {len(brackets)}"
+            f"Expected exactly one zero-Doppler bracket within "
+            f"acquisition interval for {product_id}, "
+            f"found {len(valid_brackets)}"
         )
 
-    first, second = brackets[0]
+    first, second = valid_brackets[0]
 
     # 3. Solve for the zero-Doppler time within the identified bracket
     zero_doppler_time = calculate_orbit.solve_zero_doppler_time(
@@ -122,6 +166,13 @@ def zero_doppler(
         second=second,
         ground_position=reference_ground_position,
     )
+
+    if not acquisition_start <= zero_doppler_time <= acquisition_end:
+        raise ValueError(
+            f"Zero-Doppler time {zero_doppler_time} falls outside "
+            f"acquisition interval "
+            f"[{acquisition_start}, {acquisition_end}]"
+        )
 
     logger.info(
         "Product %s | Zero-Doppler time: %s",
@@ -150,21 +201,45 @@ def zero_doppler(
         residual,
     )
 
-    # 5. Compute the line-of-sight vector and the normalized zero-Doppler residual
+    # 5. Compute the normalized zero-Doppler residual
     line_of_sight = reference_ground_position - zero_doppler_position
 
-    normalized_residual = abs(residual) / (
-        np.linalg.norm(line_of_sight) * np.linalg.norm(zero_doppler_velocity)
-    )
+    los_norm = float(np.linalg.norm(line_of_sight))
+    velocity_norm = float(np.linalg.norm(zero_doppler_velocity))
+
+    if (
+        not np.isfinite(los_norm)
+        or not np.isfinite(velocity_norm)
+        or los_norm <= 0.0
+        or velocity_norm <= 0.0
+    ):
+        raise ValueError(
+            f"Product {product_id} | Invalid geometry for normalized residual"
+        )
+
+    normalized_residual = float(abs(residual) / (los_norm * velocity_norm))
+
+    if not np.isfinite(normalized_residual):
+        raise ValueError("Normalized residual must be finite")
 
     logger.info(
-        "Product %s | residual=%.12e | LOS norm=%.6f | velocity norm=%.6f | normalized=%.12e",
+        "Product %s | residual=%.12e | LOS norm=%.6f | "
+        "velocity norm=%.6f | normalized=%.12e",
         product_id,
         residual,
-        np.linalg.norm(line_of_sight),
-        np.linalg.norm(zero_doppler_velocity),
+        los_norm,
+        velocity_norm,
         normalized_residual,
     )
+
+    if (
+        max_normalized_residual is not None
+        and normalized_residual > max_normalized_residual
+    ):
+        raise ValueError(
+            f"Normalized residual {normalized_residual:.6e} exceeds "
+            f"maximum {max_normalized_residual:.6e}"
+        )
 
     return ZeroDopplerResult(
         time=zero_doppler_time,
@@ -173,3 +248,69 @@ def zero_doppler(
         residual=residual,
         normalized_residual=normalized_residual,
     )
+
+
+@dataclass(frozen=True)
+class RangePixelResult:
+    slant_range_m: float
+    slant_range_time_s: float
+    range_pixel: float
+
+
+def calculate_range_pixel(
+    satellite_position: np.ndarray,
+    ground_position: np.ndarray,
+    slant_range_time_s: float,
+    range_sampling_rate_hz: float,
+) -> RangePixelResult:
+    satellite = np.asarray(satellite_position, dtype=float)
+    ground = np.asarray(ground_position, dtype=float)
+
+    if satellite.shape != (3,) or ground.shape != (3,):
+        raise ValueError("Expected 3D ECEF positions")
+
+    if not np.all(np.isfinite(satellite)) or not np.all(np.isfinite(ground)):
+        raise ValueError("Non-finite ECEF position")
+
+    if not np.isfinite(slant_range_time_s) or slant_range_time_s < 0:
+        raise ValueError("Invalid first-sample slant-range time")
+
+    if not np.isfinite(range_sampling_rate_hz) or range_sampling_rate_hz <= 0:
+        raise ValueError("Invalid range sampling rate")
+
+    slant_range_m = float(np.linalg.norm(satellite - ground))
+    target_time_s = 2.0 * slant_range_m / SPEED_OF_LIGHT_M_S
+
+    range_pixel = (target_time_s - slant_range_time_s) * range_sampling_rate_hz
+
+    if not np.isfinite(range_pixel):
+        raise ValueError("Non-finite range pixel")
+
+    return RangePixelResult(
+        slant_range_m=slant_range_m,
+        slant_range_time_s=target_time_s,
+        range_pixel=float(range_pixel),
+    )
+
+
+def validate_range_pixel(
+    range_pixel: float,
+    first_valid_sample: int,
+    last_valid_sample: int,
+    measurement_width: int,
+) -> None:
+    if measurement_width <= 0:
+        raise ValueError("Invalid measurement width")
+
+    if not 0 <= first_valid_sample <= last_valid_sample < measurement_width:
+        raise ValueError("Invalid range validity interval")
+
+    if not np.isfinite(range_pixel):
+        raise ValueError("Non-finite range pixel")
+
+    if not first_valid_sample <= range_pixel <= last_valid_sample:
+        raise ValueError(
+            f"Reference ground point outside valid range: "
+            f"pixel={range_pixel:.3f}, "
+            f"valid=[{first_valid_sample}, {last_valid_sample}]"
+        )

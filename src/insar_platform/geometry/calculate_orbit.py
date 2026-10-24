@@ -2,11 +2,13 @@ from datetime import UTC, datetime, timedelta
 from itertools import pairwise
 from logging import Logger
 from pathlib import Path
+from typing import cast
 from xml.etree import ElementTree as ET
 
 import numpy as np
 from scipy.optimize import brentq
 
+from insar_platform.geometry.coordinate_transform import geodetic_to_ecef
 from insar_platform.utils.date_time_format import to_iso_utc
 
 
@@ -74,11 +76,11 @@ class CalculateOrbit:
         for first, second in pairwise(orbit_vectors):
             t1 = first["timestamp"]
             t2 = second["timestamp"]
-            self.logger.debug(
-                "Checking orbit vector interval: t1=%s, t2=%s",
-                t1,
-                t2,
-            )
+            # self.logger.debug(
+            #     "Checking orbit vector interval: t1=%s, t2=%s",
+            #     t1,
+            #     t2,
+            # )
 
             if t1 <= acquisition_time <= t2:
                 return first, second
@@ -137,6 +139,16 @@ class CalculateOrbit:
 
         velocity = (dh00 * p1 + dh01 * p2) / delta_t + dh10 * v1 + dh11 * v2
 
+        if not np.all(np.isfinite(position)):
+            raise ValueError(
+                "Interpolated satellite position contains non-finite values"
+            )
+
+        if not np.all(np.isfinite(velocity)):
+            raise ValueError(
+                "Interpolated satellite velocity contains non-finite values"
+            )
+
         return position, velocity
 
     def extract_geolocation_grid(
@@ -159,12 +171,21 @@ class CalculateOrbit:
             if line_text is None or pixel_text is None:
                 raise ValueError("Missing line or pixel in geolocation grid")
 
+            latitude = self._required_float(point, "latitude")
+            longitude = self._required_float(point, "longitude")
+
+            if not -90.0 <= latitude <= 90.0:
+                raise ValueError(f"Invalid latitude: {latitude}")
+
+            if not -180.0 <= longitude <= 180.0:
+                raise ValueError(f"Invalid longitude: {longitude}")
+
             points.append(
                 {
                     "azimuth_time": azimuth_time,
                     "slant_range_time": self._required_float(point, "slantRangeTime"),
-                    "latitude": self._required_float(point, "latitude"),
-                    "longitude": self._required_float(point, "longitude"),
+                    "latitude": latitude,
+                    "longitude": longitude,
                     "height": self._required_float(point, "height"),
                     "line": int(line_text),
                     "pixel": int(pixel_text),
@@ -179,6 +200,14 @@ class CalculateOrbit:
         ground_position: np.ndarray,
     ) -> list[tuple[dict, dict]]:
         brackets = []
+
+        if len(orbit_vectors) < 2:
+            raise ValueError("At least two orbit vectors are required")
+
+        timestamps = [vector["timestamp"] for vector in orbit_vectors]
+
+        if any(t1 >= t2 for t1, t2 in pairwise(timestamps)):
+            raise ValueError("Orbit timestamps must be strictly increasing")
 
         for first, second in pairwise(orbit_vectors):
             p1 = np.array(
@@ -202,7 +231,14 @@ class CalculateOrbit:
             residual_first = self.zero_doppler_residual(p1, v1, ground_position)
             residual_second = self.zero_doppler_residual(p2, v2, ground_position)
 
-            if residual_first * residual_second < 0:
+            if not np.isfinite(residual_first) or not np.isfinite(residual_second):
+                raise ValueError("Non-finite zero-Doppler residual")
+
+            if (
+                residual_first == 0.0
+                or residual_second == 0.0
+                or np.signbit(residual_first) != np.signbit(residual_second)
+            ):
                 brackets.append((first, second))
 
         return brackets
@@ -234,13 +270,31 @@ class CalculateOrbit:
                 ground_position=ground_position,
             )
 
-        root_seconds = brentq(
-            residual_at_seconds,
-            0.0,
-            duration,
-            xtol=1e-6,
-        )
+        f_start = residual_at_seconds(0.0)
+        f_end = residual_at_seconds(duration)
 
+        if not np.isfinite(f_start) or not np.isfinite(f_end):
+            raise ValueError("Non-finite zero-Doppler residual")
+
+        if f_start == 0.0:
+            return start_time
+
+        if f_end == 0.0:
+            return second["timestamp"]
+
+        if np.signbit(f_start) == np.signbit(f_end):
+            raise ValueError("Zero-Doppler bracket does not contain a sign change")
+
+        root_seconds = cast(
+            float,
+            brentq(
+                residual_at_seconds,
+                0.0,
+                duration,
+                xtol=1e-6,
+                full_output=False,
+            ),
+        )
         return start_time + timedelta(seconds=root_seconds)
 
     @staticmethod
@@ -299,3 +353,84 @@ class CalculateOrbit:
                 + ((point["pixel"] - center_pixel) / pixel_span) ** 2
             ),
         )
+
+    @staticmethod
+    def interpolate_geolocation_point(
+        points: list[dict],
+        target_line: float,
+        target_pixel: float,
+    ) -> np.ndarray:
+        from scipy.interpolate import LinearNDInterpolator
+
+        image_coordinates = np.array(
+            [[p["line"], p["pixel"]] for p in points],
+            dtype=float,
+        )
+
+        ground_coordinates = np.array(
+            [
+                geodetic_to_ecef(
+                    latitude=p["latitude"],
+                    longitude=p["longitude"],
+                    height=p["height"],
+                )
+                for p in points
+            ],
+            dtype=float,
+        )
+
+        interpolator = LinearNDInterpolator(
+            image_coordinates,
+            ground_coordinates,
+            fill_value=np.nan,
+        )
+
+        position = np.asarray(
+            interpolator(target_line, target_pixel),
+            dtype=float,
+        ).reshape(3)
+
+        if not np.all(np.isfinite(position)):
+            raise ValueError(
+                "Unable to interpolate reference ground position "
+                "inside geolocation-grid coverage"
+            )
+
+        return position
+
+    @staticmethod
+    def extract_satellite(xml_file_path: Path) -> str:
+        if not xml_file_path.is_file():
+            raise FileNotFoundError(f"Annotation XML not found: {xml_file_path}")
+
+        root = ET.parse(xml_file_path).getroot()
+
+        satellite = root.findtext("./adsHeader/missionId")
+
+        if satellite is None:
+            raise ValueError("Missing adsHeader/missionId in annotation XML")
+
+        satellite = satellite.strip()
+
+        if satellite not in {"S1A", "S1B", "S1C", "S1D"}:
+            raise ValueError(f"Unsupported Sentinel-1 satellite: {satellite}")
+
+        return satellite
+
+    @staticmethod
+    def extract_measurement_width(xml_file_path: Path) -> int:
+        root = ET.parse(xml_file_path).getroot()
+
+        value = root.findtext("./imageAnnotation/imageInformation/numberOfSamples")
+
+        if value is None:
+            raise ValueError(
+                f"Missing numberOfSamples in annotation XML: {xml_file_path}"
+            )
+
+        measurement_width = int(value)
+
+        if measurement_width <= 0:
+            raise ValueError(f"Invalid measurement width: {measurement_width}")
+
+        return measurement_width

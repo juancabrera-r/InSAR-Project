@@ -13,6 +13,7 @@ from insar_platform.pipelines.insar import insar_processing_pipeline
 
 
 def sentinel1_app(
+    project_root: Path,
     config: dict,
     env: dict,
 ) -> None:
@@ -61,6 +62,16 @@ def sentinel1_app(
         pass_run_id=True,
     )
 
+    orbit_directory = Path(config["ORBIT_DATA_RAW"])
+
+    if not orbit_directory.is_absolute():
+        orbit_directory = project_root / orbit_directory
+
+    orbit_directory = orbit_directory.resolve()
+
+    if not orbit_directory.is_dir():
+        raise FileNotFoundError(f"Orbit directory not found: {orbit_directory}")
+
     baseline = run_tracked_pipeline(
         "insar",
         insar_processing_pipeline,
@@ -69,6 +80,10 @@ def sentinel1_app(
         acquisitions=acquisitions,
         logger=logger,
         catalogue_burst_id=config["CATALOGUE_BURST_ID"],
+        max_perpendicular_baseline_m=config.get("MAX_PERPENDICULAR_BASELINE_M"),
+        max_normalized_residual=config.get("MAX_NORMALIZED_RESIDUAL"),
+        satellite_names=config.get("SATELLITE_NAMES"),
+        orbit_directory=orbit_directory,
     )
 
     # Coregistration

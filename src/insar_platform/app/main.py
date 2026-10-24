@@ -8,6 +8,7 @@ from insar_platform.config.logger import LoggingManager
 from insar_platform.pipelines.application import sentinel1_app
 
 BASE_DIR = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 CONFIG_PATH = BASE_DIR / "config" / "config.yaml"
 ENV_PATH = BASE_DIR.parents[1] / ".env"
@@ -35,6 +36,7 @@ def main() -> None:
 
     # Initialize app
     sentinel1_app(
+        project_root=PROJECT_ROOT,
         config=config,
         env=env,
     )

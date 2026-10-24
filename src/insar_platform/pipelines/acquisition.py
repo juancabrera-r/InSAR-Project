@@ -5,7 +5,7 @@ Acquisition pipeline for processing selected Sentinel-1 acquisitions.
 
 import uuid
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 from logging import Logger
 from pathlib import Path
 from typing import Any
@@ -19,6 +19,7 @@ from insar_platform.database.services.sar_product_file import (
     SARProductFileRecord,
     register_sar_product_files,
 )
+from insar_platform.geometry.calculate_orbit import CalculateOrbit
 from insar_platform.geometry.metadata_validation import MetadataValidator
 from insar_platform.ingestion.annotation import AnnotationBurst, AnnotationManager
 from insar_platform.ingestion.cdse import CDSEIngestion
@@ -253,6 +254,26 @@ def acquisition_pipeline(
             )
 
         selected_burst = annotation_bursts[annotation_index]
+
+        burst_start = datetime.fromisoformat(selected_burst.azimuth_time).astimezone(
+            UTC
+        )
+
+        burst_end = burst_start + timedelta(
+            seconds=(len(selected_burst.first_valid_samples) - 1)
+            * sampling_metadata.azimuth_time_interval
+        )
+
+        calculate_orbit = CalculateOrbit(logger)
+
+        satellite = calculate_orbit.extract_satellite(xml_file_path=xml_file_path)
+
+        cdse_ingestion.download_orbit_for_acquisition(
+            satellite=satellite,
+            burst_start=burst_start,
+            burst_end=burst_end,
+            destination_directory=Path(config["ORBIT_DATA_RAW"]),
+        )
 
         logger.info(
             "Product %s | Burst %s | Azimuth start time: %s",
