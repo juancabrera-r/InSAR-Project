@@ -305,7 +305,7 @@ We have completed the first type, not the second.
 
 The objective of this validation is to verify that the reference (January 4, 2025) and secondary (January 16, 2025) Sentinel-1 SLC acquisitions have compatible structural characteristics before proceeding to coregistration.
 
-| Property | Reference — Jan 4 | Secondary — Jan 16 | Result |
+| Property | Reference - Jan 4 | Secondary - Jan 16 | Result |
 |---|---|---|---|
 | Mission | S1A | S1A | Match |
 | Swath | IW3 | IW3 | Match |
@@ -316,9 +316,9 @@ The objective of this validation is to verify that the reference (January 4, 202
 | Start time | 2025-01-04 18:10:41.991507 | 2025-01-16 18:10:40.993084 | Expected difference |
 | Stop time | 2025-01-04 18:11:07.176182 | 2025-01-16 18:11:06.169538 | Expected difference |
 | Burst azimuth timestamps | 9 timestamps | 9 timestamps | Same count; similar timing patterns |
-| Temporal baseline | — | 11 days, 23:59:59.001577 | Approximately 12 days |
+| Temporal baseline | - | 11 days, 23:59:59.001577 | Approximately 12 days |
 
-**Validation result: PASSED — Structural compatibility**
+**Validation result: PASSED - Structural compatibility**
 
 All six structural metadata properties match. Both acquisitions were collected by Sentinel-1A using the IW3 subswath and VV polarization, and both contain nine bursts with identical raster dimensions.
 
@@ -378,7 +378,7 @@ geolocationGrid
 
 Both acquisitions contain **210 geolocation grid points**.
 
-| Property | Reference — Jan 4 | Secondary — Jan 16 |
+| Property | Reference - Jan 4 | Secondary - Jan 16 |
 |---|---:|---:|
 | Geolocation points | 210 | 210 |
 | Minimum latitude | 36.969332° | 36.969582° |
@@ -386,7 +386,7 @@ Both acquisitions contain **210 geolocation grid points**.
 | Minimum longitude | −2.714781° | −2.714407° |
 | Maximum longitude | −1.454277° | −1.454042° |
 
-**Result: PASSED — Preliminary full-image geographic bounding-box overlap.**
+**Result: PASSED - Preliminary full-image geographic bounding-box overlap.**
 
 The reference and secondary geographic bounds are very similar, indicating extensive overlap between their sampled geolocation extents.
 
@@ -461,7 +461,7 @@ This is different from reading SLC measurement data, where burst row ranges rema
 
 The boundary-line samples are used here only to approximate geographic extent.
 
-### Selected-Burst Geographic Coverage — Reference Acquisition
+### Selected-Burst Geographic Coverage - Reference Acquisition
 
 | Burst | Points | Latitude range | Longitude range |
 |---|---:|---|---|
@@ -469,7 +469,7 @@ The boundary-line samples are used here only to approximate geographic extent.
 | 219 | 42 | 37.467897° to 37.757572° | −2.528022° to −1.549744° |
 | 220 | 42 | 37.633290° to 37.923510° | −2.564660° to −1.582442° |
 
-### Selected-Burst Geographic Coverage — Secondary Acquisition
+### Selected-Burst Geographic Coverage - Secondary Acquisition
 
 | Burst | Points | Latitude range | Longitude range |
 |---|---:|---|---|
@@ -477,7 +477,7 @@ The boundary-line samples are used here only to approximate geographic extent.
 | 219 | 42 | 37.467777° to 37.757566° | −2.527716° to −1.549426° |
 | 220 | 42 | 37.633295° to 37.923381° | −2.564324° to −1.582147° |
 
-**Result: PASSED — Preliminary selected-burst geographic bounding-box overlap.**
+**Result: PASSED - Preliminary selected-burst geographic bounding-box overlap.**
 
 For each selected burst region, the reference and secondary bounding boxes are closely matched.
 
@@ -530,10 +530,10 @@ The orbit metadata comparison produced the following results:
 |---|---|---|---|
 | Relative orbit | 1 | 1 | PASS |
 | Orbit direction | ASCENDING | ASCENDING | PASS |
-| Absolute orbit | 57298 | 57473 | PASS — distinct acquisitions |
-| Absolute orbit difference | — | 175 orbits | Consistent with a 12-day repeat cycle |
+| Absolute orbit | 57298 | 57473 | PASS - distinct acquisitions |
+| Absolute orbit difference | - | 175 orbits | Consistent with a 12-day repeat cycle |
 
-**Result: PASS — Orbit metadata compatibility.**
+**Result: PASS - Orbit metadata compatibility.**
 
 Both acquisitions belong to relative orbit 1 and were collected during ascending passes. Their absolute orbit numbers differ by 175, consistent with Sentinel-1's nominal 12-day orbital repeat cycle.
 
@@ -553,7 +553,7 @@ Radar parameters were extracted from the Sentinel-1 annotation XML files and com
 | Slant-range time (s) | 0.00601709906465 | 0.00601709906465 | 0 | Reported |
 | Mid-swath incidence angle (°) | 43.9031460883 | 43.903906926 | +0.0007608378 | Reported |
 
-**Result: PASS — Radar sampling parameter consistency.**
+**Result: PASS - Radar sampling parameter consistency.**
 
 All five parameters selected for numerical compatibility checking match exactly at the reported precision.
 
@@ -635,7 +635,7 @@ It does not directly measure geometric coregistration error.
 | 219 | 3 | 2025-01-04 18:10:50.271288 | 2025-01-16 18:10:49.266697 | −6.167 ms |
 | 220 | 4 | 2025-01-04 18:10:53.027789 | 2025-01-16 18:10:52.025254 | −4.111 ms |
 
-**Execution result: Candidate burst timing comparison — COMPLETED.**
+**Execution result: Candidate burst timing comparison - COMPLETED.**
 
 The method successfully extracted burst timestamps and calculated relative timing residuals for all three selected candidate bursts.
 
@@ -747,13 +747,13 @@ The Doppler centroid polynomial produces values in Hz, while the azimuth FM-rate
 
 ### Antenna Steering Rate Results
 
-| Parameter | Reference — Jan 4 | Secondary — Jan 16 |
+| Parameter | Reference - Jan 4 | Secondary - Jan 16 |
 |---|---:|---:|
 | Azimuth steering rate (°/s) | 1.397440818 | 1.397440818 |
 | Doppler centroid records | 11 | 11 |
 | Azimuth FM-rate records | 11 | 11 |
 
-**Result: PASS — Antenna steering rate compatibility.**
+**Result: PASS - Antenna steering rate compatibility.**
 
 The reported antenna steering rates are identical for both acquisitions.
 
@@ -787,7 +787,7 @@ The evaluated azimuth FM-rates are negative for all selected bursts in both acqu
 
 The values vary across slant range and are nearly identical between the reference and secondary acquisitions at the reported precision.
 
-**Result: PASS — Numerical FM-rate consistency.**
+**Result: PASS - Numerical FM-rate consistency.**
 
 This confirms that the extracted polynomial models produce finite, nonzero, and closely matching FM-rate values for the selected bursts.
 

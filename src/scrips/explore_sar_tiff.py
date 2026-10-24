@@ -849,7 +849,7 @@ class ExploreSARTiff:
 
         plt.legend()
 
-        plt.title("Sentinel-1 IW3 VV — SLC amplitude (dB)")
+        plt.title("Sentinel-1 IW3 VV - SLC amplitude (dB)")
         plt.xlabel("Range sample")
         plt.ylabel("Azimuth line")
         plt.colorbar(label="Amplitude (dB)")

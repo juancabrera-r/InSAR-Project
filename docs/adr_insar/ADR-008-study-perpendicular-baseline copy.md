@@ -23,7 +23,7 @@ All three vectors must use the same coordinate reference system.
 
 ## Solution
 
-**Step A — Calculate the baseline vector**
+**Step A - Calculate the baseline vector**
 
 $$
 \mathbf B = \mathbf S_2-\mathbf S_1
@@ -31,7 +31,7 @@ $$
 
 This is the displacement between the satellite positions at their respective zero-Doppler times for the same target.
 
-**Step B — Calculate the reference line-of-sight unit vector**
+**Step B - Calculate the reference line-of-sight unit vector**
 
 Define the LOS direction from the reference satellite toward the ground target:
 $$
@@ -40,7 +40,7 @@ $$
 {\|\mathbf P-\mathbf S_1\|}
 $$
 
-**Step C — Separate the parallel and perpendicular components**
+**Step C - Separate the parallel and perpendicular components**
 
 The baseline component parallel to the LOS is:
 $$

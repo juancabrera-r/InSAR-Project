@@ -1,6 +1,6 @@
 # ADR-007: Sentinel-1 InSAR Acquisition Geometry Compatibility
 
-**Status:** Investigation in progress — baseline calculation and selected-burst mapping remain open  
+**Status:** Investigation in progress - baseline calculation and selected-burst mapping remain open  
 **Scope:** Sentinel-1 SLC acquisitions of 4 and 16 January 2025  
 **Purpose:** Establish whether two acquisitions observe a common ground target with valid radar samples, then calculate their perpendicular baseline.
 
@@ -399,7 +399,7 @@ The investigation consequently checks the overlapping **burst index 3**, includi
 
 **Conclusion:** The same ground target has a valid radar sample in annotation burst index 3 for both acquisitions. Although index 4 nominally covers the target time, the target's sample is invalid there. This validates annotation-level target coverage, **not yet** the mapping to configured IDs 218–220.
 
-## 10. Compute the perpendicular baseline — remaining step
+## 10. Compute the perpendicular baseline - remaining step
 
 After choosing **one** common target and solving the corresponding observation time separately in each acquisition, evaluate the interpolated satellite positions:
 

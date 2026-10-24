@@ -8,7 +8,7 @@ The objective of this project is to develop a modular foundation for processing 
 
 Reliable InSAR analysis depends on more than producing an interferogram. It requires selecting compatible acquisitions, checking spatial and acquisition geometry, handling complex SAR data, and recording which inputs and processing steps produced each result. This repository focuses on those foundations before extending the workflow to validated deformation products.
 
-> **Status — active development.** The repository contains Sentinel-1 acquisition and metadata workflows, spatial and geometry-validation code, baseline calculations, and PostgreSQL/PostGIS models and services for tracking inputs and processing runs. A validated end-to-end chain for coregistration, interferogram generation, phase unwrapping, and line-of-sight displacement is **not yet implemented**. Cloud infrastructure and machine-learning components are future goals.
+> **Status - active development.** The repository contains Sentinel-1 acquisition and metadata workflows, spatial and geometry-validation code, baseline calculations, and PostgreSQL/PostGIS models and services for tracking inputs and processing runs. A validated end-to-end chain for coregistration, interferogram generation, phase unwrapping, and line-of-sight displacement is **not yet implemented**. Cloud infrastructure and machine-learning components are future goals.
 
 ## What the project currently covers
 
@@ -170,7 +170,7 @@ See the documents under `docs/` for investigation notes and validation evidence.
 4. Extend product lineage, reproducibility metadata, and automated workflow recovery.
 5. Evaluate cloud orchestration and machine learning only after the scientific pipeline is validated.
 
-# Sentinel-1 Pipeline — Processing and Validation Summary
+# Sentinel-1 Pipeline - Processing and Validation Summary
 
 **Scope:** Review of the supplied Python modules. **Status legend:** Implemented = enforced by an exception or explicit validation; Partial = checked only in part or merely logged; Missing = no corresponding check found in the reviewed code; Planned = stage not implemented in `application.py`.
 
@@ -215,7 +215,7 @@ sentinel1_app()                                      application.py
     +-- Interferogram generation                     PLANNED
 ```
 
-## Catalog discovery — validations
+## Catalog discovery - validations
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -228,7 +228,7 @@ sentinel1_app()                                      application.py
 | Duplicate burst-ID report | `catalog.py:64–67` | Partial | Log a warning if duplicates are found. |
 | Orbit metadata inspection | `metadata_validation.py:129–149` | Partial | Inspect/log orbit fields; not an orbit-quality validation. |
 
-## Acquisition — validations
+## Acquisition - validations
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -242,7 +242,7 @@ sentinel1_app()                                      application.py
 | Sampling metadata | `acquisition.py:224–225, 302–305` | Partial | Extract and log; no explicit positive/finite interval check here. |
 | Existing measurement download | `acquisition.py:164–179` | Partial | Reuse a nonempty local file; file integrity is assessed separately by downstream checks. |
 
-## InSAR processing — validations
+## InSAR processing - validations
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -268,6 +268,46 @@ sentinel1_app()                                      application.py
 | Database run ID | `insar.py:217–220` | Implemented | Require run ID before registration. |
 | Precise orbit provenance | `calculate_orbit.py:17–58` | Implemented | External POEORB selected, satellite and temporal coverage checked, orbit source and file path logged, SHA-256 calculated. |
 
+# Coregistration with SNAP
+
+## SNAP install:
+
+1. For Windows:
+Download from: https://step.esa.int/main/download/snap-download/
+Product to download: All Toolbox
+
+2. Install with:
+- SNAP Desktop
+- Sentinel-1 Tollbox (S1TBX)
+- Graph Processing Tool (GPT)
+
+| Phase | Development task |	Required validation |
+| --- | --- | --- |
+| 1 |	SNAP environment and execution	| Version, operators, exit codes |
+| 2 |	Input product preparation	| SAFE integrity, matching geometry |
+| 3 |	Orbit and DEM preparation	| Precise orbit coverage, DEM coverage |
+| 4 |	TOPSAR-Split	| Burst identity and overlap |
+| 5 |	Back-Geocoding	| Coarse alignment and output grid |
+| 6 |	Enhanced Spectral Diversity	| Residual azimuth alignment |
+| 7 |	Coregistration quality control	| Offsets, coherence, valid pixels |
+| 8 |	Python integration	| Outputs, provenance, database, tests |
+
+| Validation	| Proposed acceptance criterion	| Severity |
+| --- | --- | --- |
+| Product compatibility	| Same satellite, track, pass direction, subswath, polarization	 | Error |
+| Orbit provenance	| POEORB applied and compatible for both acquisitions	 | Error |
+| DEM coverage	| No missing DEM cells in required valid processing area	 | Error |
+| Burst mapping	| Expected bursts 218–220 retained in both products	 | Error |
+| Complex SLC integrity	| Finite real/imaginary values in valid areas	 | Error |
+| Output grid	| Reference and secondary dimensions match	 | Error |
+| Valid pixel overlap	| At least 90% of intended analysis area retained	 | Configurable |
+| Residual range offset	| Absolute median below 0.1 pixel	| Initial target |
+| Residual azimuth offset	| Absolute median below 0.01 pixel	| Initial TOPS  target |
+| ESD estimation	| Finite estimates, sufficient accepted overlap samples	 | Error |
+| ESD uncertainty	| Below configured threshold	 | Configurable |
+| Interferometric coherence	| Spatial statistics reported, without a universal minimum	 | Diagnostic |
+| Reproducibility	| Same inputs and parameters produce consistent outputs	 | Error |
+
 ## License
 
-**Proprietary — All Rights Reserved.** The source code is publicly viewable, but no general permission is granted to use, modify, or redistribute it. See [LICENSE](LICENSE).
+**Proprietary - All Rights Reserved.** The source code is publicly viewable, but no general permission is granted to use, modify, or redistribute it. See [LICENSE](LICENSE).
