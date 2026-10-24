@@ -3,7 +3,7 @@
 ## Context
 
 
-![alt text](slc_amplitude.png)
+![alt text](images/slc_amplitude.png)
 
 The visualization confirms that the reference SLC contains meaningful radar measurements. The image shows spatial backscatter variation, terrain-related structure, and a prominent dark horizontal band.
 

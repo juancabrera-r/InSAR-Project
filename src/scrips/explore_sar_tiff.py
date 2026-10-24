@@ -50,15 +50,15 @@ class ExploreSARTiff:
 
     def run(self):
         self.inspect_metadata_tiff()
-        # mask = self.inspect_annotation()
-        # self.compare_mask_with_tiff(mask)
-        # self.inspect_boundary(mask)
-        # self.compare_annotation_metadata()
-        # self.compare_geolocation_summary()
-        # self.compare_orbit_metadata()
-        # self.compare_burst_timing()
-        # self.validate_tops_doppler_geometry()
-        # self._inspect_small_amplitude_window()
+        mask = self.inspect_annotation()
+        self.compare_mask_with_tiff(mask)
+        self.inspect_boundary(mask)
+        self.compare_annotation_metadata()
+        self.compare_geolocation_summary()
+        self.compare_orbit_metadata()
+        self.compare_burst_timing()
+        self.validate_tops_doppler_geometry()
+        self.inspect_small_amplitude_window()
 
     def inspect_metadata_tiff(self):
         self.logger.info("Inspecting TIFF metadata: %s", self.tiff_path)

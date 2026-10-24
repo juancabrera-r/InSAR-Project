@@ -3,7 +3,7 @@ ADR-002-study-area-and-data.md
 # InSAR fundamentals
 
 ## Context
-We need select an area and data for that area.
+We need select an area and data for the area.
 
 ## Problem
 Can we measure and characterize land subsidence in the Alto Guadalentín aquifer using Sentinel-1 InSAR and reproduce the spatial deformation pattern documented by previous studies?

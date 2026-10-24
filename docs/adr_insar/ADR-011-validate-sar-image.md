@@ -71,7 +71,7 @@ We inspected the TIFF metadata with Rasterio.
 
 Sentinel-1 IW SLC products use TOPS (Terrain Observation with Progressive Scans) acquisition mode, in which the instrument records data in bursts.
 
-![alt text](tops.png)
+![alt text](images/tops.png)
 
 The annotation XML provides the burst organization.
 
@@ -104,7 +104,7 @@ For example, using zero-based indexing:
 Our selected bursts 218, 219, and 220 correspond to indices 2, 3, and 4 in the burst mapping established during exploration.
 Burst layout around the selected boundary
 
-![alt text](boundary_bursts.png)
+![alt text](images/boundary_bursts.png)
 
 **Result**: The TIFF height and XML burst structure are consistent for both acquisitions.
 
@@ -257,7 +257,7 @@ Nonzero values among annotation-invalid pixels
 
 Percentages calculated within the invalid portion of each boundary window.
 
-![alt text](invalid_portion_boundary.png)
+![alt text](images/invalid_portion_boundary.png)
 
 Approximately 95.5% of annotation-invalid samples have nonzero stored values in both boundary windows.
 

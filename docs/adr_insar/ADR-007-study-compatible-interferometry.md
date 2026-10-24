@@ -36,7 +36,7 @@ The initial selection uses `select_earliest_acquisitions()` to choose the two ea
 
 ### 2.1 What is the perpendicular baseline?
 
-![alt text](baseline.png)
+![alt text](images/baseline.png)
 
 Let $\mathbf S_1$ and $\mathbf S_2$ denote satellite positions at their respective observation times for a **common** ground target $\mathbf P$. Their separation is the baseline vector:
 
@@ -106,7 +106,7 @@ For this example, $\Delta t=10\ \mathrm{s}$ and $u\approx0.7287$.
 
 The Hermite basis functions are:
 
-![alt text](hermite_funtions.png)
+![alt text](images/hermite_funtions.png)
 
 $$
 \begin{aligned}
@@ -129,7 +129,7 @@ The interpolated velocity $\mathbf V(t)$ is obtained by differentiating $\mathbf
 
 ## 5. Define a common ground target
 
-![alt text](perpendicular_baseline.png)
+![alt text](images/perpendicular_baseline.png)
 
 Sentinel-1 geolocation-grid records include `azimuthTime`, `slantRangeTime`, `latitude`, `longitude`, `height`, `line`, and `pixel`.
 

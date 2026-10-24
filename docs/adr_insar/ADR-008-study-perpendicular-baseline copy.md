@@ -13,7 +13,7 @@ Now we can calculate the perpendicular baseline, $$B_\perp$$ between the two sat
 
 This is important because the perpendicular baseline affects interferometric sensitivity to topography and contributes to geometric decorrelation.
 
-![alt text](calc_baseline.png)
+![alt text](images/calc_baseline.png)
 
 Let:
 - S_1: reference satellite ECEF position, in metres.
