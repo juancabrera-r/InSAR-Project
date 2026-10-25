@@ -118,82 +118,25 @@ class CDSEIngestion:
         self,
         annotation_node: dict,
         destination_path: Path,
-    ) -> None:
-        """Download the specified annotation file to the given destination path."""
+    ) -> Path:
+        """Download or reuse an annotation XML file."""
 
-        node_uri = annotation_node["Nodes"]["uri"]
-
-        if not node_uri.endswith("/Nodes"):
-            raise ValueError("Unexpected CDSE node URI structure")
-
-        file_url = node_uri.removesuffix("/Nodes") + "/$value"
-
-        self.logger.debug("Annotation file URL: %s", file_url)
-
-        access_token = self.authenticate()
-
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-        }
-
-        response = requests.get(
-            file_url,
-            headers=headers,
-            timeout=60,
+        return self.download_node_file(
+            node=annotation_node,
+            destination_path=destination_path,
         )
-        response.raise_for_status()
-
-        if not destination_path.parent.exists():
-            destination_path.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(destination_path, "wb") as f:
-            f.writelines(response.iter_content(chunk_size=8192))
 
     def download_measurement_file(
         self,
         measurement_node: dict,
         destination_path: Path,
-    ) -> None:
-        """Download the specified measurement file to the given destination path."""
+    ) -> Path:
+        """Download or reuse a measurement TIFF file."""
 
-        node_uri = measurement_node["Nodes"]["uri"]
-
-        if not node_uri.endswith("/Nodes"):
-            raise ValueError("Unexpected CDSE node URI structure")
-
-        file_url = node_uri.removesuffix("/Nodes") + "/$value"
-
-        destination_path.parent.mkdir(parents=True, exist_ok=True)
-        temporary_path = destination_path.with_name(destination_path.name + ".part")
-
-        if destination_path.is_file():
-            return
-
-        access_token = self.authenticate()
-
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-        }
-
-        try:
-            with requests.get(
-                file_url,
-                headers=headers,
-                stream=True,
-                timeout=(30, 120),
-            ) as response:
-                response.raise_for_status()
-
-                with temporary_path.open("wb") as output:
-                    for chunk in response.iter_content(chunk_size=1024 * 1024):
-                        if chunk:
-                            output.write(chunk)
-
-            temporary_path.replace(destination_path)
-
-        except Exception:
-            temporary_path.unlink(missing_ok=True)
-            raise
+        return self.download_node_file(
+            node=measurement_node,
+            destination_path=destination_path,
+        )
 
     def search_orbit_products(
         self,
@@ -404,3 +347,94 @@ class CDSEIngestion:
                     return selected.file_path
 
         return None
+
+    def download_manifest_file(
+        self,
+        children_node: dict,
+        destination_path: Path,
+    ) -> Path:
+        """Download or reuse the original SAFE manifest."""
+
+        from xml.etree import ElementTree as ET
+
+        manifest_node = next(
+            (
+                node
+                for node in children_node["result"]
+                if node["Name"] == "manifest.safe"
+            ),
+            None,
+        )
+
+        if manifest_node is None:
+            raise ValueError("manifest.safe not found in CDSE product")
+
+        manifest_path = self.download_node_file(
+            node=manifest_node,
+            destination_path=destination_path,
+        )
+
+        # Validate both newly downloaded and cached manifests.
+        ET.parse(manifest_path)
+
+        return manifest_path
+
+    def download_node_file(
+        self,
+        node: dict,
+        destination_path: Path,
+    ) -> Path:
+        """Download a CDSE file only if it is not already cached."""
+
+        destination_path = Path(destination_path)
+
+        # Reuse an existing nonempty file.
+        if destination_path.is_file() and destination_path.stat().st_size > 0:
+            self.logger.info(
+                "Using cached CDSE file: %s",
+                destination_path,
+            )
+            return destination_path
+
+        node_uri = node["Nodes"]["uri"]
+
+        if not node_uri.endswith("/Nodes"):
+            raise ValueError("Unexpected CDSE node URI structure")
+
+        file_url = node_uri.removesuffix("/Nodes") + "/$value"
+
+        destination_path.parent.mkdir(parents=True, exist_ok=True)
+
+        temporary_path = destination_path.with_name(destination_path.name + ".part")
+
+        access_token = self.authenticate()
+
+        try:
+            with requests.get(
+                file_url,
+                headers={"Authorization": f"Bearer {access_token}"},
+                stream=True,
+                timeout=(30, 120),
+            ) as response:
+                response.raise_for_status()
+
+                with temporary_path.open("wb") as output:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            output.write(chunk)
+
+            if temporary_path.stat().st_size == 0:
+                raise ValueError(f"Downloaded CDSE file is empty: {destination_path}")
+
+            temporary_path.replace(destination_path)
+
+        except Exception:
+            temporary_path.unlink(missing_ok=True)
+            raise
+
+        self.logger.info(
+            "Downloaded CDSE file: %s",
+            destination_path,
+        )
+
+        return destination_path

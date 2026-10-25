@@ -24,6 +24,7 @@ def ingestion():
 @pytest.fixture
 def mock_response():
     response = MagicMock()
+    response.__enter__.return_value = response
     response.raise_for_status.return_value = None
     return response
 
@@ -340,10 +341,11 @@ def test_download_annotation_file_success(
     mock_get.assert_called_once_with(
         "https://example.com/test.xml/$value",
         headers={"Authorization": "Bearer test_token"},
-        timeout=60,
+        stream=True,
+        timeout=(30, 120),
     )
 
-    mock_response.iter_content.assert_called_once_with(chunk_size=8192)
+    mock_response.iter_content.assert_called_once_with(chunk_size=1024 * 1024)
 
 
 @patch.object(CDSEIngestion, "authenticate")

@@ -48,9 +48,17 @@ def insar_processing_pipeline(
     orbit_directory: Path | None = None,
 ) -> BaselineGeometryResult:
 
-    # 1. Validate acquisition pair
-    if len(acquisitions) != 2:
-        raise ValueError(f"Expected 2 acquisitions, found {len(acquisitions)}")
+    # 1. Validate acquisitions
+    if len(acquisitions) < 2:
+        raise ValueError(
+            f"At least 2 acquisitions are required for InSAR processing, "
+            f"but found {len(acquisitions)}"
+        )
+
+    logger.info(
+        "Processing %d acquisitions",
+        len(acquisitions),
+    )
 
     if acquisitions[0].product_id == acquisitions[1].product_id:
         raise ValueError("Reference and secondary acquisitions must be different")

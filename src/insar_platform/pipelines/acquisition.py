@@ -3,6 +3,8 @@ Acquisition pipeline for processing selected Sentinel-1 acquisitions.
 
 """
 
+import json
+import shutil
 import uuid
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
@@ -10,6 +12,9 @@ from logging import Logger
 from pathlib import Path
 from typing import Any
 from xml.etree import ElementTree as ET
+from zipfile import BadZipFile, ZipFile
+
+import requests
 
 from insar_platform.app.validations.sar_measurement_validator import (
     SARMeasurementValidator,
@@ -34,6 +39,7 @@ class AcquisitionResult:
     acquisition_time: datetime
     measurement_path: Path
     annotation_path: Path
+    manifest_path: Path
     annotation_bursts: list[AnnotationBurst]
     burst_mapping: dict[int, int]
     sampling_metadata: Any
@@ -47,10 +53,36 @@ def acquisition_pipeline(
     run_id: uuid.UUID | None = None,
 ) -> list[AcquisitionResult]:
 
-    # Select the two earliest acquisitions from each product
+    # Select acquisitions: manual count or all available.
+    acquisition_count = config.get("ACQUISITION_COUNT")
+
+    if acquisition_count is None:
+        # Automatic mode: select all available products.
+        acquisition_count = len(catalog.bursts_by_product)
+        logger.info(
+            "Automatic acquisition selection: %d available products",
+            acquisition_count,
+        )
+    else:
+        # Manual mode: select the requested number.
+        acquisition_count = int(acquisition_count)
+
+        if acquisition_count < 1:
+            raise ValueError("ACQUISITION_COUNT must be >= 1 or null")
+
+        logger.info(
+            "Manual acquisition selection: requesting %d acquisitions",
+            acquisition_count,
+        )
+
     selected_pair = select_earliest_acquisitions(
         catalog.bursts_by_product,
-        count=2,
+        count=acquisition_count,
+    )
+
+    logger.info(
+        "Selected %d acquisitions",
+        len(selected_pair),
     )
 
     if not selected_pair:
@@ -117,101 +149,200 @@ def acquisition_pipeline(
             product_metadata["Online"],
         )
 
-        # 2. Retrieve this product's nodes
-        nodes = cdse_ingestion.get_product_nodes(product_id=product_id)
+        # Download the complete original SAFE product as one ZIP archive.
+        safe_directory = Path(config["ANNOTATION_DATA_RAW"]).parent / "safe"
+        safe_directory.mkdir(parents=True, exist_ok=True)
+        product_name = product_metadata["Name"].removesuffix(".zip")
+        if not product_name.endswith(".SAFE"):
+            product_name += ".SAFE"
+        safe_zip_path = safe_directory / f"{product_name}.zip"
 
-        children_node = cdse_ingestion.get_children_node(product_nodes=nodes)
+        def inspect_safe_archive(
+            archive: ZipFile,
+            product_id: str,
+        ) -> tuple[str, str, str]:
 
-        annotation_files = cdse_ingestion.get_directory_files(
-            children_node=children_node,
-            directory_name="annotation",
-        )
+            members = [name for name in archive.namelist() if not name.endswith("/")]
 
-        # 3. Retrieve measurement files
-        measurement_files = cdse_ingestion.get_directory_files(
-            children_node=children_node,
-            directory_name="measurement",
-        )
+            manifest_files = [
+                name for name in members if name.endswith("/manifest.safe")
+            ]
 
-        iw3_vv_measurements = [
-            node
-            for node in measurement_files["result"]
-            if node["Name"].lower().startswith("s1a-iw3-slc-vv-")
-            and node["Name"].lower().endswith(".tiff")
-        ]
+            annotation_files = [
+                name
+                for name in members
+                if "/annotation/" in name
+                and name.rsplit("/", 1)[-1].lower().startswith("s1a-iw3-slc-vv-")
+                and name.lower().endswith(".xml")
+            ]
 
-        if len(iw3_vv_measurements) != 1:
-            raise ValueError(
-                f"Expected one IW3 VV measurement for {product_id}, "
-                f"found {len(iw3_vv_measurements)}"
+            measurement_files = [
+                name
+                for name in members
+                if "/measurement/" in name
+                and name.rsplit("/", 1)[-1].lower().startswith("s1a-iw3-slc-vv-")
+                and name.lower().endswith((".tif", ".tiff"))
+            ]
+
+            if not (
+                len(manifest_files)
+                == len(annotation_files)
+                == len(measurement_files)
+                == 1
+            ):
+                raise ValueError(
+                    f"Unexpected SAFE contents for {product_id}: "
+                    f"manifest={len(manifest_files)}, "
+                    f"IW3 VV annotations={len(annotation_files)}, "
+                    f"IW3 VV measurements={len(measurement_files)}"
+                )
+            return manifest_files[0], annotation_files[0], measurement_files[0]
+
+        archive_ready = False
+        verification_path = safe_zip_path.with_suffix(".zip.verified.json")
+
+        if safe_zip_path.is_file():
+            try:
+                stat = safe_zip_path.stat()
+                previously_verified = False
+
+                if verification_path.is_file():
+                    try:
+                        verification = json.loads(
+                            verification_path.read_text(encoding="utf-8")
+                        )
+                        previously_verified = (
+                            verification.get("size") == stat.st_size
+                            and verification.get("mtime_ns") == stat.st_mtime_ns
+                        )
+                    except (OSError, ValueError, TypeError):
+                        pass
+
+                with ZipFile(safe_zip_path) as archive:
+                    inspect_safe_archive(archive, product_id)
+
+                    if not previously_verified:
+                        logger.info(
+                            "Performing full SAFE ZIP integrity check: %s",
+                            safe_zip_path,
+                        )
+                        if archive.testzip() is not None:
+                            raise BadZipFile("CRC check failed")
+
+                archive_ready = True
+
+                if not previously_verified:
+                    stat = safe_zip_path.stat()
+                    verification_path.write_text(
+                        json.dumps(
+                            {
+                                "size": stat.st_size,
+                                "mtime_ns": stat.st_mtime_ns,
+                            }
+                        ),
+                        encoding="utf-8",
+                    )
+
+            except (BadZipFile, ValueError, OSError):
+                archive_ready = False
+                verification_path.unlink(missing_ok=True)
+                logger.warning(
+                    "Invalid cached SAFE ZIP, downloading again: %s",
+                    safe_zip_path,
+                )
+
+        if not archive_ready:
+            temporary_path = safe_zip_path.with_suffix(".zip.part")
+            download_url = (
+                "https://download.dataspace.copernicus.eu/odata/v1/"
+                f"Products({product_id})/$value"
             )
+            try:
+                with requests.get(
+                    download_url,
+                    headers={
+                        "Authorization": f"Bearer {cdse_ingestion.authenticate()}"
+                    },
+                    stream=True,
+                    timeout=(30, 180),
+                ) as response:
+                    response.raise_for_status()
 
-        measurement_node = iw3_vv_measurements[0]
+                    with temporary_path.open("wb") as output:
+                        for chunk in response.iter_content(chunk_size=1024 * 1024):
+                            if chunk:
+                                output.write(chunk)
 
-        logger.debug(
-            "Product %s | Selected measurement: %s",
-            product_id,
-            measurement_node["Name"],
-        )
+                with ZipFile(temporary_path) as archive:
+                    inspect_safe_archive(archive, product_id)
+                    if archive.testzip() is not None:
+                        raise BadZipFile("CRC check failed")
 
-        # 3. Download the measurement file
-        # Download the selected IW3 VV measurement for each acquisition.
-        measurement_path = (
-            Path(config["MEASUREMENT_DATA_RAW"]) / product_id / measurement_node["Name"]
-        )
+                temporary_path.replace(safe_zip_path)
 
-        measurement_path.parent.mkdir(parents=True, exist_ok=True)
+                stat = safe_zip_path.stat()
 
-        if measurement_path.is_file() and measurement_path.stat().st_size > 0:
-            logger.info(
-                "Measurement already exists: %s",
-                measurement_path,
-            )
+                verification_path.write_text(
+                    json.dumps(
+                        {
+                            "size": stat.st_size,
+                            "mtime_ns": stat.st_mtime_ns,
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+            except Exception:
+                temporary_path.unlink(missing_ok=True)
+                raise
+            logger.info("Downloaded complete SAFE archive: %s", safe_zip_path)
         else:
-            logger.info(
-                "Downloading IW3 VV measurement for product %s: %s",
-                product_id,
-                measurement_node["Name"],
-            )
+            logger.info("Using cached SAFE archive: %s", safe_zip_path)
 
-            cdse_ingestion.download_measurement_file(
-                measurement_node=measurement_node,
-                destination_path=measurement_path,
-            )
-
-        logger.info(
-            "Product %s | Measurement size: %.2f GiB",
-            product_id,
-            measurement_path.stat().st_size / (1024**3),
+        # Extract only the files required by the existing Python validators.
+        # The complete original SAFE remains available for SNAP in safe_zip_path.
+        annotation_directory = Path(config["ANNOTATION_DATA_RAW"]) / product_id
+        measurement_directory = Path(config["MEASUREMENT_DATA_RAW"]) / product_id
+        manifest_path = (
+            Path(config["ANNOTATION_DATA_RAW"]).parent
+            / "manifest"
+            / product_id
+            / "manifest.safe"
         )
 
-        # 3. Select the IW3 VV annotation
-        iw3_vv_files = [
-            node
-            for node in annotation_files["result"]
-            if node["Name"].lower().startswith("s1a-iw3-slc-vv-")
-            and node["Name"].lower().endswith(".xml")
-        ]
-
-        if len(iw3_vv_files) != 1:
-            raise ValueError(
-                f"Expected one IW3 VV annotation for {product_id}, "
-                f"found {len(iw3_vv_files)}"
+        with ZipFile(safe_zip_path) as archive:
+            manifest_member, annotation_member, measurement_member = (
+                inspect_safe_archive(archive, product_id)
             )
+            xml_file_path = annotation_directory / Path(annotation_member).name
+            measurement_path = measurement_directory / Path(measurement_member).name
 
-        annotation_node = iw3_vv_files[0]
+            for member, destination in (
+                (manifest_member, manifest_path),
+                (annotation_member, xml_file_path),
+                (measurement_member, measurement_path),
+            ):
+                member_info = archive.getinfo(member)
+                if (
+                    destination.is_file()
+                    and destination.stat().st_size == member_info.file_size
+                ):
+                    continue
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                temporary_path = destination.with_name(destination.name + ".part")
+                try:
+                    with (
+                        archive.open(member) as source,
+                        temporary_path.open("wb") as target,
+                    ):
+                        shutil.copyfileobj(source, target, length=1024 * 1024)
+                    temporary_path.replace(destination)
+                except Exception:
+                    temporary_path.unlink(missing_ok=True)
+                    raise
 
-        # 4. Download the annotation
-        xml_file_path = (
-            Path(config["ANNOTATION_DATA_RAW"]) / product_id / annotation_node["Name"]
-        )
+        ET.parse(manifest_path)
+        logger.info("Product %s | SAFE ZIP: %s", product_id, safe_zip_path)
 
-        xml_file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        cdse_ingestion.download_annotation_file(
-            annotation_node=annotation_node,
-            destination_path=xml_file_path,
-        )
         annotation_manager = AnnotationManager(
             annotation_path=xml_file_path,
             logger=logger,
@@ -378,6 +509,7 @@ def acquisition_pipeline(
                 acquisition_time=acquisition["acquisition_time"],
                 measurement_path=measurement_path,
                 annotation_path=xml_file_path,
+                manifest_path=manifest_path,
                 annotation_bursts=annotation_bursts,
                 burst_mapping=burst_mapping,
                 sampling_metadata=sampling_metadata,
