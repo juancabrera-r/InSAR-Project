@@ -18,13 +18,14 @@ from insar_platform.pipelines.catalog import catalog_discovery_pipeline
 from insar_platform.pipelines.coregistration import coregistration_pipeline
 from insar_platform.pipelines.insar import insar_processing_pipeline
 from insar_platform.pipelines.insar_interferogram import generate_interferogram
+from insar_platform.utils.cache_manager import load_cached_result, save_cached_result
 
 
 def resolve_directory(
     project_root: Path,
     directory: str | Path,
 ) -> Path:
-    """Resolve a configured directory relative to the project root."""
+    """Resolve a configured path relative to the project root."""
 
     path = Path(directory).expanduser()
 
@@ -32,6 +33,34 @@ def resolve_directory(
         path = project_root / path
 
     return path.resolve()
+
+
+def load_existing_snap_product(output_dir: Path) -> Path:
+    """Locate a single existing SNAP DIMAP product."""
+
+    if not output_dir.is_dir():
+        raise FileNotFoundError(f"SNAP output directory not found: {output_dir}")
+
+    products = sorted(output_dir.glob("*.dim"))
+
+    if not products:
+        raise FileNotFoundError(f"No SNAP .dim product found in {output_dir}")
+
+    if len(products) != 1:
+        raise RuntimeError(
+            f"Expected one SNAP .dim product in {output_dir}, "
+            f"found {len(products)}. Explicit selection is required."
+        )
+
+    product = products[0]
+    data_directory = product.with_suffix(".data")
+
+    if not data_directory.is_dir():
+        raise FileNotFoundError(
+            f"SNAP product data directory not found: {data_directory}"
+        )
+
+    return product
 
 
 def sentinel1_app(
@@ -44,6 +73,45 @@ def sentinel1_app(
     logger = logging.getLogger(__name__)
     logger.info("Starting Sentinel-1 processing")
 
+    workflow_config = config.get("CONFIG", {})
+
+    skip_catalog = workflow_config.get("skip_catalog", False)
+    skip_download = workflow_config.get("skip_download", False)
+    skip_inspect_coregistration_cache = workflow_config.get(
+        "skip_inspect_coregistration_cache", False
+    )
+    skip_baseline = workflow_config.get("skip_baseline", False)
+    skip_coregistration = workflow_config.get("skip_coregistration", False)
+    skip_interferogram = workflow_config.get("skip_interferogram", False)
+    skip_inspect_coherence = workflow_config.get("skip_inspect_coherence", False)
+
+    cache_directory = resolve_directory(
+        project_root,
+        workflow_config.get(
+            "pipeline_cache_dir",
+            "data/cache/pipelines",
+        ),
+    )
+
+    catalog_cache = cache_directory / "catalog.pkl"
+    acquisitions_cache = cache_directory / "acquisitions.pkl"
+    baseline_cache = cache_directory / "baseline.pkl"
+    inspect_coregistration_cache = cache_directory / "inspect_coregistration.pkl"
+    coregistration_cache = cache_directory / "coregistration.pkl"
+    interferogram_cache = cache_directory / "interferogram.pkl"
+    coherence_cache = cache_directory / "coherence.pkl"
+
+    _check_file_exists("catalog", skip_catalog, catalog_cache)
+    _check_file_exists("acquisitions", skip_download, acquisitions_cache)
+    _check_file_exists("baseline", skip_baseline, baseline_cache)
+    _check_file_exists(
+        "inspect_coregistration",
+        skip_inspect_coregistration_cache,
+        inspect_coregistration_cache,
+    )
+    _check_file_exists("coregistration", skip_coregistration, coregistration_cache)
+    _check_file_exists("interferogram", skip_interferogram, interferogram_cache)
+
     # 1. Prepare area of interest.
     aoi_path = resolve_directory(
         project_root,
@@ -52,43 +120,67 @@ def sentinel1_app(
 
     aoi_wkt = GeojsonManager(aoi_path).polygon_to_wkt()
 
-    # 2. Initialize Sentinel-1 catalogue ingestion.
-    sentinel1_ingestion = Sentinel1Ingestion(
-        config=config,
-        aoi_wkt=aoi_wkt,
-    )
+    # 2. Discover or restore catalog.
+    if skip_catalog:
+        logger.info("Restoring cached catalog: %s", catalog_cache)
+        catalog = load_cached_result(catalog_cache)
 
-    # 3. Discover and validate catalogue acquisitions.
-    catalog = run_tracked_pipeline(
-        "catalog",
-        catalog_discovery_pipeline,
-        logger,
-        tracking_options=TrackingOptions(
-            product_names_from_result=lambda result: [
+    else:
+        sentinel1_ingestion = Sentinel1Ingestion(
+            config=config,
+            aoi_wkt=aoi_wkt,
+        )
+
+        tracking_options = TrackingOptions(
+            product_names_from_result=lambda result: {
                 bursts[0]["ParentProductName"]
                 for bursts in result.bursts_by_product.values()
                 if bursts
-            ],
-        ),
-        sentinel1_ingestion=sentinel1_ingestion,
-        logger=logger,
-        aoi_wkt=aoi_wkt,
-        config=config,
-    )
+            },
+        )
 
-    # 4. Download and validate selected acquisitions.
-    acquisitions = run_tracked_pipeline(
-        "acquisition",
-        acquisition_pipeline,
-        tracking_logger=logger,
-        pass_run_id=True,
-        catalog=catalog,
-        config=config,
-        env=env,
-        logger=logger,
-    )
+        catalog = run_tracked_pipeline(
+            "catalog",
+            catalog_discovery_pipeline,
+            logger,
+            tracking_options=tracking_options,
+            sentinel1_ingestion=sentinel1_ingestion,
+            logger=logger,
+            aoi_wkt=aoi_wkt,
+            config=config,
+        )
 
-    # 5. Calculate InSAR baseline geometry.
+        save_cached_result(catalog_cache, catalog)
+
+    # 3. Download or restore acquisitions.
+    if skip_download:
+        logger.info(
+            "Restoring cached acquisitions: %s",
+            acquisitions_cache,
+        )
+        acquisitions = load_cached_result(acquisitions_cache)
+
+    else:
+        acquisitions = run_tracked_pipeline(
+            "acquisition",
+            acquisition_pipeline,
+            tracking_logger=logger,
+            pass_run_id=True,
+            catalog=catalog,
+            config=config,
+            env=env,
+            logger=logger,
+        )
+
+        save_cached_result(acquisitions_cache, acquisitions)
+
+    if acquisitions is None:
+        raise RuntimeError(
+            "Acquisition metadata is unavailable. "
+            "Cannot continue Sentinel-1 processing."
+        )
+
+    # 4. Calculate InSAR baseline geometry.
     orbit_directory = resolve_directory(
         project_root,
         config["ORBIT_DATA_RAW"],
@@ -97,103 +189,150 @@ def sentinel1_app(
     if not orbit_directory.is_dir():
         raise FileNotFoundError(f"Orbit directory not found: {orbit_directory}")
 
-    baseline = run_tracked_pipeline(
-        "insar",
-        insar_processing_pipeline,
-        tracking_logger=logger,
-        pass_run_id=True,
-        acquisitions=acquisitions,
-        logger=logger,
-        catalogue_burst_id=config["CATALOGUE_BURST_ID"],
-        max_perpendicular_baseline_m=config.get("MAX_PERPENDICULAR_BASELINE_M"),
-        max_normalized_residual=config.get("MAX_NORMALIZED_RESIDUAL"),
-        satellite_names=config.get("SATELLITE_NAMES"),
-        orbit_directory=orbit_directory,
-    )
+    if skip_baseline:
+        logger.info(
+            "Restoring cached baseline: %s",
+            baseline_cache,
+        )
+        baseline = load_cached_result(baseline_cache)
 
-    # 6. Inspect SAFE dependencies for SNAP coregistration.
+    else:
+        baseline = run_tracked_pipeline(
+            "insar",
+            insar_processing_pipeline,
+            tracking_logger=logger,
+            pass_run_id=True,
+            acquisitions=acquisitions,
+            logger=logger,
+            catalogue_burst_id=config["CATALOGUE_BURST_ID"],
+            max_perpendicular_baseline_m=config.get("MAX_PERPENDICULAR_BASELINE_M"),
+            max_normalized_residual=config.get("MAX_NORMALIZED_RESIDUAL"),
+            satellite_names=config.get("SATELLITE_NAMES"),
+            orbit_directory=orbit_directory,
+        )
+
+        save_cached_result(baseline_cache, baseline)
+
+    # 5. Inspect SAFE dependencies.
     raw_directory = resolve_directory(
         project_root,
         Path(config["ANNOTATION_DATA_RAW"]).parent,
     )
 
-    inspect_coregistration = run_tracked_pipeline(
-        "inspect_coregistration",
-        inspect_coregistration_pipeline,
-        tracking_logger=logger,
-        acquisitions=acquisitions,
-        raw_directory=raw_directory,
-        logger=logger,
+    if skip_inspect_coregistration_cache:
+        logger.info(
+            "Restoring cached inspect coregistration: %s",
+            inspect_coregistration_cache,
+        )
+        inspect_coregistration = load_cached_result(inspect_coregistration_cache)
+    else:
+        inspect_coregistration = run_tracked_pipeline(
+            "inspect_coregistration",
+            inspect_coregistration_pipeline,
+            tracking_logger=logger,
+            acquisitions=acquisitions,
+            raw_directory=raw_directory,
+            logger=logger,
+        )
+
+        save_cached_result(inspect_coregistration_cache, inspect_coregistration)
+
+    if inspect_coregistration.total_missing:
+        raise RuntimeError(
+            f"Missing SAFE dependencies: {inspect_coregistration.total_missing}"
+        )
+
+    # 6. Coregistration.
+    coregistration_output = resolve_directory(
+        project_root,
+        config["COREGISTRATION_OUTPUT"],
     )
 
-    # 7. Coregister selected acquisitions.
-    coregistered_dim = run_tracked_pipeline(
-        "coregistration",
-        coregistration_pipeline,
-        tracking_logger=logger,
-        acquisitions=acquisitions,
-        raw_directory=raw_directory,
-        output_dir=resolve_directory(
-            project_root,
-            config["COREGISTRATION_OUTPUT"],
-        ),
-        logger=logger,
-        safe_inspection=inspect_coregistration,
-        first_burst=int(config["SNAP_FIRST_BURST"]),
-        last_burst=int(config["SNAP_LAST_BURST"]),
-        gpt=config["SNAP_GPT"],
-        dem_name=config.get(
-            "SNAP_DEM_NAME",
-            "Copernicus 30m Global DEM",
-        ),
-        cache=config.get("SNAP_CACHE", "4G"),
-        threads=int(config.get("SNAP_THREADS", 2)),
-        run_esd=config.get("SNAP_RUN_ESD", True),
-        subswath=config["SAR_PARAMETERS"]["SWATH"],
-        polarization=config["COPERNICUS_PRODUCT"]["POLARIZATION"],
-    )
+    if skip_coregistration:
+        logger.info("Reusing existing SNAP coregistration product")
 
-    # 8. Generate interferogram and coherence.
-    interferogram_dim = run_tracked_pipeline(
-        "interferogram",
-        generate_interferogram,
-        tracking_logger=logger,
-        input_dim=coregistered_dim,
-        output_dir=resolve_directory(
-            project_root,
-            config["INTERFEROGRAM_OUTPUT"],
-        ),
-        gpt=config["SNAP_GPT"],
-        cache=config.get("SNAP_CACHE", "4G"),
-        threads=int(config.get("SNAP_THREADS", 2)),
-        coherence_window_meters=int(config.get("COHERENCE_WINDOW_METERS", 30)),
-        subtract_flat_earth=config.get(
-            "INTERFEROGRAM_SUBTRACT_FLAT_EARTH",
-            True,
-        ),
-        subtract_topographic_phase=config.get(
-            "INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE",
-            False,
-        ),
-        dem_name=config.get(
-            "SNAP_DEM_NAME",
-            "Copernicus 30m Global DEM",
-        ),
-        deburst=config.get("INTERFEROGRAM_DEBURST", True),
-    )
+        coregistered_dim = load_cached_result(coregistration_cache)
 
-    # 9. Inspect coherence.
-    coherence_report = run_tracked_pipeline(
-        "inspect_coherence",
-        inspect_coherence,
-        tracking_logger=logger,
-        input_dim=interferogram_dim,
-        output_dir=resolve_directory(
-            project_root,
-            config["COHERENCE_REPORT_OUTPUT"],
-        ),
-        histogram_bins=int(config.get("COHERENCE_HISTOGRAM_BINS", 10000)),
-    )
+    else:
+        coregistered_dim = run_tracked_pipeline(
+            "coregistration",
+            coregistration_pipeline,
+            tracking_logger=logger,
+            acquisitions=acquisitions,
+            raw_directory=raw_directory,
+            output_dir=coregistration_output,
+            logger=logger,
+            safe_inspection=inspect_coregistration,
+            first_burst=int(config["SNAP_FIRST_BURST"]),
+            last_burst=int(config["SNAP_LAST_BURST"]),
+            gpt=config["SNAP_GPT"],
+            dem_name=config.get(
+                "SNAP_DEM_NAME",
+                "Copernicus 30m Global DEM",
+            ),
+            cache=config.get("SNAP_CACHE", "4G"),
+            threads=int(config.get("SNAP_THREADS", 2)),
+            run_esd=config.get("SNAP_RUN_ESD", True),
+            subswath=config["SAR_PARAMETERS"]["SWATH"],
+            polarization=config["COPERNICUS_PRODUCT"]["POLARIZATION"],
+        )
+
+        save_cached_result(coregistration_cache, coregistered_dim)
+
+    # 7. Generate interferogram and coherence.
+    if skip_interferogram:
+        logger.info("Reusing existing SNAP interferogram product")
+
+        interferogram_dim = load_cached_result(interferogram_cache)
+    else:
+        interferogram_dim = run_tracked_pipeline(
+            "interferogram",
+            generate_interferogram,
+            tracking_logger=logger,
+            input_dim=coregistered_dim,
+            output_dir=resolve_directory(
+                project_root,
+                config["INTERFEROGRAM_OUTPUT"],
+            ),
+            gpt=config["SNAP_GPT"],
+            cache=config.get("SNAP_CACHE", "4G"),
+            threads=int(config.get("SNAP_THREADS", 2)),
+            coherence_window_meters=int(config.get("COHERENCE_WINDOW_METERS", 30)),
+            subtract_flat_earth=config.get(
+                "INTERFEROGRAM_SUBTRACT_FLAT_EARTH",
+                True,
+            ),
+            subtract_topographic_phase=config.get(
+                "INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE",
+                False,
+            ),
+            dem_name=config.get(
+                "SNAP_DEM_NAME",
+                "Copernicus 30m Global DEM",
+            ),
+            deburst=config.get("INTERFEROGRAM_DEBURST", True),
+        )
+
+        save_cached_result(interferogram_cache, interferogram_dim)
+
+    # 8. Inspect coherence.
+    if skip_inspect_coherence:
+        logger.info("Reusing existing coherence report")
+        coherence_report = load_cached_result(coherence_cache)
+    else:
+        coherence_report = run_tracked_pipeline(
+            "inspect_coherence",
+            inspect_coherence,
+            tracking_logger=logger,
+            input_dim=interferogram_dim,
+            output_dir=resolve_directory(
+                project_root,
+                config["COHERENCE_REPORT_OUTPUT"],
+            ),
+            histogram_bins=int(config.get("COHERENCE_HISTOGRAM_BINS", 10000)),
+        )
+
+        save_cached_result(coherence_cache, coherence_report)
 
     logger.info(
         "Sentinel-1 processing completed | "
@@ -209,12 +348,15 @@ def sentinel1_app(
         coherence_report.percent_above_06,
     )
 
-    # 7. Interferogram generation (not implemented yet).
 
-    logger.info(
-        "Sentinel-1 processing completed | "
-        "Baseline: %.3f m | "
-        "Missing SAFE dependencies: %d",
-        baseline.total_m,
-        inspect_coregistration.total_missing,
-    )
+def _check_file_exists(
+    name: str,
+    skip: bool,
+    file_path: Path,
+) -> None:
+    """Validate that a cache file exists when a pipeline stage is skipped."""
+    if skip and not file_path.is_file():
+        raise FileNotFoundError(
+            f"Cached file for {name} not found: {file_path}. "
+            "Run the pipeline without skipping this stage."
+        )

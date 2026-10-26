@@ -29,3 +29,6 @@ data/processed/
 
 # Logs
 logs/
+
+# Cache
+data/cache/

@@ -8,6 +8,17 @@
 # -----------------------------------------------------------------------------
 DEBUG_MODE: true
 
+CONFIG: 
+  "skip_catalog": True
+  "skip_download": True
+  "skip_baseline": True
+  "skip_inspect_coregistration_cache": True
+  "skip_coregistration": True
+  "skip_interferogram": True
+  "skip_inspect_coherence": True
+  pipeline_cache_dir: data/cache/pipelines
+
+
 # -----------------------------------------------------------------------------
 # 2. Copernicus Data Space Catalogue
 # -----------------------------------------------------------------------------

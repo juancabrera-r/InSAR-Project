@@ -14,7 +14,6 @@ Burst indices are 1-based SNAP subswath indices, not CDSE burst IDs.
 
 from __future__ import annotations
 
-import argparse
 import logging
 import os
 import shutil
@@ -355,51 +354,3 @@ def coregistration_pipeline(
         subswath=subswath,
         polarization=polarization,
     )
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--reference", type=Path, required=True)
-    parser.add_argument("--secondary", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--gpt", default="gpt")
-    parser.add_argument(
-        "--bursts",
-        type=int,
-        nargs="+",
-        required=True,
-        help="1-based SNAP burst indices (must be consecutive)",
-    )
-    parser.add_argument("--dem-name", default="Copernicus 30m Global DEM")
-    parser.add_argument("--cache", default="4G")
-    parser.add_argument("--threads", type=int, default=2)
-    parser.add_argument("--subswath", choices=("IW1", "IW2", "IW3"), default="IW3")
-    parser.add_argument(
-        "--polarization", choices=("VV", "VH", "HH", "HV"), default="VV"
-    )
-    parser.add_argument("--no-esd", action="store_true")
-    args = parser.parse_args()
-    indices = sorted(set(args.bursts))
-    if indices != list(range(indices[0], indices[-1] + 1)):
-        parser.error("--bursts must be consecutive")
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
-    )
-    coregister(
-        reference=args.reference,
-        secondary=args.secondary,
-        output=args.output,
-        first_burst=indices[0],
-        last_burst=indices[-1],
-        gpt=args.gpt,
-        dem_name=args.dem_name,
-        cache=args.cache,
-        threads=args.threads,
-        run_esd=not args.no_esd,
-        subswath=args.subswath,
-        polarization=args.polarization,
-    )
-
-
-if __name__ == "__main__":
-    main()

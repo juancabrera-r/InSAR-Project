@@ -14,7 +14,6 @@ The output is NOT terrain corrected or unwrapped.
 
 from __future__ import annotations
 
-import argparse
 import json
 import logging
 import os
@@ -225,37 +224,3 @@ def interferogram_pipeline(
         dem_name=dem_name,
         deburst=deburst,
     )
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--input", type=Path, required=True, help="Coregistered ESD .dim"
-    )
-    parser.add_argument("--output", type=Path, required=True, help="Output directory")
-    parser.add_argument("--gpt", default="gpt")
-    parser.add_argument("--cache", default="4G")
-    parser.add_argument("--threads", type=int, default=2)
-    parser.add_argument("--coherence-window-meters", type=int, default=30)
-    parser.add_argument("--no-deburst", action="store_true")
-    parser.add_argument("--subtract-topographic-phase", action="store_true")
-    parser.add_argument("--dem-name", default="Copernicus 30m Global DEM")
-    args = parser.parse_args()
-    logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
-    )
-    generate_interferogram(
-        args.input,
-        args.output,
-        gpt=args.gpt,
-        cache=args.cache,
-        threads=args.threads,
-        coherence_window_meters=args.coherence_window_meters,
-        deburst=not args.no_deburst,
-        subtract_topographic_phase=args.subtract_topographic_phase,
-        dem_name=args.dem_name,
-    )
-
-
-if __name__ == "__main__":
-    main()

@@ -235,7 +235,7 @@ def insar_processing_pipeline(
         logger.info("Orbit directory: %s", orbit_directory)
 
         if orbit_directory is not None:
-            logger.info(
+            logger.debug(
                 "Available orbit files: %s",
                 list(orbit_directory.rglob("*.EOF")),
             )
