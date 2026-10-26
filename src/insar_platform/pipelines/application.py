@@ -3,6 +3,7 @@
 import logging
 from pathlib import Path
 
+from insar_platform.coregistration.inspect_coherence import inspect_coherence
 from insar_platform.coregistration.inspect_coregistration import (
     inspect_coregistration_pipeline,
 )
@@ -14,7 +15,9 @@ from insar_platform.geometry.geojson_manage import GeojsonManager
 from insar_platform.ingestion.sentinel1 import Sentinel1Ingestion
 from insar_platform.pipelines.acquisition import acquisition_pipeline
 from insar_platform.pipelines.catalog import catalog_discovery_pipeline
+from insar_platform.pipelines.coregistration import coregistration_pipeline
 from insar_platform.pipelines.insar import insar_processing_pipeline
+from insar_platform.pipelines.insar_interferogram import generate_interferogram
 
 
 def resolve_directory(
@@ -121,6 +124,89 @@ def sentinel1_app(
         acquisitions=acquisitions,
         raw_directory=raw_directory,
         logger=logger,
+    )
+
+    # 7. Coregister selected acquisitions.
+    coregistered_dim = run_tracked_pipeline(
+        "coregistration",
+        coregistration_pipeline,
+        tracking_logger=logger,
+        acquisitions=acquisitions,
+        raw_directory=raw_directory,
+        output_dir=resolve_directory(
+            project_root,
+            config["COREGISTRATION_OUTPUT"],
+        ),
+        logger=logger,
+        safe_inspection=inspect_coregistration,
+        first_burst=int(config["SNAP_FIRST_BURST"]),
+        last_burst=int(config["SNAP_LAST_BURST"]),
+        gpt=config["SNAP_GPT"],
+        dem_name=config.get(
+            "SNAP_DEM_NAME",
+            "Copernicus 30m Global DEM",
+        ),
+        cache=config.get("SNAP_CACHE", "4G"),
+        threads=int(config.get("SNAP_THREADS", 2)),
+        run_esd=config.get("SNAP_RUN_ESD", True),
+        subswath=config["SAR_PARAMETERS"]["SWATH"],
+        polarization=config["COPERNICUS_PRODUCT"]["POLARIZATION"],
+    )
+
+    # 8. Generate interferogram and coherence.
+    interferogram_dim = run_tracked_pipeline(
+        "interferogram",
+        generate_interferogram,
+        tracking_logger=logger,
+        input_dim=coregistered_dim,
+        output_dir=resolve_directory(
+            project_root,
+            config["INTERFEROGRAM_OUTPUT"],
+        ),
+        gpt=config["SNAP_GPT"],
+        cache=config.get("SNAP_CACHE", "4G"),
+        threads=int(config.get("SNAP_THREADS", 2)),
+        coherence_window_meters=int(config.get("COHERENCE_WINDOW_METERS", 30)),
+        subtract_flat_earth=config.get(
+            "INTERFEROGRAM_SUBTRACT_FLAT_EARTH",
+            True,
+        ),
+        subtract_topographic_phase=config.get(
+            "INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE",
+            False,
+        ),
+        dem_name=config.get(
+            "SNAP_DEM_NAME",
+            "Copernicus 30m Global DEM",
+        ),
+        deburst=config.get("INTERFEROGRAM_DEBURST", True),
+    )
+
+    # 9. Inspect coherence.
+    coherence_report = run_tracked_pipeline(
+        "inspect_coherence",
+        inspect_coherence,
+        tracking_logger=logger,
+        input_dim=interferogram_dim,
+        output_dir=resolve_directory(
+            project_root,
+            config["COHERENCE_REPORT_OUTPUT"],
+        ),
+        histogram_bins=int(config.get("COHERENCE_HISTOGRAM_BINS", 10000)),
+    )
+
+    logger.info(
+        "Sentinel-1 processing completed | "
+        "Baseline: %.3f m | "
+        "Missing SAFE dependencies: %d | "
+        "Mean coherence: %.4f | "
+        "Median coherence: %.4f | "
+        "Pixels above 0.6: %.2f%%",
+        baseline.total_m,
+        inspect_coregistration.total_missing,
+        coherence_report.mean,
+        coherence_report.median,
+        coherence_report.percent_above_06,
     )
 
     # 7. Interferogram generation (not implemented yet).

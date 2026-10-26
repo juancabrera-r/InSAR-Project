@@ -1,19 +1,30 @@
 
-# Configuration file for the InSAR project
+# =============================================================================
+# InSAR Platform — Sentinel-1 Processing Configuration
+# =============================================================================
 
-# General configuration for the InSAR project
+# -----------------------------------------------------------------------------
+# 1. General
+# -----------------------------------------------------------------------------
 DEBUG_MODE: true
 
-# Copernicus Data Catalogue URL
+# -----------------------------------------------------------------------------
+# 2. Copernicus Data Space Catalogue
+# -----------------------------------------------------------------------------
 URL: "https://catalogue.dataspace.copernicus.eu"
 
-# Date range for the acquisitions in UTC
+# Acquisition search period (UTC)
 START_DATE: "2025-01-01 00:00:00"
-END_DATE: "2025-06-01 00:00:00" # Testing
-# END_DATE: "2026-04-01 00:00:00"
+END_DATE: "2025-02-01 00:00:00"
 
-ACQUISITION_COUNT: null # Selected acquisitions per product, for automatic selection null
+# Number of acquisitions to select.
+# null = automatic selection (if supported by the catalogue pipeline).
+# Pairwise coregistration currently requires exactly two selected acquisitions.
+ACQUISITION_COUNT: 2
 
+# -----------------------------------------------------------------------------
+# 3. Sentinel-1 Acquisition Filters
+# -----------------------------------------------------------------------------
 SAR_PARAMETERS:
   PLATFORM: "A"
   ORBIT_DIRECTION: "ASCENDING"
@@ -25,27 +36,95 @@ COPERNICUS_PRODUCT:
   PARENTPRODUCTTYPE: "IW_SLC__1S"
   POLARIZATION: "VV"
 
+# Supported Sentinel-1 satellites for orbit calculations
+SATELLITE_NAMES:
+  - "S1A"
+  - "S1B"
+  - "S1C"
+  - "S1D"
+
+# -----------------------------------------------------------------------------
+# 4. Area of Interest and Burst Selection
+# -----------------------------------------------------------------------------
 AOI_GEOJSON: "data/aoi/alto_guadalentin_processing.geojson"
 
-# Catalogue burst ID for the acquisitions debug
+# CDSE catalogue burst identifier (not a SNAP burst index)
 CATALOGUE_BURST_ID: 219
 
-# Fingerprint for the bursts
+# Burst fingerprint used for acquisition matching
 BURSTS_FINGERPRINT: "98344c1142d741fb0db99cfa7c2e82652b34002a7040934fb03ce047ed42dd65"
 
-
-# Validation
+# -----------------------------------------------------------------------------
+# 5. Acquisition and Geometry Validation
+# -----------------------------------------------------------------------------
 MAX_INVALID_NONZERO_FRACTION: 0.05
+
+# Maximum perpendicular baseline (meters)
 MAX_PERPENDICULAR_BASELINE_M: 200.0
-MAX_NORMALIZED_RESIDUAL: 1e-7
-SATELLITE_NAMES: {"S1A", "S1B", "S1C", "S1D"}
 
-# Alignment configuration
+# Maximum normalized orbit/geometry residual
+MAX_NORMALIZED_RESIDUAL: 1.0e-7
 
-
-# Paths
+# -----------------------------------------------------------------------------
+# 6. Raw Data Directories
+# -----------------------------------------------------------------------------
 ANNOTATION_DATA_RAW: "data/raw/annotation"
 MEASUREMENT_DATA_RAW: "data/raw/measurement"
-
-# Orbit calculation configuration
 ORBIT_DATA_RAW: "data/raw/orbit"
+
+# SAFE ZIP archives are currently resolved internally from:
+# data/raw/safe/
+
+# -----------------------------------------------------------------------------
+# 7. ESA SNAP — Common Settings
+# -----------------------------------------------------------------------------
+SNAP_GPT: "C:/Program Files/esa-snap/bin/gpt.exe"
+
+# SNAP processing memory cache and parallelism
+SNAP_CACHE: "4G"
+SNAP_THREADS: 2
+
+# DEM used for Back-Geocoding and optional topographic phase removal
+SNAP_DEM_NAME: "Copernicus 30m Global DEM"
+
+# -----------------------------------------------------------------------------
+# 8. TOPS Coregistration
+# -----------------------------------------------------------------------------
+COREGISTRATION_OUTPUT: "data/processed/coregistration"
+
+SNAP_SUBSWATH: "IW3"
+SNAP_POLARIZATION: "VV"
+
+# 1-based SNAP burst indices, inclusive.
+# These are NOT CDSE catalogue burst identifiers.
+# Must be verified for each selected acquisition pair.
+SNAP_FIRST_BURST: 3
+SNAP_LAST_BURST: 5
+
+# Enhanced Spectral Diversity (requires overlapping adjacent bursts)
+SNAP_RUN_ESD: true
+
+# -----------------------------------------------------------------------------
+# 9. Interferogram and Coherence Generation
+# -----------------------------------------------------------------------------
+INTERFEROGRAM_OUTPUT: "data/processed/interferogram_30m"
+
+# Coherence estimation window size in meters
+COHERENCE_WINDOW_METERS: 30
+
+# Subtract flat-Earth phase from interferogram
+INTERFEROGRAM_SUBTRACT_FLAT_EARTH: true
+
+# Optional topographic phase subtraction
+INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE: false
+
+# Merge TOPS bursts after interferogram generation
+INTERFEROGRAM_DEBURST: true
+
+# -----------------------------------------------------------------------------
+# 10. Coherence Quality Inspection
+# -----------------------------------------------------------------------------
+COHERENCE_REPORT_OUTPUT: "data/processed/coherence_analysis"
+
+# Histogram bins used for approximate median calculation
+COHERENCE_HISTOGRAM_BINS: 10000
