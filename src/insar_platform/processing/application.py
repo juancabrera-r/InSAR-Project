@@ -20,7 +20,7 @@ from insar_platform.pipelines.insar import insar_processing_pipeline
 from insar_platform.pipelines.insar_interferogram import generate_interferogram
 from insar_platform.pipelines.phase_filtering import phase_filtering_pipeline
 from insar_platform.pipelines.phase_unwrapping import run_phase_unwrapping
-from insar_platform.utils.cache_manager import load_cached_result, save_cached_result
+from insar_platform.utils.cache_manager import run_or_load_pipeline
 
 
 def resolve_directory(
@@ -91,10 +91,7 @@ def sentinel1_app(
 
     cache_directory = resolve_directory(
         project_root,
-        workflow_config.get(
-            "pipeline_cache_dir",
-            "data/cache/pipelines",
-        ),
+        workflow_config.get("pipeline_cache_dir"),
     )
 
     catalog_cache = cache_directory / "catalog.pkl"
@@ -117,6 +114,7 @@ def sentinel1_app(
     )
     _check_file_exists("coregistration", skip_coregistration, coregistration_cache)
     _check_file_exists("interferogram", skip_interferogram, interferogram_cache)
+    _check_file_exists("inspect_coherence", skip_inspect_coherence, coherence_cache)
     _check_file_exists("phase_filtering", skip_phase_filtering, phase_filtering_cache)
     _check_file_exists(
         "phase_unwrapping", skip_phase_unwrapping, phase_unwrapping_cache
@@ -131,47 +129,45 @@ def sentinel1_app(
     aoi_wkt = GeojsonManager(aoi_path).polygon_to_wkt()
 
     # 2. Discover or restore catalog.
-    if skip_catalog:
-        logger.info("Restoring cached catalog: %s", catalog_cache)
-        catalog = load_cached_result(catalog_cache)
+    ingestion = (
+        Sentinel1Ingestion(config=config, aoi_wkt=aoi_wkt) if not skip_catalog else None
+    )
 
-    else:
-        sentinel1_ingestion = Sentinel1Ingestion(
-            config=config,
-            aoi_wkt=aoi_wkt,
-        )
+    tracking_options = TrackingOptions(
+        product_names_from_result=lambda result: {
+            bursts[0]["ParentProductName"]
+            for bursts in result.bursts_by_product.values()
+            if bursts
+        },
+    )
 
-        tracking_options = TrackingOptions(
-            product_names_from_result=lambda result: {
-                bursts[0]["ParentProductName"]
-                for bursts in result.bursts_by_product.values()
-                if bursts
-            },
-        )
-
-        catalog = run_tracked_pipeline(
+    catalog = run_or_load_pipeline(
+        name="catalog",
+        skip=skip_catalog,
+        cache_path=catalog_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "catalog",
             catalog_discovery_pipeline,
             logger,
             tracking_options=tracking_options,
-            sentinel1_ingestion=sentinel1_ingestion,
+            sentinel1_ingestion=ingestion,
             logger=logger,
             aoi_wkt=aoi_wkt,
             config=config,
-        )
+        ),
+    )
 
-        save_cached_result(catalog_cache, catalog)
+    if catalog is None:
+        raise RuntimeError("Catalog discovery returned no result.")
 
     # 3. Download or restore acquisitions.
-    if skip_download:
-        logger.info(
-            "Restoring cached acquisitions: %s",
-            acquisitions_cache,
-        )
-        acquisitions = load_cached_result(acquisitions_cache)
-
-    else:
-        acquisitions = run_tracked_pipeline(
+    acquisitions = run_or_load_pipeline(
+        name="acquisition",
+        skip=skip_download,
+        cache_path=acquisitions_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "acquisition",
             acquisition_pipeline,
             tracking_logger=logger,
@@ -180,9 +176,8 @@ def sentinel1_app(
             config=config,
             env=env,
             logger=logger,
-        )
-
-        save_cached_result(acquisitions_cache, acquisitions)
+        ),
+    )
 
     if acquisitions is None:
         raise RuntimeError(
@@ -196,18 +191,15 @@ def sentinel1_app(
         config["ORBIT_DATA_RAW"],
     )
 
-    if not orbit_directory.is_dir():
+    if not skip_baseline and not orbit_directory.is_dir():
         raise FileNotFoundError(f"Orbit directory not found: {orbit_directory}")
 
-    if skip_baseline:
-        logger.info(
-            "Restoring cached baseline: %s",
-            baseline_cache,
-        )
-        baseline = load_cached_result(baseline_cache)
-
-    else:
-        baseline = run_tracked_pipeline(
+    baseline = run_or_load_pipeline(
+        name="baseline",
+        skip=skip_baseline,
+        cache_path=baseline_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "insar",
             insar_processing_pipeline,
             tracking_logger=logger,
@@ -219,9 +211,8 @@ def sentinel1_app(
             max_normalized_residual=config.get("MAX_NORMALIZED_RESIDUAL"),
             satellite_names=config.get("SATELLITE_NAMES"),
             orbit_directory=orbit_directory,
-        )
-
-        save_cached_result(baseline_cache, baseline)
+        ),
+    )
 
     # 5. Inspect SAFE dependencies.
     raw_directory = resolve_directory(
@@ -229,23 +220,20 @@ def sentinel1_app(
         Path(config["ANNOTATION_DATA_RAW"]).parent,
     )
 
-    if skip_inspect_coregistration_cache:
-        logger.info(
-            "Restoring cached inspect coregistration: %s",
-            inspect_coregistration_cache,
-        )
-        inspect_coregistration = load_cached_result(inspect_coregistration_cache)
-    else:
-        inspect_coregistration = run_tracked_pipeline(
+    inspect_coregistration = run_or_load_pipeline(
+        name="inspect_coregistration",
+        skip=skip_inspect_coregistration_cache,
+        cache_path=inspect_coregistration_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "inspect_coregistration",
             inspect_coregistration_pipeline,
             tracking_logger=logger,
             acquisitions=acquisitions,
             raw_directory=raw_directory,
             logger=logger,
-        )
-
-        save_cached_result(inspect_coregistration_cache, inspect_coregistration)
+        ),
+    )
 
     if inspect_coregistration.total_missing:
         raise RuntimeError(
@@ -258,13 +246,12 @@ def sentinel1_app(
         config["COREGISTRATION_OUTPUT"],
     )
 
-    if skip_coregistration:
-        logger.info("Reusing existing SNAP coregistration product")
-
-        coregistered_dim = load_cached_result(coregistration_cache)
-
-    else:
-        coregistered_dim = run_tracked_pipeline(
+    coregistered_dim = run_or_load_pipeline(
+        name="coregistration",
+        skip=skip_coregistration,
+        cache_path=coregistration_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "coregistration",
             coregistration_pipeline,
             tracking_logger=logger,
@@ -285,17 +272,16 @@ def sentinel1_app(
             run_esd=config.get("SNAP_RUN_ESD", True),
             subswath=config["SAR_PARAMETERS"]["SWATH"],
             polarization=config["COPERNICUS_PRODUCT"]["POLARIZATION"],
-        )
-
-        save_cached_result(coregistration_cache, coregistered_dim)
+        ),
+    )
 
     # 7. Generate interferogram and coherence.
-    if skip_interferogram:
-        logger.info("Reusing existing SNAP interferogram product")
-
-        interferogram_dim = load_cached_result(interferogram_cache)
-    else:
-        interferogram_dim = run_tracked_pipeline(
+    interferogram_dim = run_or_load_pipeline(
+        name="interferogram",
+        skip=skip_interferogram,
+        cache_path=interferogram_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "interferogram",
             generate_interferogram,
             tracking_logger=logger,
@@ -321,35 +307,36 @@ def sentinel1_app(
                 "Copernicus 30m Global DEM",
             ),
             deburst=config.get("INTERFEROGRAM_DEBURST", True),
-        )
-
-        save_cached_result(interferogram_cache, interferogram_dim)
+        ),
+    )
 
     # 8. Inspect coherence.
-    if skip_inspect_coherence:
-        logger.info("Reusing existing coherence report")
-        coherence_report = load_cached_result(coherence_cache)
-    else:
-        coherence_report = run_tracked_pipeline(
+    coherence_report = run_or_load_pipeline(
+        name="inspect_coherence",
+        skip=skip_inspect_coherence,
+        cache_path=coherence_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "inspect_coherence",
             inspect_coherence,
             tracking_logger=logger,
+            logger=logger,
             input_dim=interferogram_dim,
             output_dir=resolve_directory(
                 project_root,
                 config["COHERENCE_REPORT_OUTPUT"],
             ),
             histogram_bins=int(config.get("COHERENCE_HISTOGRAM_BINS", 10000)),
-        )
+        ),
+    )
 
-        save_cached_result(coherence_cache, coherence_report)
-
-    # 11. Apply Goldstein phase filtering.
-    if skip_phase_filtering:
-        logger.info("Reusing existing filtered interferogram")
-        filtered_dim = load_cached_result(phase_filtering_cache)
-    else:
-        filtered_dim = run_tracked_pipeline(
+    # 9. Apply Goldstein phase filtering.
+    filtered_dim = run_or_load_pipeline(
+        name="phase_filtering",
+        skip=skip_phase_filtering,
+        cache_path=phase_filtering_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "phase_filtering",
             phase_filtering_pipeline,
             tracking_logger=logger,
@@ -369,23 +356,24 @@ def sentinel1_app(
                 "GOLDSTEIN_USE_COHERENCE_MASK",
                 False,
             ),
-        )
+        ),
+    )
 
-        save_cached_result(phase_filtering_cache, filtered_dim)
-
-    # 12. Run phase unwrapping.
-    if skip_phase_unwrapping:
-        logger.info("Reusing existing phase unwrapping result")
-        phase_unwrapping_result = load_cached_result(phase_unwrapping_cache)
-    else:
-        phase_unwrapping_result = run_tracked_pipeline(
+    # 10. Run phase unwrapping.
+    run_or_load_pipeline(
+        name="phase_unwrapping",
+        skip=skip_phase_unwrapping,
+        cache_path=phase_unwrapping_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
             "phase_unwrapping",
             run_phase_unwrapping,
             tracking_logger=logger,
-            filtered_product=(
-                Path(config["PHASE_FILTERING_OUTPUT"]) / "filtered_interferogram.dim"
+            filtered_product=Path(filtered_dim),
+            output_directory=resolve_directory(
+                project_root,
+                config["PHASE_UNWRAPPING_OUTPUT"],
             ),
-            output_directory=config["PHASE_UNWRAPPING_OUTPUT"],
             gpt=config["SNAP_GPT"],
             snaphu_executable=config["SNAPHU_EXECUTABLE"],
             stat_cost_mode=config.get("SNAPHU_STAT_COST_MODE", "DEFO"),
@@ -397,9 +385,8 @@ def sentinel1_app(
             processors=config.get("SNAPHU_PROCESSORS", 4),
             tile_cost_threshold=config.get("SNAPHU_TILE_COST_THRESHOLD", 500),
             keep_wrapped=config.get("SNAPHU_KEEP_WRAPPED", True),
-        )
-
-        save_cached_result(phase_unwrapping_cache, phase_unwrapping_result)
+        ),
+    )
 
     logger.info(
         "Sentinel-1 processing completed | "

@@ -1,27 +1,60 @@
-"""Goldstein phase filtering for Sentinel-1 interferograms."""
+"""Goldstein phase filtering for SNAP Sentinel-1 interferograms."""
 
+from __future__ import annotations
+
+import json
 import logging
+import os
 import shutil
 import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-LOG = logging.getLogger(__name__)
+from insar_platform.validations.validate_dim import validate_dim
+from insar_platform.validations.validate_phase_filtering import (
+    validate_phase_filtering,
+)
+
+logger = logging.getLogger(__name__)
 
 
-def validate_dim(path: Path) -> None:
-    """Check that a BEAM-DIMAP product exists."""
+def inspect_interferogram_bands(
+    input_dim: Path,
+) -> tuple[str, str, str]:
+    """Find the complex interferogram and coherence bands."""
 
-    if not path.is_file():
-        raise FileNotFoundError(f"SNAP product not found: {path}")
+    root = ET.parse(input_dim).getroot()
 
-    data_dir = path.with_suffix(".data")
+    bands = []
 
-    if not data_dir.is_dir():
-        raise FileNotFoundError(f"SNAP data directory not found: {data_dir}")
+    for element in root.iter():
+        if element.tag.split("}")[-1] == "BAND_NAME" and element.text:
+            bands.append(element.text.strip())
 
-    if not any(data_dir.iterdir()):
-        raise RuntimeError(f"SNAP data directory is empty: {data_dir}")
+    bands = list(dict.fromkeys(bands))
+
+    def required(prefix: str) -> str:
+        matches = [name for name in bands if name.startswith(prefix)]
+
+        if len(matches) != 1:
+            raise ValueError(
+                f"Expected exactly one {prefix!r} band in {input_dim}, found: {matches}"
+            )
+
+        return matches[0]
+
+    real = required("i_ifg_")
+    imag = required("q_ifg_")
+    coherence = required("coh_")
+
+    logger.info(
+        "Goldstein input bands | real=%s | imaginary=%s | coherence=%s",
+        real,
+        imag,
+        coherence,
+    )
+
+    return real, imag, coherence
 
 
 def create_filter_graph(
@@ -34,45 +67,108 @@ def create_filter_graph(
     window_size: int = 3,
     use_coherence_mask: bool = False,
 ) -> None:
-    """Create the SNAP GoldsteinPhaseFiltering graph."""
+    """Write a SNAP Goldstein filtering graph with band selection."""
 
-    graph = ET.Element("graph", id="goldstein-phase-filtering")
+    input_dim = Path(input_dim).resolve()
+    output_dim = Path(output_dim).resolve()
+    graph_path = Path(graph_path).resolve()
+
+    real, imag, coherence = inspect_interferogram_bands(input_dim)
+
+    graph = ET.Element(
+        "graph",
+        id="goldstein-phase-filtering",
+    )
     ET.SubElement(graph, "version").text = "1.0"
 
-    read = ET.SubElement(graph, "node", id="Read")
-    ET.SubElement(read, "operator").text = "Read"
-    read_parameters = ET.SubElement(read, "parameters")
-    ET.SubElement(read_parameters, "file").text = str(input_dim)
+    def add_node(
+        identifier: str,
+        operator: str,
+        source: str | None,
+        params: dict[str, object],
+    ) -> None:
+        node = ET.SubElement(graph, "node", id=identifier)
+        ET.SubElement(node, "operator").text = operator
 
-    goldstein = ET.SubElement(graph, "node", id="Goldstein")
-    ET.SubElement(goldstein, "operator").text = "GoldsteinPhaseFiltering"
+        if source is not None:
+            sources = ET.SubElement(node, "sources")
+            ET.SubElement(
+                sources,
+                "sourceProduct",
+                refid=source,
+            )
 
-    sources = ET.SubElement(goldstein, "sources")
-    ET.SubElement(sources, "sourceProduct", refid="Read")
+        parameters = ET.SubElement(
+            node,
+            "parameters",
+            {"class": "com.bc.ceres.binding.dom.XppDomElement"},
+        )
 
-    parameters = ET.SubElement(goldstein, "parameters")
-    ET.SubElement(parameters, "alpha").text = str(alpha)
-    ET.SubElement(parameters, "FFTSizeString").text = str(fft_size)
-    ET.SubElement(parameters, "windowSizeString").text = str(window_size)
-    ET.SubElement(parameters, "useCoherenceMask").text = str(use_coherence_mask).lower()
+        for key, value in params.items():
+            ET.SubElement(parameters, key).text = (
+                str(value).lower() if isinstance(value, bool) else str(value)
+            )
 
-    write = ET.SubElement(graph, "node", id="Write")
-    ET.SubElement(write, "operator").text = "Write"
+    # 1. Read the original validated interferogram.
+    add_node(
+        "Read",
+        "Read",
+        None,
+        {
+            "file": str(input_dim),
+            "formatName": "BEAM-DIMAP",
+        },
+    )
 
-    write_sources = ET.SubElement(write, "sources")
-    ET.SubElement(write_sources, "sourceProduct", refid="Goldstein")
+    # 2. Exclude the existing Phase_ifg band.
+    # Keep the complex interferogram and coherence.
+    add_node(
+        "BandSelect",
+        "BandSelect",
+        "Read",
+        {
+            "sourceBands": f"{real},{imag},{coherence}",
+        },
+    )
 
-    write_parameters = ET.SubElement(write, "parameters")
-    ET.SubElement(write_parameters, "file").text = str(output_dim)
-    ET.SubElement(write_parameters, "formatName").text = "BEAM-DIMAP"
+    # 3. Apply Goldstein filtering to the selected bands.
+    add_node(
+        "Goldstein",
+        "GoldsteinPhaseFiltering",
+        "BandSelect",
+        {
+            "alpha": alpha,
+            "FFTSizeString": fft_size,
+            "windowSizeString": window_size,
+            "useCoherenceMask": use_coherence_mask,
+        },
+    )
 
-    graph_path.parent.mkdir(parents=True, exist_ok=True)
+    # 4. Write the filtered interferogram.
+    add_node(
+        "Write",
+        "Write",
+        "Goldstein",
+        {
+            "file": str(output_dim),
+            "formatName": "BEAM-DIMAP",
+        },
+    )
+
+    ET.indent(graph, space="  ")
+
+    graph_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
     ET.ElementTree(graph).write(
         graph_path,
         encoding="utf-8",
         xml_declaration=True,
     )
+
+    logger.info("Goldstein graph generated: %s", graph_path)
 
 
 def phase_filtering_pipeline(
@@ -88,7 +184,7 @@ def phase_filtering_pipeline(
     window_size: int = 3,
     use_coherence_mask: bool = False,
 ) -> Path:
-    """Apply Goldstein phase filtering to a debursted interferogram."""
+    """Filter a validated interferogram using SNAP Goldstein filtering."""
 
     input_dim = Path(interferogram_dim).resolve()
     output_dir = Path(output_dir).resolve()
@@ -98,21 +194,26 @@ def phase_filtering_pipeline(
     if not 0.0 <= alpha <= 1.0:
         raise ValueError("Goldstein alpha must be between 0 and 1")
 
-    if fft_size <= 0 or fft_size & (fft_size - 1):
-        raise ValueError("FFT size must be a positive power of two")
+    if fft_size < 2 or fft_size & (fft_size - 1):
+        raise ValueError("FFT size must be a power of two >= 2")
 
     if window_size < 1:
-        raise ValueError("Window size must be positive")
+        raise ValueError("Window size must be >= 1")
 
     if threads < 1:
         raise ValueError("SNAP threads must be >= 1")
 
-    executable = shutil.which(gpt)
+    resolved_gpt = os.environ.get("SNAP_GPT", gpt) if gpt == "gpt" else gpt
+
+    executable = shutil.which(resolved_gpt)
 
     if executable is None:
-        raise FileNotFoundError(f"SNAP GPT executable not found: {gpt}")
+        raise FileNotFoundError(f"SNAP GPT executable not found: {resolved_gpt}")
 
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
     output_dim = output_dir / "filtered_interferogram.dim"
     graph_path = output_dir / "goldstein_filter_graph.xml"
@@ -127,6 +228,15 @@ def phase_filtering_pipeline(
         use_coherence_mask=use_coherence_mask,
     )
 
+    command = [
+        executable,
+        str(graph_path),
+        "-c",
+        cache,
+        "-q",
+        str(threads),
+    ]
+
     logger.info(
         "Goldstein phase filtering | alpha=%.2f | FFT=%d | window=%d",
         alpha,
@@ -134,20 +244,75 @@ def phase_filtering_pipeline(
         window_size,
     )
 
-    subprocess.run(
-        [
-            executable,
-            str(graph_path),
-            "-c",
-            cache,
-            "-q",
-            str(threads),
-        ],
-        check=True,
+    logger.info(
+        "Executing SNAP GPT: %s",
+        subprocess.list2cmdline(command),
     )
+
+    # Capture the real SNAP error instead of returning
+    # only a CalledProcessError with exit status 1.
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        bufsize=1,
+    )
+
+    output_lines = []
+
+    if process.stdout is not None:
+        for line in process.stdout:
+            message = line.rstrip("\r\n")
+            output_lines.append(message)
+            logger.info("[SNAP] %s", message)
+
+        process.stdout.close()
+
+    return_code = process.wait()
+
+    if return_code != 0:
+        snap_output = "\n".join(output_lines[-100:])
+
+        raise RuntimeError(
+            "SNAP Goldstein phase filtering failed "
+            f"(exit code {return_code}).\n"
+            f"Graph: {graph_path}\n"
+            f"SNAP output:\n{snap_output}"
+        )
 
     validate_dim(output_dim)
 
-    logger.info("Phase filtering completed: %s", output_dim)
+    report = validate_phase_filtering(
+        input_dim,
+        output_dim,
+        report_path=(output_dir / "phase_filtering_validation.json"),
+    )
+
+    summary = {
+        "input": str(input_dim),
+        "output": str(output_dim),
+        "graph": str(graph_path),
+        "alpha": alpha,
+        "fft_size": fft_size,
+        "window_size": window_size,
+        "use_coherence_mask": use_coherence_mask,
+        "validation_status": report.status,
+    }
+
+    summary_path = output_dir / "processing_summary.json"
+
+    summary_path.write_text(
+        json.dumps(summary, indent=2),
+        encoding="utf-8",
+    )
+
+    logger.info(
+        "Phase filtering completed | output=%s | validation=%s",
+        output_dim,
+        report.status,
+    )
 
     return output_dim

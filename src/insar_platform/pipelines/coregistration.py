@@ -23,10 +23,13 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 from zipfile import BadZipFile, ZipFile
 
+from insar_platform.validations.validate_dim import validate_dim
+from insar_platform.validations.validate_esd import validate_esd
+
 if TYPE_CHECKING:
     from insar_platform.pipelines.acquisition import AcquisitionResult
 
-LOG = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def node(
@@ -115,14 +118,8 @@ def run_gpt(
         str(threads),
     ]
 
-    LOG.info("Running SNAP: %s", command)
+    logger.info("Running SNAP: %s", command)
     subprocess.run(command, check=True)
-
-
-def validate_dim(path: Path) -> None:
-    data_dir = path.with_suffix(".data")
-    if not path.is_file() or not data_dir.is_dir() or not any(data_dir.iterdir()):
-        raise RuntimeError(f"SNAP output missing or incomplete: {path}")
 
 
 def coregister(
@@ -273,10 +270,21 @@ def coregister(
             },
         )
     )
+
     graph = graph_file(output / "coregistration.xml", steps)
+
     run_gpt(gpt, graph, cache=cache, threads=threads)
+
     validate_dim(target)
-    LOG.info("Coregistration completed: %s", target)
+
+    if run_esd:
+        validate_esd(
+            target,
+            report_path=output / "esd_validation.json",
+        )
+
+    logger.info("Coregistration completed: %s", target)
+
     return target
 
 

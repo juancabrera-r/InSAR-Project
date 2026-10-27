@@ -16,7 +16,7 @@ CONFIG:
   "skip_coregistration": True
   "skip_interferogram": True
   "skip_inspect_coherence": True
-  "skip_phase_filtering": False
+  "skip_phase_filtering": True
   "skip_phase_unwrapping": False
   pipeline_cache_dir: data/cache/pipelines
 

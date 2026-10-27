@@ -22,6 +22,9 @@ import subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from insar_platform.validations.validate_dim import validate_dim
+from insar_platform.validations.validate_interferogram import validate_interferogram
+
 LOG = logging.getLogger(__name__)
 
 
@@ -56,12 +59,6 @@ def write_graph(path: Path, steps: list[tuple[str, str, dict, dict]]) -> None:
     ET.ElementTree(root).write(path, encoding="utf-8", xml_declaration=True)
 
 
-def validate_dim(path: Path) -> None:
-    data = path.with_suffix(".data")
-    if not path.is_file() or not data.is_dir() or not any(data.iterdir()):
-        raise RuntimeError(f"Missing or incomplete SNAP output: {path}")
-
-
 def inspect_dim_bands(path: Path) -> list[str]:
     """Read band names from BEAM-DIMAP metadata without loading large rasters."""
     root = ET.parse(path).getroot()
@@ -85,6 +82,91 @@ def run_graph(gpt: str, graph: Path, cache: str, threads: int) -> None:
     command = [executable, str(graph.resolve()), "-c", cache, "-q", str(threads)]
     LOG.info("Running SNAP: %s", command)
     subprocess.run(command, check=True)
+
+
+def materialize_phase(
+    source_dim: Path,
+    output_dim: Path,
+    *,
+    gpt: str,
+    cache: str,
+    threads: int,
+) -> None:
+    """Use SNAP to write real, imaginary, coherence and phase as physical bands."""
+    bands = inspect_dim_bands(source_dim)
+
+    def required(prefix: str) -> str:
+        matches = [name for name in bands if name.startswith(prefix)]
+        if len(matches) != 1:
+            raise ValueError(f"Expected one {prefix!r} band, found: {matches}")
+        return matches[0]
+
+    real = required("i_ifg_")
+    imag = required("q_ifg_")
+    coherence = required("coh_")
+    # Do not materialize Phase_ifg before Goldstein filtering.
+    phase = required("Phase_ifg_")
+
+    graph = ET.Element("graph", id="MaterializeInterferogramPhase")
+    ET.SubElement(graph, "version").text = "1.0"
+    add_node(
+        graph,
+        "Read",
+        "Read",
+        {},
+        {"file": str(source_dim), "formatName": "BEAM-DIMAP"},
+    )
+
+    node = ET.SubElement(graph, "node", id="BandMaths")
+    ET.SubElement(node, "operator").text = "BandMaths"
+    sources = ET.SubElement(node, "sources")
+    ET.SubElement(sources, "sourceProduct", refid="Read")
+    params = ET.SubElement(
+        node,
+        "parameters",
+        {"class": "com.bc.ceres.binding.dom.XppDomElement"},
+    )
+    targets = ET.SubElement(params, "targetBands")
+    band_definitions = {
+        real: (real, "real"),
+        imag: (imag, "imaginary"),
+        coherence: (coherence, "coherence"),
+        phase: (
+            f"({real} == 0 && {imag} == 0) ? 0 : atan2({imag}, {real})",
+            "rad",
+        ),
+    }
+
+    for name, (expression, unit) in band_definitions.items():
+        target = ET.SubElement(targets, "targetBand")
+        ET.SubElement(target, "name").text = name
+        ET.SubElement(target, "type").text = "float32"
+        ET.SubElement(target, "expression").text = expression
+        ET.SubElement(target, "unit").text = unit
+
+    add_node(
+        graph,
+        "Write",
+        "Write",
+        {"sourceProduct": "BandMaths"},
+        {"file": str(output_dim), "formatName": "BEAM-DIMAP"},
+    )
+    graph_path = output_dim.with_suffix(".xml")
+    ET.indent(graph, space="  ")
+    ET.ElementTree(graph).write(
+        graph_path,
+        encoding="utf-8",
+        xml_declaration=True,
+    )
+    run_graph(gpt, graph_path, cache, threads)
+    validate_dim(output_dim)
+
+    # Do not accept a virtual phase band as a replacement for the required raster.
+    data_dir = output_dim.with_suffix(".data")
+    if not (data_dir / f"{phase}.img").is_file():
+        raise FileNotFoundError(
+            f"SNAP did not materialize physical phase band {phase!r} in {data_dir}"
+        )
 
 
 def generate_interferogram(
@@ -138,16 +220,12 @@ def generate_interferogram(
             },
         ),
     ]
+    # 1. Generate the standard SNAP interferogram.
     write_graph(graph, steps)
     run_graph(gpt, graph, cache, threads)
     validate_dim(ifg_dim)
-    bands = inspect_dim_bands(ifg_dim)
-    LOG.info("Interferogram bands: %s", bands)
-    if not any("coh" in b.lower() for b in bands):
-        raise RuntimeError(
-            "No coherence band found in interferogram output; inspect SNAP graph and product"
-        )
 
+    # 2. Deburst the original SNAP product, retaining its SAR metadata.
     result = ifg_dim
     if deburst:
         deburst_dim = output_dir / "interferogram_deburst.dim"
@@ -166,33 +244,70 @@ def generate_interferogram(
                     "Write",
                     "Write",
                     {"sourceProduct": "Deburst"},
-                    {
-                        "file": str(deburst_dim),
-                        "formatName": "BEAM-DIMAP",
-                    },
+                    {"file": str(deburst_dim), "formatName": "BEAM-DIMAP"},
                 ),
             ],
         )
         run_graph(gpt, deburst_graph, cache, threads)
         validate_dim(deburst_dim)
         result = deburst_dim
-        LOG.info("Debursted bands: %s", inspect_dim_bands(deburst_dim))
 
+    # 3. Materialize phase AND retain physical I/Q/coherence in one product.
+    final_dim = output_dir / "interferogram_final.dim"
+    materialize_phase(result, final_dim, gpt=gpt, cache=cache, threads=threads)
+    result = final_dim
+
+    # 4. Validate the actual final product, never an unused intermediate.
+    final_validation = validate_interferogram(
+        result,
+        report_path=output_dir / "interferogram_validation.json",
+    )
+    LOG.info(
+        "Interferogram validation | status=%s | coherence=%s",
+        final_validation.status,
+        final_validation.coherence.get("mean"),
+    )
+
+    # 5. Save processing summary
     summary = {
         "input": str(input_dim),
         "output": str(result),
         "interferogram": str(ifg_dim),
+        "materialized_output": str(result),
         "deburst": deburst,
         "coherence_window_meters": coherence_window_meters,
         "subtract_flat_earth": subtract_flat_earth,
         "subtract_topographic_phase": subtract_topographic_phase,
         "bands": inspect_dim_bands(result),
-        "note": "Coherence existence is checked, but geometric/phase quality requires independent validation.",
+        "validation": {
+            "interferogram_status": final_validation.status,
+            "final_status": final_validation.status,
+            "coherence_mean": final_validation.coherence.get("mean"),
+            "coherence_std": final_validation.coherence.get("std"),
+            "coherence_valid_fraction": final_validation.coherence.get(
+                "valid_fraction"
+            ),
+            "high_coherence_fraction": final_validation.coherence.get(
+                "above_threshold_fraction"
+            ),
+            "warnings": final_validation.warnings,
+            "errors": final_validation.errors,
+        },
     }
-    (output_dir / "processing_summary.json").write_text(
-        json.dumps(summary, indent=2), encoding="utf-8"
+
+    summary_path = output_dir / "processing_summary.json"
+
+    summary_path.write_text(
+        json.dumps(summary, indent=2),
+        encoding="utf-8",
     )
-    LOG.info("Interferogram processing completed: %s", result)
+
+    LOG.info(
+        "Interferogram processing completed | output=%s | status=%s",
+        result,
+        final_validation.status,
+    )
+
     return result
 
 
