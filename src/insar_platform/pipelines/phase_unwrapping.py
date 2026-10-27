@@ -19,6 +19,8 @@ from pathlib import Path
 
 import numpy as np
 
+from insar_platform.validations.validate_unwrapping import validate_phase_unwrapping
+
 logger = logging.getLogger(__name__)
 
 
@@ -68,6 +70,42 @@ def _read_config(path: Path) -> dict[str, str]:
         if len(parts) >= 2:
             result[parts[0].upper()] = parts[1]
     return result
+
+
+def _resolve_exported_coherence(config_file: Path, config: dict[str, str]) -> Path:
+    """Resolve the coherence file referenced by the SNAP-generated SNAPHU config.
+
+    Do not guess a band from the DIMAP product: the exported binary and the
+    config must agree for SNAPHU to use the intended coherence measurement.
+    """
+    export_dir = config_file.parent.resolve()
+    raw = config.get("CORRFILE", "").strip().strip("\"'")
+    if not raw:
+        available = sorted(p.name for p in export_dir.iterdir() if p.is_file())
+        raise RuntimeError(
+            f"SNAPHU config has no CORRFILE entry: {config_file}. "
+            f"Exported files: {available}. Check the filtered DIMAP coherence "
+            "band and the SnaphuExport output."
+        )
+
+    # SNAP may emit Windows separators even when the config is inspected on
+    # another platform. Resolve only paths contained within the export folder.
+    relative = Path(raw.replace("\\", "/"))
+    if relative.is_absolute() or ".." in relative.parts or ":" in raw:
+        raise RuntimeError(f"Unsafe or unsupported CORRFILE path: {raw!r}")
+    resolved = (export_dir / relative).resolve()
+    if not resolved.is_relative_to(export_dir):
+        raise RuntimeError(f"CORRFILE escapes export directory: {raw!r}")
+    if not resolved.is_file():
+        available = sorted(p.name for p in export_dir.iterdir() if p.is_file())
+        raise FileNotFoundError(
+            f"SNAPHU CORRFILE references a missing file: {resolved}. "
+            f"Config value: {raw!r}. Exported files: {available}. "
+            "Do not rename another coherence band to bypass this check."
+        )
+    if resolved.stat().st_size == 0:
+        raise RuntimeError(f"SNAPHU coherence file is empty: {resolved}")
+    return resolved
 
 
 def _verify_config(
@@ -159,17 +197,50 @@ def _validate_float_raster(
     }
 
 
-def _validate_dimap(path: Path) -> None:
-    if not path.is_file() or not path.with_suffix(".data").is_dir():
-        raise RuntimeError(f"Missing SNAP DIMAP product or data directory: {path}")
-    root = ET.parse(path).getroot()
-    names = [
+def _validate_dimap(product: Path) -> None:
+    """Validate the SNAP DIMAP product and its unwrapped phase band."""
+    import re
+    from xml.etree import ElementTree as ET
+
+    if not product.is_file():
+        raise FileNotFoundError(f"SNAP DIMAP product not found: {product}")
+
+    data_directory = product.with_suffix(".data")
+
+    if not data_directory.is_dir():
+        raise FileNotFoundError(
+            f"SNAP DIMAP data directory not found: {data_directory}"
+        )
+
+    root = ET.parse(product).getroot()
+
+    band_names = [
         element.text.strip()
         for element in root.iter()
-        if element.tag.split("}")[-1] == "BAND_NAME" and element.text
+        if element.tag.split("}")[-1] == "BAND_NAME"
+        and element.text
+        and element.text.strip()
     ]
-    if not any(name.lower().startswith("unwphase") for name in names):
-        raise RuntimeError(f"SNAPHU-imported product lacks UnwPhase band: {names}")
+
+    def is_unwrapped_phase(name: str) -> bool:
+        normalized = re.sub(r"[^a-z0-9]", "", name.lower())
+
+        return normalized.startswith(("unwphase", "unwrappedphase"))
+
+    unwrapped_bands = [name for name in band_names if is_unwrapped_phase(name)]
+
+    if len(unwrapped_bands) != 1:
+        raise RuntimeError(
+            "Expected exactly one unwrapped phase band, "
+            f"found {len(unwrapped_bands)}. "
+            f"Available bands: {band_names}"
+        )
+
+    logger.info(
+        "SNAPHU-imported DIMAP validated | Product: %s | Unwrapped phase band: %s",
+        product,
+        unwrapped_bands[0],
+    )
 
 
 def _create_import_graph(
@@ -211,6 +282,67 @@ def _create_import_graph(
 def _fingerprint(path: Path) -> dict:
     stat = path.stat()
     return {"path": str(path), "size": stat.st_size, "mtime_ns": stat.st_mtime_ns}
+
+
+def _repair_snaphu_corrfile(
+    config_file: Path,
+    config: dict[str, str],
+    width: int,
+    height: int,
+) -> dict[str, str]:
+    """Repair SNAP's malformed CORRFILE only when unambiguous."""
+    export_dir = config_file.parent.resolve()
+    corrfile = config.get("CORRFILE", "").strip()
+    expected_bytes = width * height * 4
+
+    if width <= 0 or height <= 0:
+        raise ValueError("Invalid SNAPHU raster dimensions")
+
+    if corrfile != ".snaphu.img":
+        # Do not silently replace other invalid references.
+        _resolve_exported_coherence(config_file, config)
+        return config
+
+    candidates = sorted(export_dir.glob("coh_*.snaphu.img"))
+    valid = [
+        candidate
+        for candidate in candidates
+        if candidate.is_file() and candidate.stat().st_size == expected_bytes
+    ]
+
+    if len(valid) != 1:
+        raise RuntimeError(
+            "Cannot safely repair SNAPHU CORRFILE. "
+            f"Expected {expected_bytes} bytes; "
+            f"matching candidates: {valid}"
+        )
+
+    replacement = valid[0].name
+    original = config_file.read_text(encoding="utf-8-sig")
+
+    pattern = re.compile(
+        r"(?m)^([ \t]*CORRFILE[ \t]+)\.snaphu\.img"
+        r"(?=[ \t]*(?:#.*)?$)",
+        re.IGNORECASE,
+    )
+
+    updated, count = pattern.subn(
+        lambda match: match.group(1) + replacement,
+        original,
+    )
+
+    if count != 1:
+        raise RuntimeError(f"Expected one malformed CORRFILE entry; found {count}")
+
+    config_file.write_text(updated, encoding="utf-8")
+
+    logger.warning(
+        "Repaired SNAPHU CORRFILE: %s -> %s",
+        corrfile,
+        replacement,
+    )
+
+    return _read_config(config_file)
 
 
 def run_phase_unwrapping(
@@ -257,7 +389,10 @@ def run_phase_unwrapping(
     state_file = output_directory / "phase_unwrapping_state.json"
     summary_file = output_directory / "processing_summary.json"
     settings = {
-        "filtered_product": _fingerprint(filtered_product),
+        "filtered_rasters": [
+            _fingerprint(path)
+            for path in sorted(filtered_product.with_suffix(".data").rglob("*.img"))
+        ],
         "gpt": str(gpt),
         "snaphu_executable": str(snaphu_executable),
         "stat_cost_mode": stat_cost_mode,
@@ -324,9 +459,23 @@ def run_phase_unwrapping(
     height = input_path.stat().st_size // (width * 4)
     if height < 1:
         raise RuntimeError("SNAPHU input raster is empty")
-    coherence = config.get("CORRFILE")
-    if not coherence or not (config_file.parent / coherence).is_file():
-        raise RuntimeError("SNAPHU coherence input missing")
+    config = _repair_snaphu_corrfile(
+        config_file=config_file,
+        config=config,
+        width=width,
+        height=height,
+    )
+    coherence_path = _resolve_exported_coherence(config_file, config)
+    expected_bytes = width * height * 4
+    actual_bytes = coherence_path.stat().st_size
+
+    if actual_bytes != expected_bytes:
+        raise RuntimeError(
+            "SNAPHU coherence raster size mismatch: "
+            f"expected {expected_bytes} bytes, "
+            f"found {actual_bytes} bytes: {coherence_path}"
+        )
+    logger.info("SNAPHU coherence input verified: %s", coherence_path)
     output_name = config.get("OUTFILE")
     if not output_name or Path(output_name).name != output_name:
         raise RuntimeError("Invalid SNAPHU OUTFILE setting")
@@ -368,6 +517,46 @@ def run_phase_unwrapping(
         )
         _run_command([str(gpt), str(graph_file), "-c", "4G", "-q", "2"])
     _validate_dimap(unwrapped_product)
+
+    # 4. Validate phase unwrapping
+    logger.info("Validating SNAPHU phase unwrapping")
+
+    validation = validate_phase_unwrapping(
+        wrapped_product=filtered_product,
+        unwrapped_product=unwrapped_product,
+        output_json=output_directory / "validation.json",
+        tile_rows=tile_rows,
+        tile_cols=tile_cols,
+        block_size=512,
+    )
+
+    logger.info(
+        "Phase unwrapping quality | "
+        "Valid pixels: %d | "
+        "Circular residual MAE: %.6f rad | "
+        "Circular residual RMSE: %.6f rad | "
+        "Residual failures: %.4f%% | "
+        "Tile-boundary jumps: %.4f%% | "
+        "Interior jumps: %.4f%%",
+        validation.valid_pixels,
+        validation.circular_residual_mae_rad,
+        validation.circular_residual_rmse_rad,
+        validation.residual_fraction_above_0_1_rad * 100,
+        validation.tile_boundary_jump_fraction_above_pi * 100,
+        validation.interior_jump_fraction_above_pi * 100,
+    )
+
+    if not validation.passed:
+        raise RuntimeError(
+            "SNAPHU phase unwrapping validation failed | "
+            f"Residual MAE: "
+            f"{validation.circular_residual_mae_rad:.6f} rad | "
+            f"Bad residual fraction: "
+            f"{validation.residual_fraction_above_0_1_rad:.4%}"
+        )
+
+    logger.info("Phase unwrapping validation passed")
+
     summary_file.write_text(
         json.dumps(
             {

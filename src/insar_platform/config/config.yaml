@@ -16,8 +16,10 @@ CONFIG:
   "skip_coregistration": True
   "skip_interferogram": True
   "skip_inspect_coherence": True
+  "skip_topographic_phase_removal": True
   "skip_phase_filtering": True
   "skip_phase_unwrapping": False
+  
   pipeline_cache_dir: data/cache/pipelines
 
 
@@ -117,6 +119,7 @@ SNAP_LAST_BURST: 5
 # Enhanced Spectral Diversity (requires overlapping adjacent bursts)
 SNAP_RUN_ESD: true
 
+
 # -----------------------------------------------------------------------------
 # 9. Interferogram and Coherence Generation
 # -----------------------------------------------------------------------------
@@ -133,6 +136,12 @@ INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE: false
 
 # Merge TOPS bursts after interferogram generation
 INTERFEROGRAM_DEBURST: true
+
+TOPOGRAPHIC_PHASE_REMOVAL_OUTPUT: "data/processed/topographic_phase_removal"
+
+TOPOGRAPHIC_DEM: "Copernicus 30m Global DEM"
+
+TOPOGRAPHIC_ORBIT_DEGREE: 3
 
 # -----------------------------------------------------------------------------
 # 10. Coherence Quality Inspection

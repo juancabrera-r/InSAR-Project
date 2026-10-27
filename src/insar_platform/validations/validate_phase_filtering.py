@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import logging
 import math
+import re
 import warnings
 import xml.etree.ElementTree as ET
 from contextlib import ExitStack
@@ -50,26 +51,114 @@ def _band_names(dim: Path) -> list[str]:
     )
 
 
-def _physical_band(dim: Path, prefixes: tuple[str, ...]) -> Path | None:
+def _raster_index(dim: Path) -> dict[str, Path]:
+    """Index physical ENVI rasters by exact, case-insensitive band name."""
     data_dir = dim.with_suffix(".data")
     if not data_dir.is_dir():
-        return None
-    candidates = sorted(
-        p
-        for p in data_dir.rglob("*.img")
-        if p.stem.lower().startswith(prefixes)
-        and "tie_point_grids"
-        not in {part.lower() for part in p.relative_to(data_dir).parts[:-1]}
-    )
+        return {}
+    index: dict[str, Path] = {}
+    for path in sorted(data_dir.rglob("*.img")):
+        if "tie_point_grids" in {
+            part.lower() for part in path.relative_to(data_dir).parts[:-1]
+        }:
+            continue
+        key = path.stem.casefold()
+        if key in index:
+            raise ValueError(
+                f"Duplicate physical raster name {path.stem!r}: {index[key]} and {path}"
+            )
+        index[key] = path
+    return index
+
+
+def _physical_band(dim: Path, prefixes: tuple[str, ...]) -> Path | None:
+    """Resolve a unique auxiliary raster, rejecting ambiguous matches."""
+    index = _raster_index(dim)
+    candidates = [
+        path
+        for name, path in index.items()
+        if name.startswith(tuple(p.casefold() for p in prefixes))
+    ]
     if len(candidates) > 1:
         raise ValueError(f"Ambiguous raster bands for {prefixes}: {candidates}")
     return candidates[0] if candidates else None
 
 
 def _complex_pair(dim: Path) -> tuple[Path, Path] | None:
-    i = _physical_band(dim, ("i_ifg", "real_ifg"))
-    q = _physical_band(dim, ("q_ifg", "imag_ifg"))
-    return (i, q) if i is not None and q is not None else None
+    """Resolve the physical i/q pair referenced by SNAP's phase band."""
+
+    root = ET.parse(dim).getroot()
+    data_dir = dim.with_suffix(".data")
+
+    phase_expressions = []
+
+    for node in root.iter():
+        if _local(node.tag) not in {
+            "Spectral_Band_Info",
+            "Virtual_Band_Info",
+        }:
+            continue
+
+        fields = {_local(child.tag): (child.text or "").strip() for child in node}
+
+        name = fields.get("BAND_NAME", "")
+        expression = fields.get("EXPRESSION", "")
+
+        if name.lower().startswith("phase_ifg") and expression:
+            phase_expressions.append(expression)
+
+    if len(phase_expressions) != 1:
+        raise ValueError(
+            f"Expected exactly one declared interferometric phase "
+            f"expression in {dim}, found {len(phase_expressions)}"
+        )
+
+    expression = phase_expressions[0]
+
+    match = re.fullmatch(
+        r"\s*atan2\s*\(\s*"
+        r"([A-Za-z_][A-Za-z0-9_]*)\s*,\s*"
+        r"([A-Za-z_][A-Za-z0-9_]*)\s*\)\s*",
+        expression,
+        flags=re.IGNORECASE,
+    )
+
+    if match is None:
+        raise ValueError(f"Unsupported phase expression in {dim}: {expression}")
+
+    q_name, i_name = match.groups()
+
+    if not i_name.lower().startswith(("i_ifg", "real_ifg")):
+        raise ValueError(f"Unexpected real band: {i_name}")
+
+    if not q_name.lower().startswith(("q_ifg", "imag_ifg")):
+        raise ValueError(f"Unexpected imaginary band: {q_name}")
+
+    declared_bands = set(_band_names(dim))
+
+    if i_name not in declared_bands or q_name not in declared_bands:
+        raise ValueError(
+            f"Phase expression references undeclared bands: {i_name}, {q_name}"
+        )
+
+    def resolve(name: str) -> Path:
+        candidates = [
+            path
+            for path in data_dir.rglob("*.img")
+            if path.stem == name
+            and "tie_point_grids"
+            not in {part.lower() for part in path.relative_to(data_dir).parts[:-1]}
+        ]
+
+        if len(candidates) != 1:
+            raise ValueError(
+                f"Expected one physical raster for {name}, "
+                f"found {len(candidates)}: {candidates}"
+            )
+
+        return candidates[0]
+
+    return resolve(i_name), resolve(q_name)
 
 
 def _read(ds, window: Window) -> tuple[np.ndarray, np.ndarray]:
@@ -182,9 +271,6 @@ def validate_phase_filtering(
         with warnings.catch_warnings(), ExitStack() as stack:
             warnings.filterwarnings("ignore", category=NotGeoreferencedWarning)
 
-            if pairs is None:
-                raise ValueError("Raster pairs are missing")
-
             if len(pairs) != 2:
                 raise ValueError("Expected exactly two raster pairs")
 
@@ -245,7 +331,7 @@ def validate_phase_filtering(
                         sin_sum += float(np.sin(delta).sum(dtype=np.float64))
                         cos_sum += float(np.cos(delta).sum(dtype=np.float64))
                         counts["large"] += int((np.abs(delta) > math.pi / 2).sum())
-                    if all(cohs):
+                    if all(c is not None for c in cohs):
                         (x, vx), (y, vy) = [_read(z, win) for z in cohs]
                         v = vx & vy
                         counts["coh_common"] += int(v.sum())
@@ -291,7 +377,7 @@ def validate_phase_filtering(
                         "Filtered product has more valid pixels than input"
                     )
                 cn = counts["coh_common"]
-                if all(cohs) and cn:
+                if all(c is not None for c in cohs) and cn:
                     result.metrics["coherence_preservation"] = {
                         "compared_pixels": cn,
                         "mean_absolute_difference": coh_abs / cn,
@@ -392,7 +478,7 @@ def validate_phase_filtering(
                         if gn
                         else None,
                     }
-                    if all(cohs):
+                    if all(c is not None for c in cohs):
                         coh, mask = _read(cohs[0], win)
                         high = good & mask & (coh >= 0.6)
                         item["high_coherence_variance_before"] = (

@@ -1,78 +1,179 @@
 # Sentinel-1 InSAR Processing Platform
 
-**A Python project for building reproducible Sentinel-1 SAR acquisition, geometry-validation, and InSAR processing workflows.**
+**A modular Python platform for reproducible Sentinel-1 SLC acquisition, interferometric processing, scientific validation, and processing provenance.**
+
+> **Status — active development (October 2026).** The application includes catalogue discovery, acquisition inspection, orbital and baseline geometry, SNAP TOPS coregistration, interferogram/coherence generation, Goldstein phase filtering, SNAPHU phase unwrapping, and automated unwrapping validation. A separate DEM-based topographic phase removal stage has been integrated into the application code but has not yet been demonstrated to complete successfully in the provided run. **Validated, geocoded line-of-sight (LOS) displacement and deformation time series are not yet established.**
 
 ## Objective
 
-The objective of this project is to develop a modular foundation for processing Sentinel-1 Single Look Complex (SLC) imagery and, ultimately, estimating ground deformation using Interferometric Synthetic Aperture Radar (InSAR).
+Process compatible Sentinel-1 Single Look Complex (SLC) acquisitions into traceable interferometric products, with explicit validation at each stage. Successful software execution, correct phase unwrapping modulo \(2\pi\), and scientifically validated ground displacement are **different milestones**.
 
-Reliable InSAR analysis depends on more than producing an interferogram. It requires selecting compatible acquisitions, checking spatial and acquisition geometry, handling complex SAR data, and recording which inputs and processing steps produced each result. This repository focuses on those foundations before extending the workflow to validated deformation products.
+## Current capabilities
 
-> **Status - active development.** The repository contains Sentinel-1 acquisition and metadata workflows, spatial and geometry-validation code, baseline calculations, and PostgreSQL/PostGIS models and services for tracking inputs and processing runs. A validated end-to-end chain for coregistration, interferogram generation, phase unwrapping, and line-of-sight displacement is **not yet implemented**. Cloud infrastructure and machine-learning components are future goals.
-
-## What the project currently covers
-
-| Component | Current scope |
+| Component | Implementation and validation status |
 | --- | --- |
-| **Sentinel-1 discovery** | Query and organize Sentinel-1 bursts and associated SLC products using Copernicus catalogue metadata. |
-| **Acquisition validation** | Check area-of-interest coverage, burst consistency, and acquisition metadata before processing. |
-| **SAR data inspection** | Explore SAFE annotation metadata and complex SLC measurement data. |
-| **Orbital and InSAR geometry** | Extract orbit state vectors, interpolate satellite states, solve zero-Doppler geometry, and calculate total, perpendicular, and parallel baselines for an acquisition pair. |
-| **Metadata and provenance** | Use PostgreSQL/PostGIS and SQLAlchemy to catalog products, local source files, processing runs, run inputs, and per-burst baseline results. |
-| **Engineering workflow** | Manage Python dependencies with Pixi, database migrations with Alembic, and quality checks with pytest, Ruff, pre-commit, and GitHub Actions. |
+| Sentinel-1 catalogue discovery | Implemented: search, burst grouping, AOI coverage and acquisition metadata checks. |
+| Acquisition and SAFE inspection | Implemented: measurement/annotation retrieval, burst mapping and input inspection. |
+| Orbit and baseline geometry | Implemented: state-vector interpolation, zero-Doppler geometry and baseline decomposition. |
+| Database and provenance | Implemented: PostgreSQL/PostGIS and SQLAlchemy models and processing-run tracking; completeness of lineage still needs review. |
+| TOPS coregistration | Implemented through ESA SNAP GPT, including Back-Geocoding and optional ESD; quality checks require ongoing scientific assessment. |
+| Interferogram and coherence | Implemented using SNAP; supports flat-Earth subtraction and configurable coherence estimation. |
+| Coherence inspection | Implemented: summary statistics and histogram/report generation. |
+| Topographic phase removal | Implemented as a separate SNAP `TopoPhaseRemoval` stage in the application; end-to-end execution not yet confirmed. |
+| Goldstein phase filtering | Implemented using SNAP; must consume the topographically corrected interferogram. |
+| SNAPHU phase unwrapping | Implemented with SNAP export/import and tiled SNAPHU execution. |
+| Unwrapping validation | Implemented and successfully run on an earlier **non-topographically corrected** processing chain. |
+| Terrain correction and LOS displacement | Not yet demonstrated as implemented or scientifically validated in the supplied application. |
+| Deformation time series / cloud ML | Future work. |
 
-These capabilities are at different stages of development and validation. In particular, baseline geometry is **not** equivalent to a validated ground-displacement measurement.
+## Processing workflow
 
-## Processing flow
-
-The current application is organized around the following stages:
+The current application (`sentinel1_app()` in `application.py`) orchestrates the following sequence:
 
 ```text
 Area of interest (AOI)
-       |
-       v
-Sentinel-1 catalogue discovery
-       |
-       v
-Spatial and acquisition-metadata validation
-       |
-       v
-SLC product / annotation acquisition
-       |
-       v
-Orbit interpolation and zero-Doppler geometry
-       |
-       v
-Reference–secondary baseline calculation
-       |
-       v
-PostgreSQL/PostGIS metadata and processing-run records
+    |
+    v
+1. Catalogue discovery and burst/acquisition validation
+    |
+    v
+2. Acquisition and SAFE inspection/download
+    |
+    v
+3. Orbit and baseline geometry
+    |
+    v
+4. SAFE dependency inspection
+    |
+    v
+5. SNAP TOPS coregistration (Back-Geocoding / ESD)
+    |
+    v
+6. Interferogram and coherence generation
+   (flat-Earth subtraction; topographic subtraction OFF)
+    |
+    +--> Coherence inspection/report
+    |
+    v
+7. DEM-based topographic phase removal (SNAP TopoPhaseRemoval)
+    |
+    v
+8. Goldstein phase filtering
+    |
+    v
+9. SNAPHU phase unwrapping
+    |
+    v
+10. Automated phase-unwrapping validation
+    |
+    v
+Future: terrain correction -> LOS displacement -> external validation
 ```
 
-The pipeline is designed to keep scientific computations separate from acquisition, orchestration, and persistence concerns. Full interferometric processing is a planned extension, not a capability claimed by this diagram.
+The numbered processing blocks above are conceptual. In the current `application.py`, AOI preparation is step 1, catalogue discovery step 2, acquisition step 3, baseline step 4, SAFE inspection step 5, coregistration step 6, interferogram step 7, coherence inspection step 8, **topographic phase removal step 9**, **Goldstein filtering step 10**, and **phase unwrapping step 11**. Automated validation is called by the unwrapping pipeline.
+
+### Topographic phase removal
+
+The measured interferometric phase includes geometric/topographic, deformation, atmospheric and residual-noise contributions. SNAP simulates the topographic phase using a DEM and acquisition geometry, then subtracts it to reduce elevation-dependent fringes before filtering and unwrapping:
+
+```text
+wrapped interferogram -> TopoPhaseRemoval -> corrected wrapped interferogram
+```
+
+Recommended settings based on the installed SNAP operator help:
+
+| Parameter | Value |
+| --- | --- |
+| Operator | `TopoPhaseRemoval` |
+| DEM | `Copernicus 30m Global DEM` |
+| `orbitDegree` | `3` |
+| `outputTopoPhaseBand` | `true` |
+| `outputElevationBand` | `true` |
+| `outputLatLonBands` | `false` |
+| `tileExtensionPercent` | `100` |
+| Output format | `BEAM-DIMAP` (`.dim` and `.data`) |
+
+**Avoid double subtraction:** when using the separate `TopoPhaseRemoval` stage, keep `INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE=false` in the upstream `Interferogram` operator. The alternative is to enable topographic subtraction directly in `Interferogram` and omit the separate stage; do not combine both methods.
+
+**Critical wiring:** the Goldstein filtering call must receive `interferogram_dim=topographic_dim`, not the original `interferogram_dim`. Otherwise the topographic correction is calculated but not used by the downstream chain. The last shared application revision still passed the original product to Goldstein; this wiring change is required before claiming the updated workflow is operational.
+
+### Phase filtering and unwrapping
+
+Goldstein filtering reduces phase noise while preserving interferometric fringe structure. The filtered interferogram is exported for SNAPHU, unwrapped and reimported into a SNAP BEAM-DIMAP product. Example configuration used in the project:
+
+| SNAPHU parameter | Value |
+| --- | --- |
+| Statistical cost mode | `DEFO` |
+| Initialization | `MST` |
+| Tiles | 4 rows × 8 columns |
+| Row / column overlap | 200 pixels each |
+| Processors | 4 |
+
+The unwrapping validation compares unwrapped phase against the wrapped phase modulo \(2\pi\), evaluates phase jumps, checks coherence and reports coverage. It cannot independently prove the correct absolute number of phase cycles or the accuracy of derived ground displacement.
+
+### Processing cache and reproducibility
+
+Pipeline stages use `run_or_load_pipeline()` with stage-specific `.pkl` caches and `run_tracked_pipeline()` for processing-run tracking. A `.pkl` cache records a Python stage result; it is **not** a substitute for the actual SNAP `.dim`/`.data` product. Skipped stages should verify both cache presence and referenced output-product integrity.
+
+After changing topographic correction, regenerate **topographic removal → Goldstein filtering → SNAPHU unwrapping → validation**. Reuse the upstream coregistration/interferogram only when their parameters and source data remain unchanged. Stale downstream `.pkl` files or output products must not be treated as valid for the new chain.
+
+## Scientific validation and limitations
+
+### Previous successful unwrapping validation
+
+The following metrics are from the **earlier interferogram without the newly added topographic phase removal**. They must not be presented as validation of the updated topographically corrected chain.
+
+| Metric | Previous result |
+| --- | ---: |
+| Raster dimensions | 25,286 × 4,199 pixels |
+| Valid pixels | 98,087,052 |
+| Valid fraction | 92.38% |
+| Circular residual mean absolute error | 0.000004 rad |
+| Circular residual RMSE | 0.000007 rad |
+| Fraction with circular residual > 0.1 rad | 0.0000% |
+| Adjacent phase jumps > π | 0.3801% |
+| Estimated tile-boundary jumps > π | 0.3772% |
+| Interior jumps > π | 0.3801% |
+| Mean coherence over validation mask | 0.6914 |
+| Validator result | Passed |
+
+These results support **wrapped/unwrapped modulo-\(2\pi\) consistency**, not independently validated displacement. Residual atmosphere, orbital errors, DEM errors, decorrelation, unwrapping cycle mistakes and terrain-geocoding effects still require assessment.
+
+### Required next scientific checks
+
+1. Confirm the new topographic stage produces a valid SNAP product with expected corrected interferometric and optional diagnostic bands.
+2. Verify Goldstein filtering consumes that corrected product; rerun downstream stages and their validation.
+3. Inspect elevation-correlated residual fringes and DEM coverage/voids; quantify changes relative to the original interferogram.
+4. Apply appropriate terrain correction/geocoding and convert valid unwrapped phase to LOS displacement with a documented phase-sign convention.
+5. Compare displacement against independent reference observations or stable-ground controls; characterize atmospheric, orbital and unwrapping uncertainty.
 
 ## Technology
 
-- **Python 3.12** for scientific processing and application logic.
-- **Shapely, PyProj, Rasterio, SciPy, NumPy** for geospatial and numerical operations.
-- **PostgreSQL + PostGIS**, **SQLAlchemy**, and **Alembic** for spatial metadata, provenance, and schema migrations.
-- **Pixi** for reproducible environments and development tasks.
-- **Docker Compose** for a local PostGIS database.
-- **pytest, Ruff, pre-commit, GitHub Actions** for testing and code quality.
+- Python 3.12; NumPy, SciPy, Rasterio, Shapely and PyProj for scientific/geospatial operations.
+- ESA SNAP/S1TBX Graph Processing Tool (GPT) for TOPS coregistration, interferometry, DEM correction, filtering and SNAPHU import/export.
+- SNAPHU for phase unwrapping.
+- PostgreSQL/PostGIS, SQLAlchemy and Alembic for metadata and provenance.
+- Pixi for environments; Docker Compose for local database services.
+- pytest, Ruff, pre-commit and GitHub Actions for development checks.
 
 ## Code organization
 
 ```text
 src/insar_platform/
-  app/         Application entry point
-  config/      Configuration and logging
-  ingestion/   Sentinel-1 catalogue and product metadata
-  geometry/    Spatial validation, orbit and baseline calculations
-  pipelines/   Discovery, acquisition and geometry workflows
-  database/    SQLAlchemy models and persistence services
-alembic/      Database migrations
-tests/        Unit and scientific validation tests
-docs/         Technical notes and scientific investigation records
+  app/           Application entry point / workflow orchestration
+  config/        Configuration and logging
+  ingestion/     Sentinel-1 catalogue and product metadata
+  geometry/      Spatial, orbital and baseline calculations
+  coregistration/ Coregistration inspection and coherence diagnostics
+  pipelines/     Acquisition, coregistration, interferogram,
+                 topographic_phase_removal, phase_filtering,
+                 phase_unwrapping
+  validations/   SNAP product and unwrapping validation
+  database/      SQLAlchemy models and processing-run services
+  utils/         Cache management and shared helpers
+alembic/         Database migrations
+tests/           Automated tests
+docs/            Technical and scientific notes
 ```
 
 ## Getting started
@@ -80,13 +181,13 @@ docs/         Technical notes and scientific investigation records
 ### Requirements
 
 - [Pixi](https://pixi.sh/)
-- Docker with Docker Compose
-- Credentials for the Copernicus Data Space Ecosystem where required
-- Local environment variables and configuration appropriate for your system
+- Docker and Docker Compose (for the local database)
+- Copernicus Data Space credentials, when required
+- ESA SNAP with Sentinel-1 Toolbox and `gpt.exe`
+- SNAPHU executable
+- Sufficient storage for multi-gigabyte Sentinel-1 SLC products and intermediate rasters
 
-The pipeline uses real Sentinel-1 data and external services. Running the full application may require access credentials, configured acquisition parameters, sufficient storage, and a running PostgreSQL/PostGIS instance.
-
-### 1. Set up the Python environment
+### 1. Install Python environment
 
 ```bash
 pixi install -e dev
@@ -94,128 +195,64 @@ pixi install -e dev
 
 ### 2. Configure PostgreSQL/PostGIS
 
-Set `POSTGRES_PASSWORD` in your local `.env` file or environment, then start the database:
+Set `POSTGRES_PASSWORD` and `DATABASE_URL` in local environment configuration; do not commit secrets.
 
 ```bash
 docker compose up -d
-```
-
-Set `DATABASE_URL` to the corresponding PostgreSQL connection string. **Do not commit passwords or access tokens.**
-
-If the database schema has not yet been applied:
-
-```bash
 pixi run -e dev alembic upgrade head
 ```
 
-The repository already contains Alembic configuration; **do not run `alembic init` when setting up an existing clone**.
+Do not run `alembic init` in an existing repository that already contains migrations.
 
-### 3. Run the application
+### 3. Configure SNAP, SNAPHU and processing parameters
+
+Review `src/insar_platform/config/config.yaml` and any environment-specific settings. Relevant keys in the shared application include:
+
+```yaml
+SNAP_GPT: 'C:\Program Files\esa-snap\bin\gpt.exe'
+SNAPHU_EXECUTABLE: 'C:\Tools\snaphu\bin\snaphu.exe'
+INTERFEROGRAM_SUBTRACT_TOPOGRAPHIC_PHASE: false
+TOPOGRAPHIC_PHASE_REMOVAL_OUTPUT: data/processed/topographic_phase_removal
+TOPOGRAPHIC_DEM: Copernicus 30m Global DEM
+TOPOGRAPHIC_ORBIT_DEGREE: 3
+```
+
+These values are **illustrative**; confirm actual executable locations and configuration layout. Stage skip flags reside under `CONFIG` in the shared application. In a first topographic-correction run, keep the upstream verified stages skipped if their caches/products are valid, and run topographic removal, phase filtering and phase unwrapping afresh.
+
+### 4. Run the application
 
 ```bash
 pixi run -e dev insar
 ```
 
-Review `src/insar_platform/config/config.yaml` before running the pipeline: it includes the area of interest, acquisition dates, SAR selection parameters, and local data paths.
-
-### 4. Run development checks
+### 5. Run development checks
 
 ```bash
 pixi run -e dev test
 pixi run -e dev lint
 pixi run -e dev format-check
-```
-
-Scientific validation tests are configured separately:
-
-```bash
 pixi run -e dev validation
 ```
 
-> **Note:** These are repository-defined commands, not a claim that they have been independently executed or verified on a clean machine. Check the latest GitHub Actions run for the current CI status.
+These are repository-defined commands; they have not been independently verified in a clean environment for this documentation update.
 
 ## Database and provenance
 
-The database currently models five related entities:
-
-| Entity | Purpose |
-| --- | --- |
-| `SARProduct` | Identify and catalog Sentinel-1 source acquisitions. |
-| `SARProductFile` | Associate measurement and annotation files with source products. |
-| `ProcessingRun` | Track pipeline executions, status, timestamps, and errors. |
-| `ProcessingRunInput` | Record which SAR products were used in each run. |
-| `InSARBaseline` | Store per-burst baseline components for reference and secondary acquisitions. |
-
-Registration services support repeatable insertion patterns, although metadata conflict handling and end-to-end provenance consistency still require further validation.
-
-## Scientific validation and limitations
-
-The project treats scientific correctness as a separate requirement from software execution. Areas under investigation include:
-
-- Acquisition compatibility, burst identity, and common AOI coverage.
-- Orbit state-vector interpolation and time-reference consistency.
-- Zero-Doppler geometry and baseline decomposition.
-- Complex SLC measurements and burst-level validity information.
-- Traceability of inputs, parameters, and processing results.
-
-See the documents under `docs/` for investigation notes and validation evidence. Some documented numerical findings are reported from prior investigations and have **not** been independently reproduced in this README.
-
-**Not yet implemented or validated:** a complete SLC coregistration-to-displacement chain, production-scale orchestration, deformation time-series generation, anomaly-detection models, and a cloud-native deployment.
+The documented data model includes `SARProduct`, `SARProductFile`, `ProcessingRun`, `ProcessingRunInput` and `InSARBaseline`. Record acquisition identity, source SAFE/annotation paths, orbit source, DEM identity, SNAP/SNAPHU parameters, software versions, stage status and output-product paths where supported. End-to-end provenance completeness remains a validation task.
 
 ## Roadmap
 
-1. Consolidate tests and validation for acquisition selection, geometry, and database provenance.
-2. Integrate established InSAR scientific tools for coregistration, interferograms, coherence, and phase unwrapping.
-3. Validate line-of-sight displacement estimates against reference datasets and documented scientific checks.
-4. Extend product lineage, reproducibility metadata, and automated workflow recovery.
-5. Evaluate cloud orchestration and machine learning only after the scientific pipeline is validated.
+1. Execute and validate the newly integrated topographic phase removal stage and fix downstream product wiring.
+2. Confirm reliable cache invalidation and output-product integrity checks for all dependent stages.
+3. Implement/verify terrain correction and LOS displacement estimation with independent scientific validation.
+4. Extend product lineage, parameter auditing, recovery and automated regression tests.
+5. Investigate deformation time series, scalable orchestration and ML only after the scientific pipeline is validated.
 
-# Sentinel-1 Pipeline - Processing and Validation Summary
+## Historical validation review
 
-**Scope:** Review of the supplied Python modules. **Status legend:** Implemented = enforced by an exception or explicit validation; Partial = checked only in part or merely logged; Missing = no corresponding check found in the reviewed code; Planned = stage not implemented in `application.py`.
+The following validation matrix was retained from an earlier source-code review. **File/line references and implementation statuses may be stale** and should be re-audited against the current repository before use as acceptance evidence.
 
-## Processing flow
-
-```text
-sentinel1_app()                                      application.py
-    |
-    +-- Load AOI and initialize Sentinel-1 ingestion
-    |
-    +-- catalog_discovery_pipeline()                  catalog.py
-    |       Search and group Sentinel-1 bursts
-    |       Summarize metadata and identify duplicates
-    |       Validate AOI footprint geometry and coverage
-    |       Compare burst identities across products
-    |       Validate acquisition metadata
-    |       Register SAR products; inspect orbit metadata
-    |
-    +-- acquisition_pipeline()                        acquisition.py
-    |       Select two earliest acquisitions
-    |       Retrieve product nodes, measurement and annotation
-    |       Match catalog burst IDs to annotation bursts
-    |       Inspect burst validity and sampling metadata
-    |       Validate SLC TIFF against annotation mask
-    |       Inspect adjacent burst boundary
-    |       Register measurement and annotation files
-    |
-    +-- insar_processing_pipeline()                   insar.py
-    |       Require exactly two acquisitions
-    |       Extract annotation orbit vectors
-    |       Normalize acquisition timestamps and check orbit coverage
-    |       Interpolate satellite position and velocity
-    |       Extract geolocation grid and select reference ground point
-    |       Solve zero-Doppler time for each acquisition
-    |       Map solution to selected burst line; log valid samples
-    |       Calculate total, parallel and perpendicular baseline
-    |       Check baseline decomposition
-    |       Register baseline in database
-    |
-    +-- Coregistration                              PLANNED
-    |
-    +-- Interferogram generation                     PLANNED
-```
-
-## Catalog discovery - validations
+## Catalog discovery - validations**
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -228,7 +265,7 @@ sentinel1_app()                                      application.py
 | Duplicate burst-ID report | `catalog.py:64–67` | Partial | Log a warning if duplicates are found. |
 | Orbit metadata inspection | `metadata_validation.py:129–149` | Partial | Inspect/log orbit fields; not an orbit-quality validation. |
 
-## Acquisition - validations
+## Acquisition - validations**
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -242,7 +279,7 @@ sentinel1_app()                                      application.py
 | Sampling metadata | `acquisition.py:224–225, 302–305` | Partial | Extract and log; no explicit positive/finite interval check here. |
 | Existing measurement download | `acquisition.py:164–179` | Partial | Reuse a nonempty local file; file integrity is assessed separately by downstream checks. |
 
-## InSAR processing - validations
+## InSAR processing - validations**
 
 | Validation | Location | Status | Short description |
 |---|---|---|---|
@@ -268,54 +305,7 @@ sentinel1_app()                                      application.py
 | Database run ID | `insar.py:217–220` | Implemented | Require run ID before registration. |
 | Precise orbit provenance | `calculate_orbit.py:17–58` | Implemented | External POEORB selected, satellite and temporal coverage checked, orbit source and file path logged, SHA-256 calculated. |
 
-# Coregistration with SNAP
-
-## SNAP install:
-
-1. For Windows:
-Download from: https://step.esa.int/main/download/snap-download/
-Product to download: All Toolbox
-
-2. Install with:
-- SNAP Desktop
-- Sentinel-1 Tollbox (S1TBX)
-- Graph Processing Tool (GPT)
-
-| Phase | Development task |	Required validation |
-| --- | --- | --- |
-| 1 |	SNAP environment and execution	| Version, operators, exit codes |
-| 2 |	Input product preparation	| SAFE integrity, matching geometry |
-| 3 |	Orbit and DEM preparation	| Precise orbit coverage, DEM coverage |
-| 4 |	TOPSAR-Split	| Burst identity and overlap |
-| 5 |	Back-Geocoding	| Coarse alignment and output grid |
-| 6 |	Enhanced Spectral Diversity	| Residual azimuth alignment |
-| 7 |	Coregistration quality control	| Offsets, coherence, valid pixels |
-| 8 |	Python integration	| Outputs, provenance, database, tests |
-
-| Validation	| Proposed acceptance criterion	| Severity |
-| --- | --- | --- |
-| Product compatibility	| Same satellite, track, pass direction, subswath, polarization	 | Error |
-| Orbit provenance	| POEORB applied and compatible for both acquisitions	 | Error |
-| DEM coverage	| No missing DEM cells in required valid processing area	 | Error |
-| Burst mapping	| Expected bursts 218–220 retained in both products	 | Error |
-| Complex SLC integrity	| Finite real/imaginary values in valid areas	 | Error |
-| Output grid	| Reference and secondary dimensions match	 | Error |
-| Valid pixel overlap	| At least 90% of intended analysis area retained	 | Configurable |
-| Residual range offset	| Absolute median below 0.1 pixel	| Initial target |
-| Residual azimuth offset	| Absolute median below 0.01 pixel	| Initial TOPS  target |
-| ESD estimation	| Finite estimates, sufficient accepted overlap samples	 | Error |
-| ESD uncertainty	| Below configured threshold	 | Configurable |
-| Interferometric coherence	| Spatial statistics reported, without a universal minimum	 | Diagnostic |
-| Reproducibility	| Same inputs and parameters produce consistent outputs	 | Error |
-
-## Unwrapping 
-
-1. Download SANPHU
-https://step.esa.int/main/snap-supported-plugins/snaphu/
-
-2. Extract SNAPHU in ```C:/Tools/snaphu/```
-
 
 ## License
 
-**Proprietary - All Rights Reserved.** The source code is publicly viewable, but no general permission is granted to use, modify, or redistribute it. See [LICENSE](LICENSE).
+**Proprietary — All Rights Reserved.** Source visibility does not grant permission to use, modify or redistribute the code. See [LICENSE](LICENSE).

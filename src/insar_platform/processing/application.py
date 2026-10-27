@@ -20,6 +20,9 @@ from insar_platform.pipelines.insar import insar_processing_pipeline
 from insar_platform.pipelines.insar_interferogram import generate_interferogram
 from insar_platform.pipelines.phase_filtering import phase_filtering_pipeline
 from insar_platform.pipelines.phase_unwrapping import run_phase_unwrapping
+from insar_platform.pipelines.topographic_phase_removal import (
+    run_topographic_phase_removal,
+)
 from insar_platform.utils.cache_manager import run_or_load_pipeline
 
 
@@ -88,6 +91,9 @@ def sentinel1_app(
     skip_inspect_coherence = workflow_config.get("skip_inspect_coherence", False)
     skip_phase_filtering = workflow_config.get("skip_phase_filtering", False)
     skip_phase_unwrapping = workflow_config.get("skip_phase_unwrapping", False)
+    skip_topographic_phase_removal = workflow_config.get(
+        "skip_topographic_phase_removal", False
+    )
 
     cache_directory = resolve_directory(
         project_root,
@@ -103,6 +109,7 @@ def sentinel1_app(
     coherence_cache = cache_directory / "coherence.pkl"
     phase_filtering_cache = cache_directory / "phase_filtering.pkl"
     phase_unwrapping_cache = cache_directory / "phase_unwrapping.pkl"
+    topographic_phase_removal_cache = cache_directory / "topographic_phase_removal.pkl"
 
     _check_file_exists("catalog", skip_catalog, catalog_cache)
     _check_file_exists("acquisitions", skip_download, acquisitions_cache)
@@ -118,6 +125,11 @@ def sentinel1_app(
     _check_file_exists("phase_filtering", skip_phase_filtering, phase_filtering_cache)
     _check_file_exists(
         "phase_unwrapping", skip_phase_unwrapping, phase_unwrapping_cache
+    )
+    _check_file_exists(
+        "topographic_phase_removal",
+        skip_topographic_phase_removal,
+        topographic_phase_removal_cache,
     )
 
     # 1. Prepare area of interest.
@@ -330,7 +342,49 @@ def sentinel1_app(
         ),
     )
 
-    # 9. Apply Goldstein phase filtering.
+    # 9. Remove topographic phase.
+    topographic_output_directory = resolve_directory(
+        project_root,
+        config["TOPOGRAPHIC_PHASE_REMOVAL_OUTPUT"],
+    )
+
+    topographic_output_product = (
+        topographic_output_directory / "topo_corrected_interferogram.dim"
+    )
+
+    topographic_dim = run_or_load_pipeline(
+        name="topographic_phase_removal",
+        skip=skip_topographic_phase_removal,
+        cache_path=topographic_phase_removal_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
+            "topographic_phase_removal",
+            run_topographic_phase_removal,
+            tracking_logger=logger,
+            input_product=Path(interferogram_dim),
+            output_product=topographic_output_product,
+            gpt_executable=config["SNAP_GPT"],
+            dem_name=config.get(
+                "TOPOGRAPHIC_DEM",
+                "Copernicus 30m Global DEM",
+            ),
+            orbit_degree=int(config.get("TOPOGRAPHIC_ORBIT_DEGREE", 3)),
+            output_topo_phase_band=True,
+            output_elevation_band=True,
+        ),
+    )
+
+    if topographic_dim is None:
+        raise RuntimeError("Topographic phase removal returned no product.")
+
+    topographic_dim = Path(topographic_dim)
+
+    if not topographic_dim.is_file():
+        raise FileNotFoundError(
+            f"Topographically corrected interferogram not found: {topographic_dim}"
+        )
+
+    # 10. Apply Goldstein phase filtering.
     filtered_dim = run_or_load_pipeline(
         name="phase_filtering",
         skip=skip_phase_filtering,
@@ -340,7 +394,7 @@ def sentinel1_app(
             "phase_filtering",
             phase_filtering_pipeline,
             tracking_logger=logger,
-            interferogram_dim=interferogram_dim,
+            interferogram_dim=topographic_dim,
             output_dir=resolve_directory(
                 project_root,
                 config["PHASE_FILTERING_OUTPUT"],
@@ -359,7 +413,7 @@ def sentinel1_app(
         ),
     )
 
-    # 10. Run phase unwrapping.
+    # 11. Run phase unwrapping.
     run_or_load_pipeline(
         name="phase_unwrapping",
         skip=skip_phase_unwrapping,
