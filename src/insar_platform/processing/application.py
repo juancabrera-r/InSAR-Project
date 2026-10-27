@@ -18,6 +18,8 @@ from insar_platform.pipelines.catalog import catalog_discovery_pipeline
 from insar_platform.pipelines.coregistration import coregistration_pipeline
 from insar_platform.pipelines.insar import insar_processing_pipeline
 from insar_platform.pipelines.insar_interferogram import generate_interferogram
+from insar_platform.pipelines.phase_filtering import phase_filtering_pipeline
+from insar_platform.pipelines.phase_unwrapping import run_phase_unwrapping
 from insar_platform.utils.cache_manager import load_cached_result, save_cached_result
 
 
@@ -84,6 +86,8 @@ def sentinel1_app(
     skip_coregistration = workflow_config.get("skip_coregistration", False)
     skip_interferogram = workflow_config.get("skip_interferogram", False)
     skip_inspect_coherence = workflow_config.get("skip_inspect_coherence", False)
+    skip_phase_filtering = workflow_config.get("skip_phase_filtering", False)
+    skip_phase_unwrapping = workflow_config.get("skip_phase_unwrapping", False)
 
     cache_directory = resolve_directory(
         project_root,
@@ -100,6 +104,8 @@ def sentinel1_app(
     coregistration_cache = cache_directory / "coregistration.pkl"
     interferogram_cache = cache_directory / "interferogram.pkl"
     coherence_cache = cache_directory / "coherence.pkl"
+    phase_filtering_cache = cache_directory / "phase_filtering.pkl"
+    phase_unwrapping_cache = cache_directory / "phase_unwrapping.pkl"
 
     _check_file_exists("catalog", skip_catalog, catalog_cache)
     _check_file_exists("acquisitions", skip_download, acquisitions_cache)
@@ -111,6 +117,10 @@ def sentinel1_app(
     )
     _check_file_exists("coregistration", skip_coregistration, coregistration_cache)
     _check_file_exists("interferogram", skip_interferogram, interferogram_cache)
+    _check_file_exists("phase_filtering", skip_phase_filtering, phase_filtering_cache)
+    _check_file_exists(
+        "phase_unwrapping", skip_phase_unwrapping, phase_unwrapping_cache
+    )
 
     # 1. Prepare area of interest.
     aoi_path = resolve_directory(
@@ -333,6 +343,63 @@ def sentinel1_app(
         )
 
         save_cached_result(coherence_cache, coherence_report)
+
+    # 11. Apply Goldstein phase filtering.
+    if skip_phase_filtering:
+        logger.info("Reusing existing filtered interferogram")
+        filtered_dim = load_cached_result(phase_filtering_cache)
+    else:
+        filtered_dim = run_tracked_pipeline(
+            "phase_filtering",
+            phase_filtering_pipeline,
+            tracking_logger=logger,
+            interferogram_dim=interferogram_dim,
+            output_dir=resolve_directory(
+                project_root,
+                config["PHASE_FILTERING_OUTPUT"],
+            ),
+            logger=logger,
+            gpt=config["SNAP_GPT"],
+            cache=config.get("SNAP_CACHE", "4G"),
+            threads=int(config.get("SNAP_THREADS", 2)),
+            alpha=float(config.get("GOLDSTEIN_ALPHA", 1.0)),
+            fft_size=int(config.get("GOLDSTEIN_FFT_SIZE", 64)),
+            window_size=int(config.get("GOLDSTEIN_WINDOW_SIZE", 3)),
+            use_coherence_mask=config.get(
+                "GOLDSTEIN_USE_COHERENCE_MASK",
+                False,
+            ),
+        )
+
+        save_cached_result(phase_filtering_cache, filtered_dim)
+
+    # 12. Run phase unwrapping.
+    if skip_phase_unwrapping:
+        logger.info("Reusing existing phase unwrapping result")
+        phase_unwrapping_result = load_cached_result(phase_unwrapping_cache)
+    else:
+        phase_unwrapping_result = run_tracked_pipeline(
+            "phase_unwrapping",
+            run_phase_unwrapping,
+            tracking_logger=logger,
+            filtered_product=(
+                Path(config["PHASE_FILTERING_OUTPUT"]) / "filtered_interferogram.dim"
+            ),
+            output_directory=config["PHASE_UNWRAPPING_OUTPUT"],
+            gpt=config["SNAP_GPT"],
+            snaphu_executable=config["SNAPHU_EXECUTABLE"],
+            stat_cost_mode=config.get("SNAPHU_STAT_COST_MODE", "DEFO"),
+            init_method=config.get("SNAPHU_INIT_METHOD", "MST"),
+            tile_rows=config.get("SNAPHU_TILE_ROWS", 4),
+            tile_cols=config.get("SNAPHU_TILE_COLS", 8),
+            row_overlap=config.get("SNAPHU_ROW_OVERLAP", 200),
+            col_overlap=config.get("SNAPHU_COL_OVERLAP", 200),
+            processors=config.get("SNAPHU_PROCESSORS", 4),
+            tile_cost_threshold=config.get("SNAPHU_TILE_COST_THRESHOLD", 500),
+            keep_wrapped=config.get("SNAPHU_KEEP_WRAPPED", True),
+        )
+
+        save_cached_result(phase_unwrapping_cache, phase_unwrapping_result)
 
     logger.info(
         "Sentinel-1 processing completed | "

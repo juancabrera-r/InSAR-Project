@@ -308,6 +308,14 @@ Product to download: All Toolbox
 | Interferometric coherence	| Spatial statistics reported, without a universal minimum	 | Diagnostic |
 | Reproducibility	| Same inputs and parameters produce consistent outputs	 | Error |
 
+## Unwrapping 
+
+1. Download SANPHU
+https://step.esa.int/main/snap-supported-plugins/snaphu/
+
+2. Extract SNAPHU in ```C:/Tools/snaphu/```
+
+
 ## License
 
 **Proprietary - All Rights Reserved.** The source code is publicly viewable, but no general permission is granted to use, modify, or redistribute it. See [LICENSE](LICENSE).

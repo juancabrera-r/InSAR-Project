@@ -5,7 +5,7 @@ from pathlib import Path
 
 from insar_platform.config.config import ConfigLoader
 from insar_platform.config.logger import LoggingManager
-from insar_platform.pipelines.application import sentinel1_app
+from insar_platform.processing.application import sentinel1_app
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = Path(__file__).resolve().parents[3]

@@ -16,6 +16,8 @@ CONFIG:
   "skip_coregistration": True
   "skip_interferogram": True
   "skip_inspect_coherence": True
+  "skip_phase_filtering": False
+  "skip_phase_unwrapping": False
   pipeline_cache_dir: data/cache/pipelines
 
 
@@ -139,3 +141,32 @@ COHERENCE_REPORT_OUTPUT: "data/processed/coherence_analysis"
 
 # Histogram bins used for approximate median calculation
 COHERENCE_HISTOGRAM_BINS: 10000
+
+# -----------------------------------------------------------------------------
+# 11. Phase Filtering
+# -----------------------------------------------------------------------------
+# Goldstein phase filtering
+PHASE_FILTERING_OUTPUT: "data/processed/phase_filtering"
+
+GOLDSTEIN_ALPHA: 1.0
+GOLDSTEIN_FFT_SIZE: 64
+GOLDSTEIN_WINDOW_SIZE: 3
+GOLDSTEIN_USE_COHERENCE_MASK: false
+
+# -----------------------------------------------------------------------------
+# 12. Phase Unwrapping
+# -----------------------------------------------------------------------------
+SNAP_GPT: "C:/Program Files/esa-snap/bin/gpt.exe"
+SNAPHU_EXECUTABLE: "C:/Tools/snaphu/bin/snaphu.exe"
+PHASE_UNWRAPPING_OUTPUT: "data/processed/phase_unwrapping"
+
+SNAPHU_STAT_COST_MODE: "DEFO"
+SNAPHU_INIT_METHOD: "MST"
+SNAPHU_TILE_ROWS: 4
+SNAPHU_TILE_COLS: 8
+SNAPHU_ROW_OVERLAP: 200
+SNAPHU_COL_OVERLAP: 200
+SNAPHU_PROCESSORS: 4
+SNAPHU_TILE_COST_THRESHOLD: 500
+SNAPHU_KEEP_WRAPPED: true
+
