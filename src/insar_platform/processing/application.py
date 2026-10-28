@@ -18,12 +18,18 @@ from insar_platform.pipelines.catalog import catalog_discovery_pipeline
 from insar_platform.pipelines.coregistration import coregistration_pipeline
 from insar_platform.pipelines.insar import insar_processing_pipeline
 from insar_platform.pipelines.insar_interferogram import generate_interferogram
+from insar_platform.pipelines.los_displacement import run_los_displacement
+from insar_platform.pipelines.los_trend_diagnostics import run_los_trend_diagnostics
 from insar_platform.pipelines.phase_filtering import phase_filtering_pipeline
 from insar_platform.pipelines.phase_unwrapping import run_phase_unwrapping
+from insar_platform.pipelines.terrain_correction import run_terrain_correction
 from insar_platform.pipelines.topographic_phase_removal import (
     run_topographic_phase_removal,
 )
 from insar_platform.utils.cache_manager import run_or_load_pipeline
+from insar_platform.validations.validate_los_displacement import (
+    validate_los_displacement,
+)
 
 
 def resolve_directory(
@@ -94,6 +100,14 @@ def sentinel1_app(
     skip_topographic_phase_removal = workflow_config.get(
         "skip_topographic_phase_removal", False
     )
+    skip_terrain_correction = workflow_config.get("skip_terrain_correction", False)
+    skip_los_displacement = workflow_config.get("skip_los_displacement", False)
+    skip_validate_los_displacement = workflow_config.get(
+        "skip_validate_los_displacement", False
+    )
+    skip_los_trend_diagnostics = workflow_config.get(
+        "skip_los_trend_diagnostics", False
+    )
 
     cache_directory = resolve_directory(
         project_root,
@@ -110,6 +124,10 @@ def sentinel1_app(
     phase_filtering_cache = cache_directory / "phase_filtering.pkl"
     phase_unwrapping_cache = cache_directory / "phase_unwrapping.pkl"
     topographic_phase_removal_cache = cache_directory / "topographic_phase_removal.pkl"
+    terrain_correction_cache = cache_directory / "terrain_correction.pkl"
+    los_displacement_cache = cache_directory / "los_displacement.pkl"
+    los_validation_cache = cache_directory / "validate_los_displacement.pkl"
+    los_trend_cache = cache_directory / "los_trend_diagnostics.pkl"
 
     _check_file_exists("catalog", skip_catalog, catalog_cache)
     _check_file_exists("acquisitions", skip_download, acquisitions_cache)
@@ -130,6 +148,20 @@ def sentinel1_app(
         "topographic_phase_removal",
         skip_topographic_phase_removal,
         topographic_phase_removal_cache,
+    )
+    _check_file_exists(
+        "terrain_correction", skip_terrain_correction, terrain_correction_cache
+    )
+    _check_file_exists(
+        "los_displacement", skip_los_displacement, los_displacement_cache
+    )
+    _check_file_exists(
+        "validate_los_displacement",
+        skip_validate_los_displacement,
+        los_validation_cache,
+    )
+    _check_file_exists(
+        "los_trend_diagnostics", skip_los_trend_diagnostics, los_trend_cache
     )
 
     # 1. Prepare area of interest.
@@ -172,6 +204,12 @@ def sentinel1_app(
 
     if catalog is None:
         raise RuntimeError("Catalog discovery returned no result.")
+
+    logger.debug(
+        "Catalog discovery results:\n  Products: %d\n  Common coverage: %s",
+        len(catalog.bursts_by_product),
+        catalog.common_coverage_percentage,
+    )
 
     # 3. Download or restore acquisitions.
     acquisitions = run_or_load_pipeline(
@@ -226,6 +264,16 @@ def sentinel1_app(
         ),
     )
 
+    if baseline is None:
+        raise RuntimeError(
+            "Baseline calculation failed. Cannot continue Sentinel-1 processing."
+        )
+
+    logger.debug(
+        "Baseline results:\n  Total baseline: %.3f m",
+        baseline.total_m,
+    )
+
     # 5. Inspect SAFE dependencies.
     raw_directory = resolve_directory(
         project_root,
@@ -251,6 +299,11 @@ def sentinel1_app(
         raise RuntimeError(
             f"Missing SAFE dependencies: {inspect_coregistration.total_missing}"
         )
+
+    logger.debug(
+        "Coregistration inspection results:\n  Missing SAFE dependencies: %d",
+        inspect_coregistration.total_missing,
+    )
 
     # 6. Coregistration.
     coregistration_output = resolve_directory(
@@ -285,6 +338,16 @@ def sentinel1_app(
             subswath=config["SAR_PARAMETERS"]["SWATH"],
             polarization=config["COPERNICUS_PRODUCT"]["POLARIZATION"],
         ),
+    )
+
+    if coregistered_dim is None:
+        raise RuntimeError(
+            "Coregistration failed. Cannot continue Sentinel-1 processing."
+        )
+
+    logger.debug(
+        "Coregistration results:\n  Product: %s",
+        coregistered_dim,
     )
 
     # 7. Generate interferogram and coherence.
@@ -322,6 +385,14 @@ def sentinel1_app(
         ),
     )
 
+    if interferogram_dim is None:
+        raise RuntimeError("Interferogram generation failed.")
+
+    logger.debug(
+        "Interferogram results:\n  Product: %s",
+        interferogram_dim,
+    )
+
     # 8. Inspect coherence.
     coherence_report = run_or_load_pipeline(
         name="inspect_coherence",
@@ -340,6 +411,19 @@ def sentinel1_app(
             ),
             histogram_bins=int(config.get("COHERENCE_HISTOGRAM_BINS", 10000)),
         ),
+    )
+
+    if coherence_report is None:
+        raise RuntimeError("Coherence inspection failed.")
+
+    logger.debug(
+        "Coherence inspection results:\n"
+        "  Mean: %.4f\n"
+        "  Median: %.4f\n"
+        "  Pixels above 0.6: %.2f%%",
+        coherence_report.mean,
+        coherence_report.median,
+        coherence_report.percent_above_06,
     )
 
     # 9. Remove topographic phase.
@@ -384,6 +468,11 @@ def sentinel1_app(
             f"Topographically corrected interferogram not found: {topographic_dim}"
         )
 
+    logger.debug(
+        "Topographic phase removal results:\n  Product: %s",
+        topographic_dim,
+    )
+
     # 10. Apply Goldstein phase filtering.
     filtered_dim = run_or_load_pipeline(
         name="phase_filtering",
@@ -413,8 +502,15 @@ def sentinel1_app(
         ),
     )
 
+    if filtered_dim is None:
+        raise RuntimeError("Phase filtering returned no product.")
+    logger.debug(
+        "Phase filtering results:\n  Product: %s",
+        filtered_dim,
+    )
+
     # 11. Run phase unwrapping.
-    run_or_load_pipeline(
+    unwrapping_result = run_or_load_pipeline(
         name="phase_unwrapping",
         skip=skip_phase_unwrapping,
         cache_path=phase_unwrapping_cache,
@@ -440,6 +536,156 @@ def sentinel1_app(
             tile_cost_threshold=config.get("SNAPHU_TILE_COST_THRESHOLD", 500),
             keep_wrapped=config.get("SNAPHU_KEEP_WRAPPED", True),
         ),
+    )
+
+    if unwrapping_result is None:
+        raise RuntimeError("Phase unwrapping returned no product.")
+
+    logger.debug(
+        "Phase unwrapping results:\n  Unwrapped product: %s",
+        unwrapping_result.unwrapped_product,
+    )
+
+    # 12. Terrain correction.
+    terrain_correction_result = run_or_load_pipeline(
+        name="terrain_correction",
+        skip=skip_terrain_correction,
+        cache_path=terrain_correction_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
+            "terrain_correction",
+            run_terrain_correction,
+            tracking_logger=logger,
+            input_product=unwrapping_result.unwrapped_product,
+            output_directory="data/processed/terrain_correction",
+            gpt="C:/Program Files/esa-snap/bin/gpt.exe",
+            dem_name="Copernicus 30m Global DEM",
+            map_projection="EPSG:32628",
+            pixel_spacing_m=10.0,
+            save_dem=True,
+            cache="4G",
+            threads=2,
+        ),
+    )
+
+    logger.debug(
+        "Terrain correction results:\n  Product: %s\n  CRS: %s\n  Bands: %s",
+        terrain_correction_result.output_product,
+        terrain_correction_result.crs,
+        ", ".join(terrain_correction_result.band_names),
+    )
+
+    # 13. LOS displacement.
+
+    los_displacement_result = run_or_load_pipeline(
+        name="los_displacement",
+        skip=skip_los_displacement,
+        cache_path=los_displacement_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
+            "los_displacement",
+            run_los_displacement,
+            tracking_logger=logger,
+            input_product=terrain_correction_result.output_product,
+            output_directory="data/processed/los_displacement",
+            coherence_threshold=0.3,
+            wavelength_m=0.05546576,
+            phase_to_los_sign=-1,
+            overwrite=True,
+        ),
+    )
+
+    logger.debug(
+        "LOS displacement results:\n"
+        "  Output: %s\n"
+        "  CRS: %s\n"
+        "  Dimensions: %d x %d\n"
+        "  Reference phase: %.6f rad\n"
+        "  Reference valid pixels: %d\n"
+        "  Valid pixels: %d / %d (%.2f%%)\n"
+        "  Mean displacement: %.3f mm\n"
+        "  Minimum displacement: %.3f mm\n"
+        "  Maximum displacement: %.3f mm\n"
+        "  Validation report: %s",
+        los_displacement_result.output_product,
+        los_displacement_result.crs,
+        los_displacement_result.width,
+        los_displacement_result.height,
+        los_displacement_result.reference_phase_rad,
+        los_displacement_result.reference_valid_pixels,
+        los_displacement_result.valid_pixels,
+        los_displacement_result.total_pixels,
+        los_displacement_result.valid_fraction * 100,
+        los_displacement_result.mean_displacement_m * 1000,
+        los_displacement_result.min_displacement_m * 1000,
+        los_displacement_result.max_displacement_m * 1000,
+        los_displacement_result.report_file,
+    )
+
+    # 14. LOS displacement quality assessment.
+    los_quality_result = run_or_load_pipeline(
+        name="validate_los_displacement",
+        skip=skip_validate_los_displacement,
+        cache_path=los_validation_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
+            "validate_los_displacement",
+            validate_los_displacement,
+            tracking_logger=logger,
+            displacement_file=los_displacement_result.output_product,
+            terrain_corrected_product=terrain_correction_result.output_product,
+            report_file="data/processed/los_displacement/quality_report.json",
+            coherence_threshold=0.3,
+            wavelength_m=0.05546576,
+            phase_to_los_sign=-1,
+            reference_phase_rad=los_displacement_result.reference_phase_rad,
+            adjacent_jump_threshold_m=0.02,
+            block_size=512,
+        ),
+    )
+
+    logger.info(
+        "LOS displacement quality assessment completed:\n  Result: %s",
+        los_quality_result,
+    )
+
+    # 15. LOS planar trend diagnostics.
+    los_trend_result = run_or_load_pipeline(
+        name="los_trend_diagnostics",
+        skip=skip_los_trend_diagnostics,
+        cache_path=los_trend_cache,
+        logger=logger,
+        pipeline=lambda: run_tracked_pipeline(
+            "los_trend_diagnostics",
+            run_los_trend_diagnostics,
+            tracking_logger=logger,
+            displacement_file=los_displacement_result.output_product,
+            output_directory="data/processed/los_displacement/diagnostics",
+            elevation_file=None,
+            sample_stride=12,
+            block_size=512,
+            overwrite=True,
+        ),
+    )
+
+    logger.info(
+        "LOS trend diagnostics:\n"
+        "  Trend raster: %s\n"
+        "  Residual raster: %s\n"
+        "  Gradient: %.4f mm/km\n"
+        "  East gradient: %.4f mm/km\n"
+        "  North gradient: %.4f mm/km\n"
+        "  Plane-fit R²: %s\n"
+        "  Elevation correlation: %s\n"
+        "  Report: %s",
+        los_trend_result.trend_file,
+        los_trend_result.residual_file,
+        los_trend_result.gradient_mm_per_km,
+        los_trend_result.east_gradient_mm_per_km,
+        los_trend_result.north_gradient_mm_per_km,
+        los_trend_result.plane_fit_r2,
+        los_trend_result.elevation_correlation,
+        los_trend_result.report_file,
     )
 
     logger.info(

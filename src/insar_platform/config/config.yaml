@@ -18,8 +18,12 @@ CONFIG:
   "skip_inspect_coherence": True
   "skip_topographic_phase_removal": True
   "skip_phase_filtering": True
-  "skip_phase_unwrapping": False
-  
+  "skip_phase_unwrapping": True
+  "skip_terrain_correction": False
+  "skip_los_displacement": False
+  "skip_validate_los_displacement": False
+  "skip_los_trend_diagnostics": False
+
   pipeline_cache_dir: data/cache/pipelines
 
 
